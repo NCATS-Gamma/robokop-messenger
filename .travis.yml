@@ -15,7 +15,7 @@ before_script:
   - cd neo4j
   - mkdir logs
   - echo "" > logs/debug.log
-  - docker-compose up -d
+  - docker-compose up
   - cd ..
   - until grep -q "Bolt enabled" ./neo4j/logs/debug.log; do sleep 1 && tail -n1 ./neo4j/logs/debug.log; done
 script:
