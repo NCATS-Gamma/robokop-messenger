@@ -1,10 +1,13 @@
 connexion
 flask
+flask-cors
 jinja2
+jsonschema
 lru-dict
 neo4j-driver
 numpy
 psycopg2
 pyyaml
 redis
+requests
 swagger-ui-bundle
