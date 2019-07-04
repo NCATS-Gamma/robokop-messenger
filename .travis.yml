@@ -15,9 +15,9 @@ before_script:
   - cd neo4j
   - mkdir logs
   - echo "" > logs/debug.log
-  - docker-compose up
+  - docker-compose up -d
   - cd ..
-  - until grep -q "Bolt enabled" ./neo4j/logs/debug.log; do sleep 1 && tail -n1 ./neo4j/logs/debug.log; done
+  - until grep -q "Bolt enabled" ./neo4j/logs/debug.log; do sleep 1; done
 script:
   - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
 after_script:

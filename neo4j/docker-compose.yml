@@ -5,6 +5,8 @@ services:
     container_name: neo4j_tmp
     environment:
       - NEO4J_AUTH=neo4j/pword
+    volumes:
+      - ./logs:/logs
     ports:
       - 7474:7474
       - 7687:7687
