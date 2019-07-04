@@ -12,7 +12,7 @@ install:
   - mkdir logs
   - mkdir cache
 script: 
-  - cd graph
+  - cd neo4j
   - docker-compose up -d
   - cd ..
   - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
