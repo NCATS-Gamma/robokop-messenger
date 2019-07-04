@@ -13,6 +13,7 @@ install:
   - mkdir cache
 before_script:
   - cd neo4j
+  - mkdir logs
   - echo "" > logs/debug.log
   - docker-compose up -d
   - cd ..
