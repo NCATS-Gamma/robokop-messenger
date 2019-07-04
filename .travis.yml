@@ -11,10 +11,16 @@ install:
   - pip install -r requirements-test.txt
   - mkdir logs
   - mkdir cache
-script: 
+before_script:
   - cd neo4j
+  - echo "" > logs/debug.log
   - docker-compose up -d
   - cd ..
+  - until grep -q "Bolt enabled" ./neo4j/logs/debug.log
+    do
+        sleep 1
+    done
+script:
   - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
 after_script:
   - codecov
