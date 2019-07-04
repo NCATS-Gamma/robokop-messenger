@@ -1,0 +1,17 @@
+dist: xenial
+language: python
+python:
+  - "3.7"
+services:
+  - neo4j
+env:
+  - NEO4J_HOST=robokopdb2.renci.org NEO4J_PASSWORD=blahb
+install:
+  - pip install -r requirements.txt
+  - pip install -r requirements-test.txt
+  - mkdir logs
+  - mkdir cache
+script: 
+  - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
+after_script:
+  - codecov

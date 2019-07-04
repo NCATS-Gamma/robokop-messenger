@@ -1,0 +1,20 @@
+{
+    "knowledge_graph": {
+        "url": "bolt://robokopdb2.renci.org:7687",
+        "credentials": {
+            "username": "neo4j",
+            "password": "***REMOVED***"
+        }
+    },
+    "query_graph": {
+        "edges": [],
+        "nodes": [
+            {
+                "id": "n00",
+                "curie": "DOID:4325",
+                "type": "disease"
+            }
+        ]
+    },
+    "results": []
+}

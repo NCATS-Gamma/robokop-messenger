@@ -1,0 +1,10 @@
+connexion
+flask
+jinja2
+lru-dict
+neo4j-driver
+numpy
+psycopg2
+pyyaml
+redis
+swagger-ui-bundle

@@ -1,0 +1,39 @@
+{
+    "knowledge_graph": {
+        "url": "bolt://robokopdb2.renci.org:7687",
+        "credentials": {
+            "username": "neo4j",
+            "password": "***REMOVED***"
+        }
+    },
+    "query_graph": {
+        "edges": [
+            {
+                "source_id": "n00",
+                "target_id": "n01",
+                "id": "e00"
+            },
+            {
+                "source_id": "n01",
+                "target_id": "n02",
+                "id": "e01"
+            }
+        ],
+        "nodes": [
+            {
+                "curie": "MONDO:0005737",
+                "id": "n00",
+                "type": "disease"
+            },
+            {
+                "id": "n01",
+                "type": "gene"
+            },
+            {
+                "id": "n02",
+                "type": "genetic_condition"
+            }
+        ]
+    },
+    "results": []
+}

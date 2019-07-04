@@ -1,0 +1,72 @@
+openapi: 3.0.1
+info:
+  title: {{ title|default('<title>') }}
+  description: {{ description|default('\<description\>') }}
+  version: {{ version|default('<version>') }}
+  contact:
+    email: {{ email|default('<email>') }}
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+tags:
+  - name: reasoner
+    description: Reasoner services
+{% if path is defined -%}
+servers:
+  - url: "/{{ path }}"
+{% endif -%}
+paths:
+  {%- for endpoint in endpoints %}
+  /{{ endpoint.operation }}:
+    post:
+      tags:
+        - reasoner
+      summary: {{ endpoint.description.split('\n')[0]|default('<summary>')}}
+      description: ''
+      operationId: {{ endpoint.operation|default('not_implemented') }}
+      requestBody:
+        description: Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                options:
+                  additionalProperties: true
+            example:
+                results: []
+                query_graph:
+                  nodes:
+                    - id: n00
+                      curie: MONDO:0005737
+                  edges: []
+                knowledge_graph:
+                  nodes: []
+                  edges: []
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                  results:
+                    - n00: ['MONDO:0005737']
+                  query_graph:
+                    nodes:
+                      - id: n00
+                        curie: MONDO:0005737
+                    edges: []
+                  knowledge_graph:
+                    nodes:
+                      - id: MONDO:0005737
+                    edges: []
+        '400':
+          description: Invalid input
+      x-openapi-router-controller: controllers
+  {%- endfor %}
+{% include 'components.yaml' %}
