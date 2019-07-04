@@ -3,7 +3,7 @@ language: python
 python:
   - "3.7"
 services:
-  - neo4j
+  - docker
 env:
   - NEO4J_HOST=robokopdb2.renci.org NEO4J_PASSWORD=blahb
 install:
@@ -12,6 +12,11 @@ install:
   - mkdir logs
   - mkdir cache
 script: 
+  - cd graph
+  - docker-compose up -d
+  - cd ..
   - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
 after_script:
   - codecov
+  - cd graph
+  - docker-compose down
