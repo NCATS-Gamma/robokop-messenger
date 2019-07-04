@@ -22,5 +22,5 @@ script:
   - PYTHONPATH=. pytest --cov=messenger --cov-report term-missing
 after_script:
   - codecov
-  - cd graph
+  - cd neo4j
   - docker-compose down
