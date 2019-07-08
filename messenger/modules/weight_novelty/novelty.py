@@ -1,8 +1,8 @@
-"""Informativeness."""
+"""Novelty."""
 import os
 import json
 from collections import defaultdict
-from messenger.modules.yank import NodeReference, EdgeReference, RemoteKGraph
+from messenger.modules.answer import NodeReference, EdgeReference, RemoteKGraph
 
 
 def query(message):

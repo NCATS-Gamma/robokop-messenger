@@ -18,5 +18,5 @@ def test_empty(client, empty):
         'message': empty,
         'options': {}
     }
-    response = client.post('/yank', json=request)
+    response = client.post('/answer', json=request)
     assert response.status_code == 200

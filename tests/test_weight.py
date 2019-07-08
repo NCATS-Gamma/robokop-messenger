@@ -1,7 +1,7 @@
 """Test correctness (publication) weighting."""
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
-from messenger.modules.weight import query as weight
+from messenger.modules.weight_correctness import query as weight
 from .fixtures import to_weight
 
 
