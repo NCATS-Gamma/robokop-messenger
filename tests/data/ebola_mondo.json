@@ -1,9 +1,9 @@
 {
     "knowledge_graph": {
-        "url": "bolt://robokopdb2.renci.org:7687",
+        "url": "bolt://localhost:7687",
         "credentials": {
             "username": "neo4j",
-            "password": "***REMOVED***"
+            "password": "pword"
         }
     },
     "query_graph": {

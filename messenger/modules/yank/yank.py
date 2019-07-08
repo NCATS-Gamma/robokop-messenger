@@ -3,24 +3,26 @@ from neo4j import GraphDatabase, basic_auth
 from messenger.shared.message_state import kgraph_is_local
 from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import random_string
+from messenger.shared.neo4j import dump_kg
 from .qgraph_compiler import cypher_query_answer_map
 
 
-def KGraph(kgraph):
+def KGraph(message):
     """Return a LocalKGraph or RemoteKGraph, depending on the structure of `kgraph`."""
     # TODO: rigorously check against json schema
-    if "edges" in kgraph:
-        return LocalKGraph(kgraph)
+    if "edges" in message['knowledge_graph']:
+        return LocalKGraph(message)
     else:
-        return RemoteKGraph(kgraph)
+        return RemoteKGraph(message)
 
 
 class RemoteKGraph:
     """Context manager for persistent remote KGraph."""
 
-    def __init__(self, kgraph):
+    def __init__(self, message):
         """Initialize context manager."""
         # get Neo4j connection
+        kgraph = message['knowledge_graph']
         self.driver = GraphDatabase.driver(
             kgraph["url"],
             auth=basic_auth(
@@ -41,47 +43,40 @@ class RemoteKGraph:
 class LocalKGraph:
     """Context manager for temporary cypher-able KGraph."""
 
-    def __init__(self, kgraph):
+    def __init__(self, message):
         """Initialize context manager."""
-        self.kgraph = kgraph
         self.driver = GraphDatabase.driver(
             "bolt://localhost:7687",
             auth=basic_auth("neo4j", "pword")
         )
         self.uid = random_string()
 
-    def __enter__(self):
-        """Enter context."""
-        neo4j_graph = Graph("kg", self.driver)
-        nodes = {}
-        for node in self.kgraph["nodes"]:
+        # add uid to kgraph nodes
+        nodes = []
+        for node in message['knowledge_graph']['nodes']:
             node_type = node['type']
             if isinstance(node_type, str):
                 node_type = [node_type]
-            node_id = node['id'].replace('"', '\\"')
-            nodes[node["id"]] = Node(
-                labels=[self.uid] + node_type,
-                properties={
-                    # "name": node["name"],
-                    "id": node_id
-                },
-            )
-        edges = {}
-        for edge in self.kgraph["edges"]:
-            edges[edge["id"]] = Edge(
-                nodes[edge["source_id"]],
-                edge["type"],
-                nodes[edge["target_id"]],
-                properties={"id": edge["id"]},
-            )
+            node_type.append(self.uid)
+            node['type'] = node_type
+            nodes.append(node)
+        message['knowledge_graph']['nodes'] = nodes
 
-        for node in nodes.values():
-            neo4j_graph.add_node(node)
+        # add uid to qgraph nodes
+        nodes = []
+        for node in message['query_graph']['nodes']:
+            node_type = node['type']
+            if isinstance(node_type, str):
+                node_type = [node_type]
+            node_type.append(self.uid)
+            node['type'] = node_type
+            nodes.append(node)
+        message['query_graph']['nodes'] = nodes
+        self.kgraph = message['knowledge_graph']
 
-        for edge in edges.values():
-            neo4j_graph.add_edge(edge)
-
-        neo4j_graph.commit()
+    def __enter__(self):
+        """Enter context."""
+        dump_kg(self.driver, self.kgraph)
         return self.driver
 
     def __exit__(self, type, value, traceback):
@@ -92,7 +87,7 @@ class LocalKGraph:
 
 def query(message, max_connectivity=0):
     """Fetch answers to question."""
-    with KGraph(message["knowledge_graph"]) as driver:
+    with KGraph(message) as driver:
         message = query_neo4j(message, driver, max_connectivity=max_connectivity)
     return message
 

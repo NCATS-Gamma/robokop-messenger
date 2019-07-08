@@ -19,11 +19,10 @@ class NodeReference():
         node = dict(node)
         node_id = node.pop("id")
         name = f'{node_id}' if not anonymous else ''
-        label = node.pop('type', 'named_thing')
+        labels = node.pop('type', 'named_thing')
+        if not isinstance(labels, list):
+            labels = [labels]
         props = {}
-
-        if label == 'biological_process':
-            label = 'biological_process_or_activity'
 
         curie = node.pop("curie", None)
         if curie is not None:
@@ -47,11 +46,11 @@ class NodeReference():
         props.update(node)
 
         self.name = name
-        self.label = label
+        self.labels = labels
         self.prop_string = ' {' + ', '.join([f"`{key}`: {cypher_prop_string(props[key])}" for key in props]) + '}'
         self._filters = filters
         if curie:
-            self._extras = f' USING INDEX {name}:{label}(id)'
+            self._extras = f' USING INDEX {name}:{labels[0]}(id)'
         else:
             self._extras = ''
         self._num = 0
@@ -61,7 +60,7 @@ class NodeReference():
         self._num += 1
         if self._num == 1:
             return f'{self.name}' + \
-                   f'{":" + self.label if self.label else ""}' + \
+                   ''.join(':' + label for label in self.labels) + \
                    f'{self.prop_string}'
         return self.name
 
