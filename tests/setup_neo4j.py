@@ -2,6 +2,7 @@
 """Set up Neo4j."""
 
 import json
+import os
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.neo4j import dump_kg, clear
 
@@ -13,7 +14,7 @@ driver = GraphDatabase.driver(
         'pword'
     ),
 )
-with open('tests/data/ebola_kg.json', 'r') as f:
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'ebola_kg.json'), 'r') as f:
     kgraph = json.load(f)
 clear(driver)
 dump_kg(driver, kgraph, with_props=True)
