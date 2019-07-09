@@ -7,6 +7,7 @@ from uuid import uuid4
 from .cache import Cache
 from .omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
+from messenger.shared.message_state import kgraph_is_local
 
 
 def query(message):
@@ -14,11 +15,8 @@ def query(message):
 
     Add support edges to knowledge_graph and bindings to results.
     """
-
-    # We don't need this generality if everything is omnicorp
-    # get supporter
-    # support_module_name = 'ranker.support.omnicorp'
-    # supporter = import_module(support_module_name).get_supporter()
+    if not kgraph_is_local(message):
+        raise ValueError('Support requires a local kgraph.')
 
     kgraph = message['knowledge_graph']
     qgraph = message['query_graph']
@@ -26,11 +24,7 @@ def query(message):
 
     # get cache if possible
     try:
-        cache = Cache(
-            redis_host=os.environ['CACHE_HOST'],
-            redis_port=os.environ['CACHE_PORT'],
-            redis_db=os.environ['CACHE_DB'],
-            redis_password=os.environ['CACHE_PASSWORD'])
+        cache = Cache()
     except Exception as e:
         cache = None
 

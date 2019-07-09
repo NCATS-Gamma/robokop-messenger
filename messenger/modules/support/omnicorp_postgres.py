@@ -13,11 +13,11 @@ class OmniCorp():
 
     def __init__(self):
         """Create and omnicorp service object."""
-        db = os.environ['OMNICORP_DB']
-        user = os.environ['OMNICORP_USER']
-        port = os.environ['OMNICORP_PORT']
-        host = os.environ['OMNICORP_HOST']
-        password = os.environ['OMNICORP_PASSWORD']
+        db = 'omnicorp'
+        user = 'murphy'
+        port = 5432
+        host = 'localhost'
+        password = 'pword'
         self.prefixes = set([
             'UBERON',
             'BSPO',

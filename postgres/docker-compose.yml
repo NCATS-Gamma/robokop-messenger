@@ -1,0 +1,11 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    container_name: messenger_postgres
+    environment:
+      - POSTGRES_USER=murphy
+      - POSTGRES_DB=omnicorp
+      - POSTGRES_PASSWORD=pword
+    ports:
+      - 5432:5432

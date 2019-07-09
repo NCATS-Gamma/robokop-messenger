@@ -1,8 +1,8 @@
 version: "3"
 services:
-  neo4j_tmp:
+  neo4j:
     image: neo4j:3.5.4
-    container_name: neo4j_tmp
+    container_name: messenger_neo4j
     environment:
       - NEO4J_AUTH=neo4j/pword
     volumes:
