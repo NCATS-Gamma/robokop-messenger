@@ -1,0 +1,2 @@
+tests/data/omnicorp_hgnc.csv filter=lfs diff=lfs merge=lfs -text
+tests/data/omnicorp_mondo.csv filter=lfs diff=lfs merge=lfs -text
