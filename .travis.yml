@@ -18,9 +18,9 @@ before_script:
   - cd ..
   - cd postgres
   - docker-compose up -d
-  - docker exec postgres mkdir /data
-  - docker cp ./tests/data/omnicorp_mondo.csv postgres:/data/omnicorp_mondo.csv
-  - docker cp ./tests/data/omnicorp_hgnc.csv postgres:/data/omnicorp_hgnc.csv
+  - docker exec messenger_postgres mkdir /data
+  - docker cp ./tests/data/omnicorp_mondo.csv messenger_postgres:/data/omnicorp_mondo.csv
+  - docker cp ./tests/data/omnicorp_hgnc.csv messenger_postgres:/data/omnicorp_hgnc.csv
   - cd ..
   - python ./tests/init_omnicorp.py
   - cd neo4j
