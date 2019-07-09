@@ -50,7 +50,7 @@ def query(message):
             if support_dict is not None:
                 pass
             else:
-                support_dict = supporter.get_node_info(node['id'])
+                support_dict = supporter.node_pmid_count(node['id'])
                 if cache and support_dict['omnicorp_article_count']:
                     cache.set(key, support_dict)
             # add omnicorp_article_count to nodes in networkx graph
@@ -101,7 +101,7 @@ def query(message):
                 else:
                     #logger.info(f"exec op: {key}")
                     try:
-                        support_edge = supporter.term_to_term_count(pair[0], pair[1])
+                        support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
                         if cache and support_edge:
                             cache.set(key, support_edge)
                     except Exception as e:

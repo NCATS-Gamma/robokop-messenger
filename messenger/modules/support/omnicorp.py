@@ -1,17 +1,10 @@
 """Omnicorp support module."""
 import logging
-import time
 from .omnicorp_postgres import OmniCorp
 
 logger = logging.getLogger(__name__)
 
 COUNT_KEY = 'omnicorp_article_count'
-
-
-def get_supporter():
-    """Return an omnicorp support object."""
-    # greent should be a greent.core.GreenT
-    return OmnicorpSupport()
 
 
 class OmnicorpSupport():
@@ -22,52 +15,30 @@ class OmnicorpSupport():
         self.omnicorp = OmniCorp()
 
     def __enter__(self):
+        """Enter context."""
         return self
 
     def __exit__(self, exception_type, exception_value, traceback):
+        """Exit context, closing database connection."""
         logger.info("Closing Connection to ROBOKOPDB Postgres")
         self.omnicorp.close()
 
-    def term_to_term_count(self, node_a, node_b):
-        """Get number of articles related to both terms and return the result."""
-        num_articles = self.omnicorp.get_shared_pmids_count(node_a, node_b)
-        # logger.debug(f'OmniCorp {node_a} {node_b} -> {num_articles}')
-        return num_articles
-
-    def term_to_term(self, node_a, node_b):
+    def term_to_term_pmids(self, node_a, node_b):
         """Get number of articles related to both terms and return the result."""
         articles = self.omnicorp.get_shared_pmids(node_a, node_b)
-        # count_a = 0
-        # count_b = 0
-        # if COUNT_KEY in node_a.properties:
-        #     count_a = int(node_a.properties[COUNT_KEY])
-        # if COUNT_KEY in node_b.properties:
-        #     count_b = int(node_b.properties[COUNT_KEY])
-        # if (count_a > 0) and (count_b > 0):
-        #     articles = self.omnicorp.get_shared_pmids(node_a, node_b)
-        # else:
-        #     articles = []
-        # logger.debug(f'OmniCorp {node_a} {node_b} -> {len(articles)}')
         return articles
-        # Dont' put these edges into neo4j, just return the article list
-        # Even if articles = [], we want to make an edge for the cache.
-        # We can decide later to write it or not.
-    def get_node_publications(self, node):
+
+    def term_to_term_pmid_count(self, node_a, node_b):
+        """Get number of articles related to both terms and return the result."""
+        num_articles = self.omnicorp.get_shared_pmids_count(node_a, node_b)
+        return num_articles
+
+    def node_pmids(self, node):
         """Get node publications."""
         pmids = self.omnicorp.get_pmids(node)
         return pmids
 
-    def get_node_count(self, node):
+    def node_pmid_count(self, node):
         """Get node publication count."""
         count = self.omnicorp.count_pmids(node)
         return {COUNT_KEY: count}
-
-    def get_node_info(self, node):
-        """Get node info."""
-        count = self.omnicorp.count_pmids(node)
-        return {COUNT_KEY: count}
-
-    def prepare(self, nodes):
-        """Get list of good nodes?"""
-        goodnodes = list(filter(lambda n: self.omnicorp.get_omni_identifier(n) is not None, nodes))
-        return goodnodes
