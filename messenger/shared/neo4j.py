@@ -1,4 +1,5 @@
 """Neo4j lookup utilities."""
+from copy import deepcopy
 from neo4j import GraphDatabase, basic_auth
 from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import batches, flatten_semilist
@@ -18,6 +19,7 @@ def escape_quotes(string):
 def dump_kg(driver, kgraph, with_props=False):
     """Dump knowledge graph into Neo4j database."""
     neo4j_graph = Graph("kg", driver)
+    kgraph = deepcopy(kgraph)
     nodes = {}
     for node in kgraph["nodes"]:
         node_type = node.pop('type')

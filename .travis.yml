@@ -13,21 +13,7 @@ install:
   - mkdir cache
   - export PYTHONPATH=$(pwd)
 before_script:
-  - cd redis
-  - docker-compose up -d
-  - cd ../postgres
-  - docker-compose up -d
-  - docker exec messenger_postgres mkdir /data
-  - docker cp ../tests/data/omnicorp_mondo.csv messenger_postgres:/data/omnicorp_mondo.csv
-  - docker cp ../tests/data/omnicorp_hgnc.csv messenger_postgres:/data/omnicorp_hgnc.csv
-  - python ../tests/init_omnicorp.py
-  - cd ../neo4j
-  - mkdir logs
-  - echo "" > logs/debug.log
-  - docker-compose up -d
-  - until grep -q "Bolt enabled" ./neo4j/logs/debug.log; do sleep 1; done
-  - python ../tests/setup_neo4j.py
-  - cd ..
+  - ./tests/setup_helpers.sh
 script:
   - pytest --cov=messenger --cov-report term-missing
 after_script:
