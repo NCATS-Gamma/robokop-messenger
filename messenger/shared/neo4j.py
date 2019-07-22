@@ -151,11 +151,11 @@ def get_edge_properties(edge_ids, **options):
 
 def edges_from_answers(message, **kwargs):
     """Get edges from answers."""
-    edge_ids = [eb['kid'] for answer in message['results'] for eb in answer['edge_bindings']]
+    edge_ids = [eb['kg_id'] for answer in message['results'] for eb in answer['edge_bindings']]
     edge_ids = flatten_semilist(edge_ids)
     edge_ids = list(set(edge_ids))
 
-    node_ids = [nb['kid'] for answer in message['results'] for nb in answer['node_bindings']]
+    node_ids = [nb['kg_id'] for answer in message['results'] for nb in answer['node_bindings']]
     node_ids = flatten_semilist(node_ids)
     node_ids = list(set(node_ids))
     kwargs['node_ids'] = node_ids
@@ -165,7 +165,7 @@ def edges_from_answers(message, **kwargs):
 
 def nodes_from_answers(message, **kwargs):
     """Get nodes from answers."""
-    node_ids = [nb['kid'] for answer in message['results'] for nb in answer['node_bindings']]
+    node_ids = [nb['kg_id'] for answer in message['results'] for nb in answer['node_bindings']]
     node_ids = flatten_semilist(node_ids)
     node_ids = list(set(node_ids))
     return get_node_properties(node_ids, **kwargs)

@@ -25,12 +25,12 @@ def query(message):
         score_ids[edge['target_id']].append((f"{edge['id']}_target", edge, edge['source_id']))
 
     for result in results:
-        eb_map = {eb['qid']: eb for eb in result['edge_bindings']}
+        eb_map = {eb['qg_id']: eb for eb in result['edge_bindings']}
         counters = []
         keys = []
         for nb in result['node_bindings']:
-            qnode_id = nb['qid']
-            knode_id = nb['kid']
+            qnode_id = nb['qg_id']
+            knode_id = nb['kg_id']
             knode = knode_map[knode_id]
             anchor_node_reference = NodeReference({
                 'id': 'n',

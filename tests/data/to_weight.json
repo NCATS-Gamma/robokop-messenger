@@ -474,150 +474,150 @@
         {
             "edge_bindings": [
                 {
-                    "kid": [
+                    "kg_id": [
                         "5579d0ec3e69cf5bd79fd643942d8536"
                     ],
-                    "qid": "e00"
+                    "qg_id": "e00"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "4307c21780ba9435f2ec841186fc1aef"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "3e0357ca76a619211570454f2c6cf992"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "09faa8e1752c8078bd854ee50479fcd1"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
-                    "qid": "s3"
+                    "kg_id": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
+                    "qg_id": "s3"
                 },
                 {
-                    "kid": "f474c502-02e5-497f-9600-d384e1e623e3",
-                    "qid": "s154"
+                    "kg_id": "f474c502-02e5-497f-9600-d384e1e623e3",
+                    "qg_id": "s154"
                 },
                 {
-                    "kid": "ae9d8a4f-f866-45b3-9b17-d41aff3f81c9",
-                    "qid": "s155"
+                    "kg_id": "ae9d8a4f-f866-45b3-9b17-d41aff3f81c9",
+                    "qg_id": "s155"
                 }
             ],
             "node_bindings": [
                 {
-                    "kid": "MONDO:0005737",
-                    "qid": "n00"
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
                 },
                 {
-                    "kid": "HGNC:7897",
-                    "qid": "n01"
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
                 },
                 {
-                    "kid": "MONDO:0009757",
-                    "qid": "n02"
+                    "kg_id": "MONDO:0009757",
+                    "qg_id": "n02"
                 }
             ]
         },
         {
             "edge_bindings": [
                 {
-                    "kid": [
+                    "kg_id": [
                         "5579d0ec3e69cf5bd79fd643942d8536"
                     ],
-                    "qid": "e00"
+                    "qg_id": "e00"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "08c3eeec57fe0374dc63e6ae7d9b1415"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "78b2176fe83ffb7eafff1383bfc0249b"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
-                    "qid": "s3"
+                    "kg_id": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
+                    "qg_id": "s3"
                 },
                 {
-                    "kid": "52a810a9-c8a1-494a-a69b-7e3e197a41f7",
-                    "qid": "s77"
+                    "kg_id": "52a810a9-c8a1-494a-a69b-7e3e197a41f7",
+                    "qg_id": "s77"
                 },
                 {
-                    "kid": "b786b3c1-47bf-438c-b214-6aed237a2ddd",
-                    "qid": "s78"
+                    "kg_id": "b786b3c1-47bf-438c-b214-6aed237a2ddd",
+                    "qg_id": "s78"
                 }
             ],
             "node_bindings": [
                 {
-                    "kid": "MONDO:0005737",
-                    "qid": "n00"
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
                 },
                 {
-                    "kid": "HGNC:7897",
-                    "qid": "n01"
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
                 },
                 {
-                    "kid": "MONDO:0018982",
-                    "qid": "n02"
+                    "kg_id": "MONDO:0018982",
+                    "qg_id": "n02"
                 }
             ]
         },
         {
             "edge_bindings": [
                 {
-                    "kid": [
+                    "kg_id": [
                         "5579d0ec3e69cf5bd79fd643942d8536"
                     ],
-                    "qid": "e00"
+                    "qg_id": "e00"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "0ad16bee8af8229e57d24582ec2f179b"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": [
+                    "kg_id": [
                         "456976ff982dd5fff0e1e92a601f8340"
                     ],
-                    "qid": "e01"
+                    "qg_id": "e01"
                 },
                 {
-                    "kid": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
-                    "qid": "s3"
+                    "kg_id": "85fe2234-19f1-4b2d-9839-0d81ea5e46da",
+                    "qg_id": "s3"
                 },
                 {
-                    "kid": "da96b98f-4363-4e5c-bcb1-b61c602469f5",
-                    "qid": "s112"
+                    "kg_id": "da96b98f-4363-4e5c-bcb1-b61c602469f5",
+                    "qg_id": "s112"
                 },
                 {
-                    "kid": "91fa6831-396c-42ff-b11a-8768cb6bc389",
-                    "qid": "s113"
+                    "kg_id": "91fa6831-396c-42ff-b11a-8768cb6bc389",
+                    "qg_id": "s113"
                 }
             ],
             "node_bindings": [
                 {
-                    "kid": "MONDO:0005737",
-                    "qid": "n00"
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
                 },
                 {
-                    "kid": "HGNC:7897",
-                    "qid": "n01"
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
                 },
                 {
-                    "kid": "MONDO:0019255",
-                    "qid": "n02"
+                    "kg_id": "MONDO:0019255",
+                    "qg_id": "n02"
                 }
             ]
         }

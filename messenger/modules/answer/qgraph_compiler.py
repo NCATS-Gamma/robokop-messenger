@@ -216,8 +216,8 @@ def cypher_query_answer_map(qgraph, options=None):
         clauses.append(with_string)
 
     # add bound fields and return map
-    node_dicts = [f"[ni IN {n} | {{qid:'{n}', kid:ni}}]" for n in node_names]
-    edge_dicts = [f"[ei IN {e} | {{qid:'{e}', kid:ei}}]" for e in edge_names]
+    node_dicts = [f"[ni IN {n} | {{qg_id:'{n}', kg_id:ni}}]" for n in node_names]
+    edge_dicts = [f"[ei IN {e} | {{qg_id:'{e}', kg_id:ei}}]" for e in edge_names]
     answer_return_string = f"RETURN {' + '.join(node_dicts) or '[]'} AS nodes, {' + '.join(edge_dicts) or '[]'} AS edges"
     clauses.append(answer_return_string)
 

@@ -55,12 +55,12 @@ def query(message):
         for ans_idx, answer_map in enumerate(answers):
 
             # Get all nodes that are not part of sets and densely connect them
-            nodes = [nb['kid'] for nb in answer_map['node_bindings'] if isinstance(nb['kid'], str)]
+            nodes = [nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], str)]
             for node_pair in combinations(nodes, 2):
                 pair_to_answer[node_pair].append(ans_idx)
 
             # For all nodes that are within sets, connect them to all nodes that are not in sets
-            set_nodes_list_list = [nb['kid'] for nb in answer_map['node_bindings'] if isinstance(nb['kid'], list)]
+            set_nodes_list_list = [nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], list)]
             set_nodes = [n for el in set_nodes_list_list for n in el]
             for set_node in set_nodes:
                 for node in nodes:
@@ -118,8 +118,8 @@ def query(message):
 
             for sg in pair_to_answer[pair]:
                 answers[sg]['edge_bindings'].append({
-                    'qid': f's{support_idx}',
-                    'kid': uid
+                    'qg_id': f's{support_idx}',
+                    'kg_id': uid
                 })
         # Next pair
 

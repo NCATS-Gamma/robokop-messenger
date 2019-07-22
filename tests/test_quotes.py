@@ -11,4 +11,4 @@ from .fixtures import quotes_local
 def test_quotes(quotes_local):
     """Test handling quotes in node id."""
     answered = answer(quotes_local)
-    assert answered['results'][0]['node_bindings'][1]['kid'] == 'gene1\">'
+    assert answered['results'][0]['node_bindings'][1]['kg_id'] == 'gene1\">'

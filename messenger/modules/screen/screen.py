@@ -22,11 +22,11 @@ def query(message, max_results=3):
     node_ids = set()
     edge_ids = set()
     for answer in answers:
-        these_node_ids = [nb['kid'] for nb in answer['node_bindings']]
+        these_node_ids = [nb['kg_id'] for nb in answer['node_bindings']]
         these_node_ids = flatten_semilist(these_node_ids)
         node_ids.update(these_node_ids)
 
-        these_edge_ids = [eb['kid'] for eb in answer['edge_bindings']]
+        these_edge_ids = [eb['kg_id'] for eb in answer['edge_bindings']]
         these_edge_ids = flatten_semilist(these_edge_ids)
         edge_ids.update(these_edge_ids)
 

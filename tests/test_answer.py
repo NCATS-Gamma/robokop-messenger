@@ -18,7 +18,7 @@ def test_answer_whatis(whatis_mondo):
     """Test that answer() can look up a single node."""
     result = answer(whatis_mondo)
     assert result['results']
-    assert 'MONDO:0005737' in result['results'][0]['node_bindings'][0]['kid']
+    assert 'MONDO:0005737' in result['results'][0]['node_bindings'][0]['kg_id']
 
 
 def test_answer_onestep(onestep):

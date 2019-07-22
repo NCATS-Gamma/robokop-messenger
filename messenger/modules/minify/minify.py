@@ -8,7 +8,7 @@ def query(message):
       * keep only node properties: id, name, type
       * keep only edge properties: id, source_id, target_id, type
     for results:
-      * keep only qid, kid
+      * keep only qg_id, kg_id
     """
     kgraph = message['knowledge_graph']
     results = message['results']
@@ -26,12 +26,12 @@ def query(message):
     } for edge in kgraph['edges']]
     for result in results:
         result['node_bindings'] = [{
-            'qid': nb['qid'],
-            'kid': nb['kid']
+            'qg_id': nb['qg_id'],
+            'kg_id': nb['kg_id']
         } for nb in result['node_bindings']]
         result['edge_bindings'] = [{
-            'qid': eb['qid'],
-            'kid': eb['kid']
+            'qg_id': eb['qg_id'],
+            'kg_id': eb['kg_id']
         } for eb in result['edge_bindings']]
 
     message['knowledge_graph'] = kgraph

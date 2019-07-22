@@ -53,31 +53,31 @@ components:
     RNode:
       type: object
       properties:
-        qid:
+        qg_id:
           type: string
-        kid:
+        kg_id:
           oneOf:
             - type: string
             - type: array
               items:
                 type: string
       required:
-        - qid
-        - kid
+        - qg_id
+        - kg_id
     REdge:
       type: object
       properties:
-        qid:
+        qg_id:
           type: string
-        kid:
+        kg_id:
           oneOf:
             - type: string
             - type: array
               items:
                 type: string
       required:
-        - qid
-        - kid
+        - qg_id
+        - kg_id
     KnowledgeGraph:
       type: object
       description: >-
