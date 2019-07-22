@@ -39,8 +39,9 @@ def query(message, **options):
     krmap = defaultdict(list)
     for result in results:
         for eb in result['edge_bindings']:
-            for kid in eb['kid']:
-                krmap[kid].append(eb)
+            assert isinstance(eb['kg_id'], str)
+            eb['weight'] = 1
+            krmap[eb['kg_id']].append(eb)
 
     edges = kgraph['edges']
     for edge in edges:

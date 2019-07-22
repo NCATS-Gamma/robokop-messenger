@@ -474,27 +474,19 @@
         {
             "edge_bindings": [
                 {
-                    "kg_id": [
-                        "5579d0ec3e69cf5bd79fd643942d8536"
-                    ],
+                    "kg_id": "5579d0ec3e69cf5bd79fd643942d8536",
                     "qg_id": "e00"
                 },
                 {
-                    "kg_id": [
-                        "4307c21780ba9435f2ec841186fc1aef"
-                    ],
+                    "kg_id": "4307c21780ba9435f2ec841186fc1aef",
                     "qg_id": "e01"
                 },
                 {
-                    "kg_id": [
-                        "3e0357ca76a619211570454f2c6cf992"
-                    ],
+                    "kg_id": "3e0357ca76a619211570454f2c6cf992",
                     "qg_id": "e01"
                 },
                 {
-                    "kg_id": [
-                        "09faa8e1752c8078bd854ee50479fcd1"
-                    ],
+                    "kg_id": "09faa8e1752c8078bd854ee50479fcd1",
                     "qg_id": "e01"
                 },
                 {
@@ -528,21 +520,15 @@
         {
             "edge_bindings": [
                 {
-                    "kg_id": [
-                        "5579d0ec3e69cf5bd79fd643942d8536"
-                    ],
+                    "kg_id": "5579d0ec3e69cf5bd79fd643942d8536",
                     "qg_id": "e00"
                 },
                 {
-                    "kg_id": [
-                        "08c3eeec57fe0374dc63e6ae7d9b1415"
-                    ],
+                    "kg_id": "08c3eeec57fe0374dc63e6ae7d9b1415",
                     "qg_id": "e01"
                 },
                 {
-                    "kg_id": [
-                        "78b2176fe83ffb7eafff1383bfc0249b"
-                    ],
+                    "kg_id": "78b2176fe83ffb7eafff1383bfc0249b",
                     "qg_id": "e01"
                 },
                 {
@@ -576,21 +562,15 @@
         {
             "edge_bindings": [
                 {
-                    "kg_id": [
-                        "5579d0ec3e69cf5bd79fd643942d8536"
-                    ],
+                    "kg_id": "5579d0ec3e69cf5bd79fd643942d8536",
                     "qg_id": "e00"
                 },
                 {
-                    "kg_id": [
-                        "0ad16bee8af8229e57d24582ec2f179b"
-                    ],
+                    "kg_id": "0ad16bee8af8229e57d24582ec2f179b",
                     "qg_id": "e01"
                 },
                 {
-                    "kg_id": [
-                        "456976ff982dd5fff0e1e92a601f8340"
-                    ],
+                    "kg_id": "456976ff982dd5fff0e1e92a601f8340",
                     "qg_id": "e01"
                 },
                 {

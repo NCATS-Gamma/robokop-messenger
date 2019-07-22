@@ -2,7 +2,8 @@
 
 from operator import itemgetter
 from collections import defaultdict
-from itertools import combinations
+from itertools import combinations, product
+import re
 import numpy as np
 from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.util import flatten_semilist
@@ -28,13 +29,12 @@ class Ranker:
             for kedge in kedges:
                 kedge['weight'] = 1
 
+        self.qnode_by_id = {n['id']: n for n in qgraph['nodes']}
         self.kedge_by_id = {n['id']: n for n in kedges}
         self.qedge_by_id = {n['id']: n for n in qgraph['edges']}
         self.kedges_by_knodes = defaultdict(list)
-        for e in self.kedge_by_id.values():
+        for e in kedges:
             self.kedges_by_knodes[tuple(sorted([e['source_id'], e['target_id']]))].append(e)
-
-        self.terminals = terminal_nodes(qgraph)
 
     def rank(self, answers):
         """Generate a sorted list and scores for a set of subgraphs."""
@@ -49,20 +49,10 @@ class Ranker:
         # answer is a list of dicts with fields 'id' and 'bound'
         rgraph = self.get_rgraph(answer)
 
-        laplacian, node_ids = self.graph_laplacian(rgraph)
-        terminals = [n for n in node_ids if any([n.startswith(t) for t in self.terminals])]
+        laplacian = self.graph_laplacian(rgraph)
+        nonset_node_ids = [idx for idx, node_id in enumerate(rgraph[0]) if not node_id.startswith('_')]
 
-        voltages = []
-        node_id_set = set(node_ids)
-        for from_id, to_id in combinations(terminals, 2):
-            node_ids_sorted = [from_id] + list(node_id_set - {from_id, to_id}) + [to_id]
-            idx = [node_ids.index(node_id) for node_id in node_ids_sorted]
-            idx = np.expand_dims(np.array(idx), axis=1)
-            idy = np.transpose(idx)
-            L = laplacian[idx, idy]
-            voltages.append(1 / voltage_from_laplacian(L))
-
-        score = np.mean(voltages)
+        score = 1 / kirchhoff(laplacian, nonset_node_ids)
 
         # fail safe to nuke nans
         score = score if np.isfinite(score) and score >= 0 else -1
@@ -87,49 +77,45 @@ class Ranker:
 
         # add teleportation to allow leaps of faith
         laplacian = laplacian + self.teleport_weight * (num_nodes * np.eye(num_nodes) - np.ones((num_nodes, num_nodes)))
-        return laplacian, node_ids
+        return laplacian
 
     def get_rgraph(self, answer):
         """Get "ranker" subgraph."""
+        # TODO: for each set node with degree 1, add a new neighbor
+
         # get list of nodes, and knode_map
         rnodes = []
         knode_map = defaultdict(set)
         for nb in answer['node_bindings']:
-            qnode_id = nb['qid']
-            knode_ids = nb['kid']
-            if not isinstance(knode_ids, list):
-                knode_ids = [knode_ids]
-            for knode_id in knode_ids:
-                rnode_id = f"{qnode_id}/{knode_id}"
-                rnodes.append(rnode_id)
-                knode_map[knode_id].add(rnode_id)
+            qnode_id = nb['qg_id']
+            knode_id = nb['kg_id']
+            rnode_id = f"{qnode_id}/{knode_id}"
+            if self.qnode_by_id[qnode_id].get('set', False):
+                rnode_id = '_' + rnode_id
+            rnodes.append(rnode_id)
+            knode_map[knode_id].add(rnode_id)
 
         # get "result" edges
         redges = []
         for eb in answer['edge_bindings']:
-            qedge_id = eb['qid']
-            kedge_ids = eb['kid']
+            qedge_id = eb['qg_id']
+            kedge_id = eb['kg_id']
             if qedge_id[0] == 's':
                 continue
             qedge = self.qedge_by_id[qedge_id]
-            if not isinstance(kedge_ids, list):
-                kedge_ids = [kedge_ids]
-            for kedge_id in kedge_ids:
-                kedge = self.kedge_by_id[kedge_id]
+            kedge = self.kedge_by_id[kedge_id]
 
-                # find source and target
-                # qedge direction may not match kedge direction
-                # we'll go with the qedge direction
-                candidate_source_ids = [f"{qedge['source_id']}/{kedge['source_id']}", f"{qedge['source_id']}/{kedge['target_id']}"]
-                candidate_target_ids = [f"{qedge['target_id']}/{kedge['source_id']}", f"{qedge['target_id']}/{kedge['target_id']}"]
-                source_id = next(rnode_id for rnode_id in rnodes if rnode_id in candidate_source_ids)
-                target_id = next(rnode_id for rnode_id in rnodes if rnode_id in candidate_target_ids)
-                edge = {
-                    'weight': kedge['weight'],
-                    'source_id': source_id,
-                    'target_id': target_id
-                }
-                redges.append(edge)
+            # find source and target
+            # qedge direction may not match kedge direction
+            # we'll go with the qedge direction
+            source_id = first_match(f"_?{qedge['source_id']}/({kedge['source_id']}|{kedge['target_id']})", rnodes)
+            target_id = first_match(f"_?{qedge['target_id']}/({kedge['source_id']}|{kedge['target_id']})", rnodes)
+            edge = {
+                'weight': eb['weight'],
+                'source_id': source_id,
+                'target_id': target_id
+            }
+            redges.append(edge)
 
         # get "support" edges
         # We cannot get these the same way as the result edges
@@ -140,14 +126,13 @@ class Ranker:
                 if kedge['type'] != 'literature_co-occurrence':
                     continue
                 # loop over rnodes connected by this edge
-                for source_id in knode_map[kedge['source_id']]:
-                    for target_id in knode_map[kedge['target_id']]:
-                        edge = {
-                            'weight': kedge['weight'],
-                            'source_id': source_id,
-                            'target_id': target_id
-                        }
-                        redges.append(edge)
+                for source_id, target_id in product(knode_map[kedge['source_id']], knode_map[kedge['target_id']]):
+                    edge = {
+                        'weight': kedge['weight'],
+                        'source_id': source_id,
+                        'target_id': target_id
+                    }
+                    redges.append(edge)
 
         return rnodes, redges
 
@@ -183,3 +168,26 @@ def voltage_from_laplacian(L):
     results = np.linalg.lstsq(L, iv, rcond=None)
     potentials = results[0]
     return potentials[-1] - potentials[0]
+
+
+def kirchhoff(L, keep):
+    """Compute Kirchhoff index, including only specific nodes."""
+    num_nodes = L.shape[0]
+    cols = []
+    for x, y in combinations(keep, 2):
+        d = np.zeros(num_nodes)
+        d[x] = -1
+        d[y] = 1
+        cols.append(d)
+    x = np.stack(cols, axis=1)
+
+    return np.trace(x.T @ np.linalg.lstsq(L, x, rcond=None)[0])
+
+
+def first_match(pattern, strings):
+    """Return the first string in the list matching the regular expression."""
+    return next(
+        string
+        for string in strings
+        if re.fullmatch(pattern, string) is not None
+    )
