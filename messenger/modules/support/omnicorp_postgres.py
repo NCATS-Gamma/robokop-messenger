@@ -52,19 +52,6 @@ class OmniCorp():
         """Close postgres database connection."""
         self.conn.close()
 
-    def get_shared_pmids(self, node1, node2):
-        """Get shared PMIDs."""
-        if (
-                get_curie_prefix(node1) not in self.prefixes or
-                get_curie_prefix(node2) not in self.prefixes
-        ):
-            return []
-        pmids = self.postgres_get_shared_pmids(node1, node2)
-        if pmids is None:
-            logger.error("OmniCorp gave up")
-            return None
-        return [f'PMID:{p}' for p in pmids]
-
     def get_shared_pmids_count(self, node1, node2):
         """Get shared PMIDs."""
         if (
@@ -77,37 +64,6 @@ class OmniCorp():
             logger.error("OmniCorp gave up")
             return None
         return pmid_count
-
-    def postgres_get_shared_pmids(self, id1, id2):
-        """Get shared PMIDs from postgres."""
-        prefix1 = get_curie_prefix(id1)
-        prefix2 = get_curie_prefix(id2)
-        start = datetime.datetime.now()
-        cur = self.conn.cursor()
-        statement = f"SELECT a.pubmedid\n" + \
-                    f"FROM omnicorp.{prefix1} a\n" + \
-                    f"JOIN omnicorp.{prefix2} b ON a.pubmedid = b.pubmedid\n" + \
-                    f"WHERE a.curie = %s\n" + \
-                    f"AND b.curie = %s"
-        try:
-            cur.execute(statement, (id1, id2))
-            pmids = [x[0] for x in cur.fetchall()]
-            cur.close()
-            end = datetime.datetime.now()
-            self.total_pair_call += (end - start)
-            # logger.debug(f"Found {len(pmids)} shared ids in {end-start}\n" +
-            #             f"Total {self.total_pair_call}")
-            self.npair += 1
-            if self.npair % 100 == 0:
-                logger.info(f"NCalls: {self.npair}\n" +
-                            f"Total time: {self.total_pair_call}\n" +
-                            f"Avg Time: {self.total_pair_call/self.npair}")
-            return pmids
-        except psycopg2.ProgrammingError as err:
-            self.conn.rollback()
-            cur.close()
-            logger.debug('OmniCorp query error: %s\nReturning [].', str(err))
-            return []
 
     def postgres_get_shared_pmids_count(self, id1, id2):
         """Get shared PMIDs from postgres."""
@@ -158,32 +114,3 @@ class OmniCorp():
             cur.close()
             logger.debug('OmniCorp query error: %s\nReturning 0.', str(err))
             return 0
-
-    def get_pmids(self, node):
-        """Get PMIDs and return result."""
-        if get_curie_prefix(node) not in self.prefixes:
-            return []
-        prefix = get_curie_prefix(node)
-        start = datetime.datetime.now()
-        cur = self.conn.cursor()
-        statement = f"SELECT pubmedid from omnicorp.{prefix}\n" + \
-                    "WHERE curie = %s"
-        try:
-            cur.execute(statement, (node,))
-            pmids = [x[0] for x in cur.fetchall()]
-            cur.close()
-            end = datetime.datetime.now()
-            self.total_single_call += (end - start)
-            # logger.debug(f"""Found {n} pmids in {end-start}
-            #             Total {self.total_single_call}""")
-            self.nsingle += 1
-            if self.nsingle % 100 == 0:
-                logger.info(f"NCalls: {self.nsingle}\n" +
-                            f"Total time: {self.total_single_call}\n" +
-                            f"Avg Time: {self.total_single_call/self.nsingle}")
-            return pmids
-        except psycopg2.ProgrammingError as err:
-            self.conn.rollback()
-            cur.close()
-            logger.debug('OmniCorp query error: %s\nReturning [].', str(err))
-            return []
