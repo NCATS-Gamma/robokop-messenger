@@ -42,6 +42,8 @@ def dump_kg(driver, kgraph, with_props=False):
         source_id = escape_quotes(edge.pop('source_id'))
         target_id = escape_quotes(edge.pop('target_id'))
         edge_type = edge.pop('type')
+        if edge_type == 'literature_co-occurrence':
+            continue
         properties = {"id": edge_id}
         if with_props:
             properties.update(**edge)
