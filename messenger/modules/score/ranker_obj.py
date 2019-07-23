@@ -8,7 +8,6 @@ import numpy as np
 from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.util import flatten_semilist
 from messenger.shared.message_state import kgraph_is_local
-from .dijkstra import dijkstra
 
 
 class Ranker:
@@ -135,39 +134,6 @@ class Ranker:
                     redges.append(edge)
 
         return rnodes, redges
-
-
-def terminal_nodes(question):
-    """Return indices of terminal question nodes.
-
-    Terminal nodes are those that either:
-    a) have curies
-    b) have degree 1
-    c) have maximum dijkstra distance from a named node
-    """
-    nodes = question['nodes']
-    simple_edges = [(edge['source_id'], edge['target_id'], 1) for edge in question['edges']]
-    is_named = [node['id'] for node in nodes if node.get('curie', False)]
-    degree = defaultdict(int)
-    for edge in simple_edges:
-        degree[edge[0]] += 1
-        degree[edge[1]] += 1
-    is_terminal = [key for key in degree if degree[key] == 1]
-    if len(is_named) >= 2:
-        return list(set(is_terminal + is_named))
-    distances = dijkstra(simple_edges, is_named)
-    is_far_from_named = [key for key in distances if distances[key] == np.max(list(distances.values()))]
-    return list(set(is_terminal + is_named + is_far_from_named))
-
-
-def voltage_from_laplacian(L):
-    """Compute voltage drop given Laplacian matrix."""
-    iv = np.zeros(L.shape[0])
-    iv[0] = -1
-    iv[-1] = 1
-    results = np.linalg.lstsq(L, iv, rcond=None)
-    potentials = results[0]
-    return potentials[-1] - potentials[0]
 
 
 def kirchhoff(L, keep):
