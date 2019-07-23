@@ -40,7 +40,7 @@ def query(message, **options):
     for result in results:
         for eb in result['edge_bindings']:
             assert isinstance(eb['kg_id'], str)
-            eb['weight'] = 1
+            eb['weight'] = eb.get('weight', 1.0)
             krmap[eb['kg_id']].append(eb)
 
     edges = kgraph['edges']
