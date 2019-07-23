@@ -2,7 +2,7 @@
 import os
 import json
 from collections import defaultdict
-from messenger.modules.answer import NodeReference, EdgeReference, RemoteKGraph
+from messenger.modules.answer import NodeReference, EdgeReference, KGraph
 
 
 def query(message):
@@ -35,7 +35,7 @@ def query(message):
             anchor_node_reference = NodeReference({
                 'id': 'n',
                 'curie': knode['id'],
-                'type': knode['type'][0]
+                'type': knode['type']
             })
             counts = score_ids[qnode_id]
             base = f"MATCH ({anchor_node_reference}) USING INDEX n:{knode['type'][0]}(id)"
@@ -56,14 +56,7 @@ def query(message):
 
         cypher = ' '.join(counters) + ' RETURN ' + ', '.join(keys)
 
-        remote = {
-            "url": f"bolt://{os.environ['NEO4J_HOST']}:7687",
-            "credentials": {
-                "username": "neo4j",
-                "password": os.environ['NEO4J_PASSWORD']
-            }
-        }
-        with RemoteKGraph(remote) as driver:
+        with KGraph(message) as driver:
             with driver.session() as session:
                 response = session.run(cypher)
 
@@ -79,9 +72,3 @@ def query(message):
 
     message['results'] = results
     return message
-
-if __name__ == "__main__":
-    with open('tests/data/inform.json') as f:
-        message = json.load(f)
-    message = query(message)
-    print(json.dumps(message, indent=2))
