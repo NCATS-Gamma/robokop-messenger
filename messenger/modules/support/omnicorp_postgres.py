@@ -54,21 +54,13 @@ class OmniCorp():
 
     def get_shared_pmids_count(self, node1, node2):
         """Get shared PMIDs."""
+        prefix1 = get_curie_prefix(node1)
+        prefix2 = get_curie_prefix(node2)
         if (
-                get_curie_prefix(node1) not in self.prefixes or
-                get_curie_prefix(node2) not in self.prefixes
+                prefix1 not in self.prefixes or
+                prefix2 not in self.prefixes
         ):
             return 0
-        pmid_count = self.postgres_get_shared_pmids_count(node1, node2)
-        if pmid_count is None:
-            logger.error("OmniCorp gave up")
-            return None
-        return pmid_count
-
-    def postgres_get_shared_pmids_count(self, id1, id2):
-        """Get shared PMIDs from postgres."""
-        prefix1 = get_curie_prefix(id1)
-        prefix2 = get_curie_prefix(id2)
         cur = self.conn.cursor()
         statement = f"SELECT COUNT(a.pubmedid)\n" + \
                     f"FROM omnicorp.{prefix1} a\n" + \
@@ -76,15 +68,18 @@ class OmniCorp():
                     f"WHERE a.curie = %s\n" + \
                     f"AND b.curie = %s"
         try:
-            cur.execute(statement, (id1, id2))
+            cur.execute(statement, (node1, node2))
             pmid_count = cur.fetchall()[0][0]
             cur.close()
-            return pmid_count
         except psycopg2.ProgrammingError as err:
             self.conn.rollback()
             cur.close()
             logger.debug('OmniCorp query error: %s\nReturning 0.', str(err))
-            return 0
+            pmid_count = 0
+        if pmid_count is None:
+            logger.error("OmniCorp gave up")
+            return None
+        return pmid_count
 
     def count_pmids(self, node):
         """Count PMIDs and return result."""
