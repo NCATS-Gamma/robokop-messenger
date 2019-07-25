@@ -13,8 +13,6 @@ from messenger.shared.message_state import kgraph_is_local
 class Ranker:
     """Ranker."""
 
-    teleport_weight = 0.001  # probability to teleport along graph (make random inference) in hitting time calculation
-
     def __init__(self, message):
         """Create ranker."""
         kgraph = message['knowledge_graph']
@@ -74,8 +72,6 @@ class Ranker:
             laplacian[i, i] += weight
             laplacian[j, j] += weight
 
-        # add teleportation to allow leaps of faith
-        laplacian = laplacian + self.teleport_weight * (num_nodes * np.eye(num_nodes) - np.ones((num_nodes, num_nodes)))
         return laplacian
 
     def get_rgraph(self, answer):
