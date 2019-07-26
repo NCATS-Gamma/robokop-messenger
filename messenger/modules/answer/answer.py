@@ -1,4 +1,5 @@
 """Answer."""
+import copy
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.message_state import kgraph_is_local
 from messenger.cypher_adapter import Node, Edge, Graph
@@ -87,6 +88,7 @@ class LocalKGraph:
 
 def query(message, max_connectivity=0):
     """Fetch answers to question."""
+    message = copy.deepcopy(message)
     with KGraph(message) as driver:
         message = query_neo4j(message, driver, max_connectivity=max_connectivity)
     return message
