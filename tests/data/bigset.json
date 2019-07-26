@@ -1,0 +1,59 @@
+{
+    "knowledge_graph": {
+        "url": "bolt://localhost:7687",
+        "credentials": {
+            "username": "neo4j",
+            "password": "pword"
+        }
+    },
+    "query_graph": {
+        "nodes": [
+            {
+                "curie": "start",
+                "id": "n00",
+                "type": "A"
+            },
+            {
+                "id": "n01",
+                "type": "B"
+            },
+            {
+                "id": "n02",
+                "type": "C",
+                "set": true
+            },
+            {
+                "id": "n03",
+                "type": "D"
+            },
+            {
+                "curie": "end",
+                "id": "n04",
+                "type": "E"
+            }
+        ],
+        "edges": [
+            {
+                "source_id": "n00",
+                "target_id": "n01",
+                "id": "e00"
+            },
+            {
+                "source_id": "n01",
+                "target_id": "n02",
+                "id": "e01"
+            },
+            {
+                "source_id": "n02",
+                "target_id": "n03",
+                "id": "e02"
+            },
+            {
+                "source_id": "n03",
+                "target_id": "n04",
+                "id": "e03"
+            }
+        ]
+    },
+    "results": []
+}
