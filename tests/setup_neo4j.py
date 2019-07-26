@@ -26,7 +26,6 @@ statement = "MATCH ()-[e]-() RETURN DISTINCT type(e) as predicate"
 with driver.session() as session:
     result = session.run(statement)
 predicates = [record['predicate'] for record in result]
-predicates = set(edge['type'] for edge in kgraph['edges'])
 predicates_string = ', '.join(f"'{predicate}'" for predicate in predicates)
 statement = f"""CALL db.index.fulltext.createRelationshipIndex(
     'edge_id_index',
