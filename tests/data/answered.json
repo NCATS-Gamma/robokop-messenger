@@ -1,1 +1,2426 @@
-{"knowledge_graph": {"credentials": {"password": "pword", "username": "neo4j"}, "url": "bolt://localhost:7687"}, "query_graph": {"edges": [{"id": "e00", "source_id": "n00", "target_id": "n01"}, {"id": "e01", "source_id": "n01", "target_id": "n02"}], "nodes": [{"curie": "MONDO:0005737", "id": "n00", "type": "disease"}, {"id": "n01", "type": "gene"}, {"id": "n02", "type": "genetic_condition"}]}, "results": [{"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["c807299da181d889d6ff0414a1b64afd", "f6f6734e56280df2cbbe07118981253c", "0df5ef3e36637dc0c9455fc0595994d4"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019588", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["e9eac70cd3cc45c7abbb37ee12aebdfe"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016058", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["bb4ef7665e078ee311ec7fc530d6645f", "7ec869cd45063b6493978bdd806c8f12"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019047", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["669648517b88affed7fa7ffbabc29a6b", "20bc6b2b75370525dcd88927e569a107"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016308", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["d1724be72c0e2d857100bd1c872f5fa7"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0017312", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["fd9a62a7580a568cf1a5de29b1c64724", "2b2b938c075dde9f8f5489c8b3bcec66", "998224377c2cd10c024c521347c2458b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0016484", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["f4b72dc15d30af3056bfbf1ce0349730", "26e7a1f0093b8c6c553c9a3649dbe766", "72a6f6a2a818e9c0bf7ce25b5c9b7a65"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0019502", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["e23c8b6913baf15eadd2f0c39f679cf4"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019041", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["972d8871cc1458703d3dd326841ec75c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0001386", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["9d176db36fcfb9f359c52062767faa7d"], "qg_id": "e00"}, {"kg_id": ["21abfcf64d93b48ff888717b09e2ea81"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:17770", "qg_id": "n01"}, {"kg_id": "MONDO:0008947", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["0230c73aa7991090651a75dea8c01355", "fdc4a44eb784bfea02f522f03caff5c1"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020244", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["0800137d3edc22c500becfab4a2519aa", "de122bc74154215b4a2735b09130a264"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0000275", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["e043157b373a08914242809f0a093edb", "d4dd7ae50bbd75f8b0776472c148d594"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0013702", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["7361a22b0bd99e435e77889cb8b65e97"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0017719", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["d9dc1b3f3972ff4a3cf0ebfad122c5c8"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0010576", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["7cdd196338c9b9929bf7590bd2cf21a1", "440135ceb855d048b669405a169bf693"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019118", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["7e1b2160c9aa6d81beab79fb10080065", "9a9c71765722e96d5d3ae23af1e96673"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016397", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["264cff2607b8c2138c741281f5f7c65a", "c9ad1af4a5ecf54af315ed4eba36c132"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015547", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["183bb098d9007451355afd2996fb437e", "267e80f3a570c0764735fd9be69f4085"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016306", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["f24300ef9c3aa5995c202302c39ed7d0", "ebf9e8c2c5cfba06d09fd0a7f1027a5d"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015107", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["1f3464393b094fbf4fdbc982c2712919", "f56e5478034455c1fde69b0cf3663898"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020142", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["55d862c4f22cccb9c1e4103ef3f19052", "d64845733e162f105936d839b34c599d"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020242", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["9d176db36fcfb9f359c52062767faa7d"], "qg_id": "e00"}, {"kg_id": ["8a710ca1978da2a4dd0532018f02f2d8"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:17770", "qg_id": "n01"}, {"kg_id": "MONDO:0008345", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["d459bc32bb821e8ebdcedf78d7e64364", "c3881761c5f040c9148f8746be7cef0e"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019117", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["72e3d2f2c48f896055127b6a8f1e6f9e", "2bf8e4ef204806e3f65bbcee97ce6f4b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015510", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["c6890b79b73d8f86ed3b5f968335d19c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0007774", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["5b189442d745e677afbed761d8e0c47c", "32faa927347bade0553a24fbb0b6e376"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015984", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["3656ccedfeba8968579e04f8fad92b57", "69c367848de41322e284f15aac165de1"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020238", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["67a7f6624237560f87ceef92b494d81f", "b1f3cc96d6e6f957fd61a5ad2399f0ab"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020143", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["e86d1802b656b1c4bf76c699e97f1964", "d9c74516c42ac76997bbb2539f149bbc"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0006025", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["0ce6c54596df538747abffe91cf6e61d", "68e1086eaf932f273bbd9e3dc04b58bf"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0019117", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["0b92eff3ba0cc8ac633270bf859b70cc", "e86818ac806286b24a452fc17d8b5c45"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015955", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["c73e3bd1ebda18b810e05ee4acb35def", "6801da477da7b7c21562ecd3f0219e70"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0011767", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["002b66a8f33c957ce2655cee9cf78495", "aad385b442387dd4848ea7c999e93f99"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0015107", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["74848a5c66d74c59922e05ce07a1f1d1", "d2e7d5cff25876daa41bafc9b4566521"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019245", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["46345bb5090e444a54fce30d78ac7beb"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0011080", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["ea477734b56c5824889235d5ee1f5c43", "e0da0c4879cf4ab4a1dc866569d2d4ad"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019043", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["0d7067f9acc8b939a59acfa458d35c6a", "f265d157f1724a5bf2f99080d54d754f"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0006025", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["08c3eeec57fe0374dc63e6ae7d9b1415", "78b2176fe83ffb7eafff1383bfc0249b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0018982", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["c07b837cfe3576ab96f97b3e23b20d09", "a0264e9687fbe54c748a812ecf9f8ab4"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019118", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["ba1ba707bc8abdfa7d3b5c6249a54a28"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0008062", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["70c1310b7572665cdaa355c1caa78391", "4ea6333a5546557c5de45e384ab44d88"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016307", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["d262eabaede367af395611cf060e8433"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015615", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["e968d8a8b12f30dd059b9d2c15b76cfe", "cf93c3bac618b3a1196da225e9078a38", "984c60dd9ba8f50149324888518fd65d"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019501", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["2300941a6ab7e9930d685f5a5d52d77d", "1dcded030d72657b88257d05528def53"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0020240", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["9716fb933c515431d70344001200dd71", "2fbf764fc5d2c3ec0530d7c2dcbf2b30"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0018751", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["9cba21cd8eda43a8b5c40643e55da52d", "8338ab983f919cd75ca79c7ca35c66ef"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019058", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["73c233669f63e0e890697e19b64995e0", "e304e305cfe9703e49d33979b511d6e8"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0015108", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["030b0f33b57f958a323ed8914e466af1", "96971e91d7c5ba1763d72d0c696d3835"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015952", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["84656c9d65e500046be73e8045b238f0", "3e3fc53e7686e6ec956fa8a4dd44d61c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0015982", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["ef10ec35cc79bf0032b54f353fbfd715", "290e96ab6da1a8e6a66b928bf66cd84b", "fcd28755343edd566650471e6fe12b54"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0011719", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["86089dd253b46e52ae425f8b8e1f1315", "5db549709c74137908ad28f50f84ab3c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019200", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["e6775d270b117f11f4647981d89ee7c5"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015616", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["b21576f5b254ae96416302aa708bf591", "a9da3bd42555133fe738db06157b5271"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0000455", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["79992037fb01c6744d50bf4a4da525ed", "d94e1ab1ad6de971c938d6f6d6662969"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0002525", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["9b31c7f46154d1f5bdd2b8ac4f2c73db", "b3476693519facd209a39971665cb7af"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016309", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["0ad16bee8af8229e57d24582ec2f179b", "456976ff982dd5fff0e1e92a601f8340"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019255", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["fa4b08206af858e75510db7f2eec65c1"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0010017", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["78afc7ba9a6c0f9700a6c03883b83e4b", "dc729f11038abb356673ab867180ab6c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0016310", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["6270a40083c336b17d29ad145ed4bc26", "60aad0ebe2483c938ef0bc31e9311d8e"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0012662", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["b174ffefed0bf36ed510a17325e0daa0", "91de16a0f368defc806799f61cac4b2c"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019589", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["8c50195c5c76b7501ffe72345836a0cf", "e7115e34fa50acc0b794a258bf191e80"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0016298", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["4f39a60359a47462c34b2ef565cc97b8", "f78f7dd21ace7e200b1d8e39b02c7e1a"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0024255", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["b5c727deaaad1e3f8be46e12a0c12cf7"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0005181", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["acdf9432fa493a8947de5514d883562f", "011573dd3fa27628113cc2c1884cfcab"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0002561", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["3f983914406e5ac35f7170e453a7f74d", "1cbbb1c2220de6762a82b8f632e83f4a"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0020257", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["2fab55008b84688f4203f10ca8db68e6"], "qg_id": "e00"}, {"kg_id": ["6b56f24f52a2dbc161cb3feeffe32d4a"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:4669", "qg_id": "n01"}, {"kg_id": "MONDO:0010383", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["707a6bbe3f735db98e9aa997ef3f6f41"], "qg_id": "e00"}, {"kg_id": ["ecc41c5a4a6d0ae6632ca4456ec754b8"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:13236", "qg_id": "n01"}, {"kg_id": "MONDO:0013674", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["bdffa3045931fb651cf270dcf1f4fa59", "d5c5155df21271424395bf907352723b", "1e848ba11cef9bd3550bc4695451094b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0001982", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["8fa1738b38bf5deefbbcb163080ebd59", "5ab8478717ee5d88e8eb4c97858629ae"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0018299", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["d18e2dcf7bf5b28d348b3cbaa464758e", "1a9fb4083aa6020ee5722e666efba791"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019052", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["39be31d4e134546a43882d14f945aeec"], "qg_id": "e00"}, {"kg_id": ["bc8cec26ab2c2ce305bf66a8792f4fd2"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:20818", "qg_id": "n01"}, {"kg_id": "MONDO:0019262", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["980635ff5e939f96b42bed751cf6d421", "6956502b4ac429aa588347af276c1a0b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0000275", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["208dd38872977cb2fcb20f5800e8ea3a", "3b2fd853fdb7116549c6fc1bc54fb944"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0015368", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["f13d329d1f04fa31a0b42bf3b0972435", "bafbbe94a8ae4ea5768177ae3cb04873"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0024237", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["35521044dac0a1f0f87c4d1f79ad4157"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0017128", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["4307c21780ba9435f2ec841186fc1aef", "3e0357ca76a619211570454f2c6cf992", "09faa8e1752c8078bd854ee50479fcd1"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0009757", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["69a090c4ce4cdae4f4189d9525d3a8fe", "fb7c71873ceb80dbdb27557384766928"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0000429", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["b4835feac457fe2140e3f5394cd09290"], "qg_id": "e00"}, {"kg_id": ["72ddf7a13a974871abea6070f204f638", "391ff4f80485d2e313159dfc7e9e4514"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:30922", "qg_id": "n01"}, {"kg_id": "MONDO:0000429", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["3998de4e1e60d5a009025efb1e2f12fa", "bd39582cc1a7a1f0e4f9306181b7a68b"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0016297", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["5579d0ec3e69cf5bd79fd643942d8536"], "qg_id": "e00"}, {"kg_id": ["f402933a0975ec238be2db18d5db9877", "52ebb798f70c1a2984f7432519040c55"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:7897", "qg_id": "n01"}, {"kg_id": "MONDO:0019117", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["653609b6f006e0b47486f8da354c72e3", "ec915afffb5196656aa43f7a89d189cf"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0020238", "qg_id": "n02"}]}, {"edge_bindings": [{"kg_id": ["f30686d3a5edb8d62e319fa34920fec9"], "qg_id": "e00"}, {"kg_id": ["50a0ad6d298df425516f13185d528db0", "860b7fd48e49ccb48fad4d3c9f98c66e", "30bbb47109fcf0f43b4708b6be5b50ef"], "qg_id": "e01"}], "node_bindings": [{"kg_id": "MONDO:0005737", "qg_id": "n00"}, {"kg_id": "HGNC:16361", "qg_id": "n01"}, {"kg_id": "MONDO:0019497", "qg_id": "n02"}]}]}
+{
+    "knowledge_graph": {
+        "url": "bolt://localhost:7687",
+        "credentials": {
+            "username": "neo4j",
+            "password": "pword"
+        }
+    },
+    "query_graph": {
+        "edges": [
+            {
+                "source_id": "n00",
+                "target_id": "n01",
+                "id": "e00"
+            },
+            {
+                "source_id": "n01",
+                "target_id": "n02",
+                "id": "e01"
+            }
+        ],
+        "nodes": [
+            {
+                "curie": "MONDO:0005737",
+                "id": "n00",
+                "type": "disease"
+            },
+            {
+                "id": "n01",
+                "type": "gene"
+            },
+            {
+                "id": "n02",
+                "type": "genetic_condition"
+            }
+        ]
+    },
+    "results": [
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0000275",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17099577",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17099865",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0000429",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17324712",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17325582",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015108",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17818038",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17817890",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0006025",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19053926",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19054294",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019502",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19373252",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18017877",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18017947",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019117",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17995604",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17994154",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0007774",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17702041",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0013702",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17804857",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19373251",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:30922",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015982",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17701963",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17892503",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17892405",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:17770",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0008345",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557485",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "6912167",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:17770",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0008947",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557485",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17698802",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:20818",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019262",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18064063",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18064062",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:4669",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0010383",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "17148793",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17721428",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0009757",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "6912168",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19284379",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19284411",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019118",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18003790",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18002911",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0024237",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18242885",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18242534",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015984",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17895858",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17895087",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016397",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17906058",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17905868",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0024255",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18244550",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18243720",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019052",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17982780",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17981220",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020143",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18118551",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18118435",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019245",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18009882",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18009731",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015547",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17848814",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17848464",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0018299",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17947256",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17947108",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019255",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18010279",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18010190",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015510",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17844623",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17844179",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015368",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17841877",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17841482",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015955",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17877136",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17876624",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0001982",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17709885",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17709670",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17709537",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015107",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17816423",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17814849",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020242",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18127873",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18127654",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0018982",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17968073",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17967940",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019043",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17975862",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17975114",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020238",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18126660",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18126168",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019117",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17996461",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17992751",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015952",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17875930",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17875430",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020244",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18128860",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18128575",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0002561",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19022668",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19022300",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019058",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17987595",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17987265",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0002525",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18977351",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18977098",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020142",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18118419",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18118162",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020257",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18130565",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18130401",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016307",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430742",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903103",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016306",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430740",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903099",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016310",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430825",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903184",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016058",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430918",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0008062",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430916",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016309",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430741",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903178",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0001386",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430914",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0010017",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19431019",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016308",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430824",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903104",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0011719",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19064644",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "6912165",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19065250",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0005181",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17026672",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0017719",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19430921",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0017128",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17924914",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015615",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17852841",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019041",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17971437",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:7897",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015616",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557484",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17853319",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019117",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17991797",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17993373",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019588",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18021489",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18021406",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19633376",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0006025",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19054358",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19054763",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019501",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18017973",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18017841",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0011080",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17669504",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019497",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18017595",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18017497",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019047",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17978443",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17978511",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019200",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18006510",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18006726",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019118",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18003672",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18003171",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0011767",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19128587",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19128521",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0018751",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17962155",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17962253",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0000429",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17323134",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17324079",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0012662",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "19633328",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17793202",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016484",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17907100",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19633526",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17907161",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0015107",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17816292",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17815410",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020240",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18127327",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18127143",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016297",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17902829",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17902771",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0000275",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17098846",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17099378",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0019589",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18021881",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18022246",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0020238",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "18126654",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "18126231",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0000455",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17375511",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "19633651",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0010576",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17753029",
+                    "qg_id": "e01"
+                }
+            ]
+        },
+        {
+            "node_bindings": [
+                {
+                    "kg_id": "MONDO:0005737",
+                    "qg_id": "n00"
+                },
+                {
+                    "kg_id": "HGNC:16361",
+                    "qg_id": "n01"
+                },
+                {
+                    "kg_id": "MONDO:0016298",
+                    "qg_id": "n02"
+                }
+            ],
+            "edge_bindings": [
+                {
+                    "kg_id": "18557493",
+                    "qg_id": "e00"
+                },
+                {
+                    "kg_id": "17902994",
+                    "qg_id": "e01"
+                },
+                {
+                    "kg_id": "17903029",
+                    "qg_id": "e01"
+                }
+            ]
+        }
+    ]
+}
