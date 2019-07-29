@@ -93,12 +93,16 @@ def get_node_properties(node_ids, **options):
         with driver.session() as session:
             result = session.run(query_string)
 
+        nodes = []
         for record in result:
             r = record['n']
             if 'type' in r and 'named_thing' in r['type']:
                 r['type'].remove('named_thing')
 
-            output.append(r)
+            nodes.append(r)
+        if len(nodes) != len(batch):
+            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}')
+        output += nodes
 
     return output
 
@@ -144,8 +148,10 @@ def get_edge_properties(edge_ids, **options):
             for batch in batches(edge_ids, 1024):
                 result = tx.run(statement, {'edge_ids': ' '.join(batch)})
 
-                for record in result:
-                    output.append(record['e'])
+                edges = [record['e'] for record in result]
+                if len(edges) != len(batch):
+                    raise RuntimeError(f'Went looking for {len(batch)} edges but only found {len(edges)}')
+                output += edges
             tx.commit()
 
     return output
