@@ -101,7 +101,8 @@ def get_node_properties(node_ids, **options):
 
             nodes.append(r)
         if len(nodes) != len(batch):
-            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}')
+            node_ids = [node['id'] for node in nodes]
+            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}; could not find {set(batch) - set(node_ids)}')
         output += nodes
 
     return output
@@ -150,7 +151,8 @@ def get_edge_properties(edge_ids, **options):
 
                 edges = [record['e'] for record in result]
                 if len(edges) != len(batch):
-                    raise RuntimeError(f'Went looking for {len(batch)} edges but only found {len(edges)}')
+                    edge_ids = [edge['id'] for edge in edges]
+                    raise RuntimeError(f'Went looking for {len(batch)} edges but only found {len(edge_ids)}; could not find {set(batch) - set(edge_ids)}')
                 output += edges
             tx.commit()
 
