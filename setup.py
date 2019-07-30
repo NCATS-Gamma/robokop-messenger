@@ -8,7 +8,7 @@ setup(
     author_email='patrick@covar.com',
     url='https://github.com/NCATS-Gamma/robokop-messenger',
     description='ROBOKOP Message-passing modules',
-    packages=['messenger'],
+    packages=['messenger', 'messenger.modules', 'messenger.shared'],
     include_package_data=True,
     zip_safe=False,
     license='MIT',

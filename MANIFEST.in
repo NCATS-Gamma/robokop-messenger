@@ -1,1 +1,2 @@
-include messenger/reasoner.yaml
+include messenger/templates/reasoner.yaml
+include messenger/templates/components.yaml
