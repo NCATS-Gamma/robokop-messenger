@@ -18,7 +18,7 @@ summary = {
     'endpoints': []
 }
 dirname = os.path.join(os.path.dirname(__file__), 'modules')
-operations = os.listdir(dirname)
+operations = [op[:-3] for op in os.listdir(dirname) if op.endswith('.py')]
 
 # create controllers module
 controllers = ModuleType('controllers')

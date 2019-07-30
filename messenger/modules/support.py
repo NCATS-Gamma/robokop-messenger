@@ -4,8 +4,8 @@ import os
 from collections import defaultdict
 from itertools import combinations
 from uuid import uuid4
-from .cache import Cache
-from .omnicorp import OmnicorpSupport
+from messenger.shared.cache import Cache
+from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
 from messenger.shared.message_state import kgraph_is_local
 

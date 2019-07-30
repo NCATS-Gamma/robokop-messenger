@@ -1,7 +1,8 @@
 """Novelty."""
 import uuid
 from collections import defaultdict
-from messenger.modules.answer import NodeReference, EdgeReference, KGraph
+from messenger.shared.qgraph_compiler import NodeReference, EdgeReference
+from messenger.modules.answer import KGraph
 
 
 def get_rgraph(result, message):

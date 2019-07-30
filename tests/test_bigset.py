@@ -7,13 +7,9 @@ from messenger.modules.yank import query as yank
 from messenger.modules.weight_correctness import query as correctness
 from messenger.modules.weight_novelty import query as novelty
 from messenger.modules.score import query as score
-from tests.fixtures import bigset
+from fixtures import bigset
 
 
 def test_answer_bigset(bigset):
     """Test that answer() handles empty queries."""
     result = score(novelty(yank(answer(bigset))))
-    print(json.dumps(
-        result,
-        indent=4
-    ))

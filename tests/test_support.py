@@ -1,6 +1,6 @@
 """Test Support."""
 from messenger.modules.support import query as support
-from tests.fixtures import yanked
+from fixtures import yanked
 
 
 def test_support(yanked):

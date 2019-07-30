@@ -2,7 +2,7 @@
 from messenger.shared.util import flatten_semilist
 from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.message_state import kgraph_is_local
-from .ranker_obj import Ranker
+from messenger.shared.ranker_obj import Ranker
 
 
 def query(message):

@@ -5,7 +5,7 @@ from messenger.shared.message_state import kgraph_is_local
 from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import random_string
 from messenger.shared.neo4j import dump_kg
-from .qgraph_compiler import cypher_query_answer_map
+from messenger.shared.qgraph_compiler import cypher_query_answer_map
 
 
 def KGraph(message):

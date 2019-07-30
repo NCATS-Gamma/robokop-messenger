@@ -1,5 +1,5 @@
 """Test yank."""
-from tests.fixtures import answered
+from fixtures import answered
 from messenger.modules.yank import query as yank
 
 

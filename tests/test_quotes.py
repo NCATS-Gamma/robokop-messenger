@@ -5,7 +5,7 @@ import json
 
 from messenger.modules.answer import query as answer
 from messenger.modules.normalize import query as normalize
-from tests.fixtures import quotes_local
+from fixtures import quotes_local
 
 
 def test_quotes(quotes_local):

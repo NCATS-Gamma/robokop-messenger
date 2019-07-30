@@ -2,7 +2,7 @@
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 from messenger.modules.answer import query as answer
-from tests.fixtures import empty, whatis_mondo, onestep, ebola_mondo
+from fixtures import empty, whatis_mondo, onestep, ebola_mondo
 
 
 def test_answer_empty(empty):

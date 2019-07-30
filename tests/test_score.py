@@ -3,10 +3,9 @@
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 import json
 from messenger.modules.score import query as score
-from tests.fixtures import weighted2
+from fixtures import weighted2
 
 
 def test_score(weighted2):
     """Test that score() runs without errors."""
     result = score(weighted2)
-    print(json.dumps(result, indent=4))
