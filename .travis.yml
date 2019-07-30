@@ -7,17 +7,15 @@ services:
 env:
   - NEO4J_HOST=localhost NEO4J_PASSWORD=pword
 install:
-  - pip install -r requirements.txt
-  - pip install -r requirements-test.txt
+  - pip install tox neo4j-driver psycopg2
   - mkdir logs
   - mkdir cache
   - export PYTHONPATH=$(pwd)
 before_script:
   - ./tests/setup_helpers.sh
 script:
-  - pytest --cov=messenger --cov-report term-missing
+  - tox
 after_script:
-  - codecov
   - cd neo4j
   - docker-compose down
   - cd ../postgres
