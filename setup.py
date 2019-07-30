@@ -9,7 +9,6 @@ setup(
     url='https://github.com/NCATS-Gamma/robokop-messenger',
     description='ROBOKOP Message-passing modules',
     packages=['messenger'],
-    package_data={'messenger': ['reasoner.yaml']},
     include_package_data=True,
     zip_safe=False,
     license='MIT',
