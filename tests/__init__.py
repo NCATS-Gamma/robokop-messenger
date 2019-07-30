@@ -1,1 +1,0 @@
-"""Required to import .fixtures."""

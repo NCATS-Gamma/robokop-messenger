@@ -4,7 +4,7 @@
 import json
 from messenger.modules.weight_novelty import query as novelty
 from messenger.modules.weight_correctness import query as correctness
-from .fixtures import to_weight
+from tests.fixtures import to_weight
 
 
 def test_weight(to_weight):

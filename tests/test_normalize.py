@@ -2,7 +2,7 @@
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 from messenger.modules.normalize import query as normalize
-from .fixtures import nonsense_curie, whatis_doid
+from tests.fixtures import nonsense_curie, whatis_doid
 
 
 def test_normalize_nonsense(nonsense_curie):

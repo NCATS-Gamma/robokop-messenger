@@ -2,7 +2,7 @@
 import os
 import pytest
 from messenger.server import app as flask_app
-from .fixtures import empty
+from tests.fixtures import empty
 
 
 @pytest.fixture
