@@ -4,11 +4,18 @@ import os
 import sys
 from types import ModuleType
 from importlib import import_module
+import logging.config
+import pkg_resources
 from flask import request
 import yaml
 from jinja2 import Environment, PackageLoader
 from flask_cors import CORS
 import connexion
+
+# Set up default logger.
+with pkg_resources.resource_stream('messenger', 'logging.yml') as f:
+    config = yaml.safe_load(f.read())
+logging.config.dictConfig(config)
 
 summary = {
     'title': 'ROBOKOP Messenger',
