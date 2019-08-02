@@ -8,26 +8,16 @@ from lru import LRU
 logger = logging.getLogger(__name__)
 
 
-class CacheSerializer:
-    """Generic serializer."""
-
-    def __init__(self):
-        pass
-
-
-class PickleCacheSerializer(CacheSerializer):
+class PickleCacheSerializer():
     """Use Python's default serialization."""
 
-    def __init__(self):
-        pass
     def dumps(self, obj):
+        """Return stringified object."""
         return pickle.dumps(obj)
+
     def loads(self, string):
+        """Load object from string."""
         return pickle.loads(string)
-
-
-class JSONCacheSerializer(CacheSerializer):
-    pass  # would be nice
 
 
 class Cache:
@@ -42,7 +32,6 @@ class Cache:
                  redis_password="",
                  enabled=True):
         """Connect to cache."""
-        
         self.enabled = enabled
         try:
             if redis_password:
@@ -62,7 +51,7 @@ class Cache:
                         redis_host,
                         redis_port,
                         redis_db)
-        except Exception:
+        except redis.exceptions.ConnectionError:
             self.redis = None
             logger.error("Failed to connect to redis at %s:%s/%s",
                          redis_host,

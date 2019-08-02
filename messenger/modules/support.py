@@ -1,6 +1,5 @@
 """Literature co-occurrence support."""
 
-import os
 from collections import defaultdict
 from itertools import combinations
 from uuid import uuid4
@@ -39,10 +38,8 @@ def query(message):
             values.extend(cache.mget(*batch))
 
         for node, value, key in zip(kgraph['nodes'], values, keys):
-            support_dict = value
-
-            if support_dict is not None:
-                pass
+            if value is not None:
+                support_dict = value
             else:
                 support_dict = supporter.node_pmid_count(node['id'])
                 if cache and support_dict['omnicorp_article_count']:
