@@ -25,7 +25,7 @@ def query(message):
     # get cache if possible
     try:
         cache = Cache()
-    except Exception as e:
+    except:
         cache = None
 
     redis_batch_size = 100
@@ -85,7 +85,7 @@ def query(message):
                 #    of a prefix pair that we evaluated all of.  In that case
                 #    we can infer that getting nothing back means an empty list
                 #    check cached_prefixes for this...
-                prefixes = tuple([ident.split(':')[0].upper() for ident in pair])
+                prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
                 if cached_prefixes and prefixes in cached_prefixes:
                     support_edge = []
                 else:
