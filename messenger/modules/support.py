@@ -78,9 +78,7 @@ def query(message):
         for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys)):
             support_edge = value
 
-            if support_edge is not None:
-                pass
-            else:
+            if support_edge is None:
                 # There are two reasons that we don't get anything back:
                 # 1. We haven't evaluated that pair
                 # 2. We evaluated, and found it to be zero, and it was part
@@ -91,12 +89,9 @@ def query(message):
                 if cached_prefixes and prefixes in cached_prefixes:
                     support_edge = []
                 else:
-                    try:
-                        support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
-                        if cache and support_edge:
-                            cache.set(key, support_edge)
-                    except Exception as e:
-                        raise e
+                    support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
+                    if cache and support_edge:
+                        cache.set(key, support_edge)
             if not support_edge:
                 continue
             uid = str(uuid4())
