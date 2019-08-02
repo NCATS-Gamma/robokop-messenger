@@ -67,7 +67,6 @@ def query(message):
                     node_pair = tuple(sorted((node, set_node)))
                     pair_to_answer[node_pair].append(ans_idx)
 
-
         # get all pair supports
         cached_prefixes = cache.get('OmnicorpPrefixes') if cache else None
 
@@ -80,28 +79,24 @@ def query(message):
             support_edge = value
 
             if support_edge is not None:
-                #logger.info(f"cache hit: {key} {support_edge}")
                 pass
             else:
-                #There are two reasons that we don't get anything back:
+                # There are two reasons that we don't get anything back:
                 # 1. We haven't evaluated that pair
                 # 2. We evaluated, and found it to be zero, and it was part
-                #  of a prefix pair that we evaluated all of.  In that case
-                #  we can infer that getting nothing back means an empty list
-                #  check cached_prefixes for this...
-                prefixes = tuple([ ident.split(':')[0].upper() for ident in pair ])
+                #    of a prefix pair that we evaluated all of.  In that case
+                #    we can infer that getting nothing back means an empty list
+                #    check cached_prefixes for this...
+                prefixes = tuple([ident.split(':')[0].upper() for ident in pair])
                 if cached_prefixes and prefixes in cached_prefixes:
                     support_edge = []
                 else:
-                    #logger.info(f"exec op: {key}")
                     try:
                         support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
                         if cache and support_edge:
                             cache.set(key, support_edge)
                     except Exception as e:
                         raise e
-                        # logger.debug('Support error, not caching')
-                        # continue
             if not support_edge:
                 continue
             uid = str(uuid4())
@@ -121,10 +116,7 @@ def query(message):
                     'qg_id': f's{support_idx}',
                     'kg_id': uid
                 })
-        # Next pair
 
     message['knowledge_graph'] = kgraph
     message['results'] = answers
     return message
-
-    # Close the supporter
