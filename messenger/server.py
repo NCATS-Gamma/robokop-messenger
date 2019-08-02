@@ -17,8 +17,10 @@ with pkg_resources.resource_stream('messenger', 'logging.yml') as f:
     config = yaml.safe_load(f.read())
 logging.config.dictConfig(config)
 handlers = logging.getLogger('messenger').handlers
+print(handlers)
 fh = next(h for h in handlers if isinstance(h, logging.FileHandler))
 logdir = os.path.dirname(fh.baseFilename)
+print(logdir)
 if not os.path.exists(logdir):
     os.makedirs(logdir)
 
