@@ -1,0 +1,30 @@
+version: "3"
+services:
+  messenger:
+    container_name: messenger
+    build:
+      context: .
+    command: 'python /home/murphy/robokop-messenger/main.py'
+    user: "${UID}:${GID}"
+    env_file:
+      - ../shared/robokop.env
+    environment:
+      - ROBOKOP_HOME=/home/murphy
+      - PYTHONPATH=/home/murphy/robokop-messenger
+      - LOCAL_NEO4J_HOST=messenger_neo4j
+    ports:
+      - "${MESSENGER_PORT}:${MESSENGER_PORT}"
+    volumes:
+      - ../logs:/home/murphy/logs
+      - ../shared:/home/murphy/shared
+      - ./:/home/murphy/robokop-messenger
+    links:
+      - neo4j
+
+  neo4j:
+    image: neo4j:3.5.4
+    container_name: messenger_neo4j
+    environment:
+      - NEO4J_AUTH=neo4j/pword
+    volumes:
+      - ./logs:/logs

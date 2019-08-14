@@ -54,8 +54,6 @@ env = Environment(
 )
 template = env.get_template('reasoner.yaml')
 spec_string = template.render(**summary)
-with open('openapi.yaml', 'w') as f:
-    f.write(spec_string)
 spec = yaml.load(spec_string, Loader=yaml.SafeLoader)
 
 # build Flask app

@@ -1,7 +1,0 @@
-version: "3"
-services:
-  postgres:
-    image: redis
-    container_name: messenger_redis
-    ports:
-      - 6379:6379

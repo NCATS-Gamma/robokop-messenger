@@ -1,5 +1,6 @@
 """Answer."""
 import copy
+import os
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.message_state import kgraph_is_local
 from messenger.cypher_adapter import Node, Edge, Graph
@@ -47,7 +48,7 @@ class LocalKGraph:
     def __init__(self, message):
         """Initialize context manager."""
         self.driver = GraphDatabase.driver(
-            "bolt://localhost:7687",
+            f"bolt://{os.environ['LOCAL_NEO4J_HOST']}:7687",
             auth=basic_auth("neo4j", "pword")
         )
         self.uid = random_string()

@@ -2,6 +2,7 @@
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 import json
+import os
 import pytest
 from messenger.shared.neo4j import get_edge_properties, get_node_properties
 
@@ -9,10 +10,10 @@ from messenger.shared.neo4j import get_edge_properties, get_node_properties
 def test_yank_edges():
     """Test yanking edges from the KG."""
     options = {
-        "url": "bolt://localhost:7687",
+        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_PORT']}",
         "credentials": {
-            "username": "neo4j",
-            "password": "pword",
+            "username": os.environ['NEO4J_USER'],
+            "password": os.environ['NEO4J_PASSWORD'],
         },
     }
     edge_id = '18557484'
@@ -24,10 +25,10 @@ def test_yank_edges():
 def test_fail_yank():
     """Test yanking nodes/edges from the KG."""
     options = {
-        "url": "bolt://localhost:7687",
+        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_PORT']}",
         "credentials": {
-            "username": "neo4j",
-            "password": "pword",
+            "username": os.environ['NEO4J_USER'],
+            "password": os.environ['NEO4J_PASSWORD'],
         },
     }
     edge_ids = [
