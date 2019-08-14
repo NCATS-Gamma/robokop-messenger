@@ -15,9 +15,5 @@ before_script:
 script:
   - tox
 after_script:
-  - cd ./helpers/neo4j
-  - docker-compose down
-  - cd ../../tests/helpers/postgres
-  - docker-compose down
-  - cd ../redis
+  - cd ./helpers
   - docker-compose down
