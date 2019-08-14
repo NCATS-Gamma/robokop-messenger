@@ -11,7 +11,7 @@ install:
   - mkdir logs
   - mkdir cache
   - export PYTHONPATH=$(pwd)
-  - export ROBOKOP_HOME=$HOME
+  - export ROBOKOP_HOME=$(pwd)/..
 before_script:
   - ./tests/setup/startup_helpers.sh
 script:
