@@ -13,11 +13,6 @@ class OmniCorp():
 
     def __init__(self):
         """Create and omnicorp service object."""
-        db = 'omnicorp'
-        user = 'murphy'
-        port = 5432
-        host = 'localhost'
-        password = 'pword'
         self.prefixes = set([
             'UBERON',
             'BSPO',
@@ -34,11 +29,11 @@ class OmniCorp():
             'MESH'])
         logger.info("Opening Connection to ROBOKOPDB Postgres")
         self.conn = psycopg2.connect(
-            dbname=db,
-            user=user,
-            host=host,
-            port=port,
-            password=password)
+            dbname=os.environ['OMNICORP_DB'],
+            user=os.environ['OMNICORP_USER'],
+            host=os.environ['OMNICORP_HOST'],
+            port=os.environ['OMNICORP_POST'],
+            password=os.environ['OMNICORP_PASSWORD'])
         self.nsingle = 0
         self.total_single_call = datetime.timedelta()
         self.npair = 0

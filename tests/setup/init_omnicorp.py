@@ -1,18 +1,18 @@
 """Initialize omnicorp testing instance."""
+import os
+from dotenv import load_dotenv
 import psycopg2
 
-db = 'omnicorp'
-user = 'murphy'
-port = 5432
-host = 'localhost'
-password = 'pword'
+file_path = os.path.dirname(os.path.realpath(__file__))
+dotenv_path = os.path.abspath(os.path.join(file_path, '..', '.env'))
+load_dotenv(dotenv_path=dotenv_path)
 
 conn = psycopg2.connect(
-    dbname=db,
-    user=user,
-    host=host,
-    port=port,
-    password=password)
+    dbname=os.environ['OMNICORP_DB'],
+    user=os.environ['OMNICORP_USER'],
+    host=os.environ['OMNICORP_HOST'],
+    port=os.environ['OMNICORP_PORT'],
+    password=os.environ['OMNICORP_PASSWORD'])
 
 cur = conn.cursor()
 

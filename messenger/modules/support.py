@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 from itertools import combinations
+import os
 from uuid import uuid4
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
@@ -23,7 +24,12 @@ def query(message):
 
     # get cache if possible
     try:
-        cache = Cache()
+        cache = Cache(
+            redis_host=os.environ['CACHE_HOST'],
+            redis_port=os.environ['CACHE_PORT'],
+            redis_db=os.environ['CACHE_DB'],
+            redis_password=os.environ['CACHE_PASSWORD'],
+        )
     except:
         cache = None
 

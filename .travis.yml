@@ -4,10 +4,8 @@ python:
   - "3.6"
 services:
   - docker
-env:
-  - NEO4J_HOST=localhost NEO4J_PASSWORD=pword
 install:
-  - pip install tox neo4j-driver psycopg2
+  - pip install tox neo4j-driver psycopg2 python-dotenv
   - mkdir logs
   - mkdir cache
   - export PYTHONPATH=$(pwd)

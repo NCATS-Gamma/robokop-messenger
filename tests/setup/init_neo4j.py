@@ -7,8 +7,13 @@ import json
 import os
 import re
 import uuid
+from dotenv import load_dotenv
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.neo4j import dump_kg, clear
+
+file_path = os.path.dirname(os.path.realpath(__file__))
+dotenv_path = os.path.abspath(os.path.join(file_path, '..', '.env'))
+load_dotenv(dotenv_path=dotenv_path)
 
 Edge = namedtuple('Edge', ['source_id', 'target_id'])
 Node = namedtuple('Node', ['id', 'type'])
@@ -97,12 +102,12 @@ def big_set():
     return g
 
 
-url = 'bolt://localhost:7687'
+url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_PORT"]}'
 driver = GraphDatabase.driver(
     url,
     auth=basic_auth(
-        'neo4j',
-        'pword'
+        os.environ['NEO4J_USER'],
+        os.environ['NEO4J_PASSWORD']
     ),
 )
 with open(os.path.join(os.environ['ROBOKOP_HOME'], 'robokop-messenger', 'tests', 'data', 'ebola_kg.json'), 'r') as f:
