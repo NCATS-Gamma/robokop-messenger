@@ -1,11 +1,14 @@
-"""Generate graphs."""
+#! /usr/bin/env python
+"""Set up Neo4j."""
+
 from collections import namedtuple
 from itertools import product
 import json
+import os
 import re
 import uuid
 from neo4j import GraphDatabase, basic_auth
-from messenger.shared.neo4j import dump_kg
+from messenger.shared.neo4j import dump_kg, clear
 
 Edge = namedtuple('Edge', ['source_id', 'target_id'])
 Node = namedtuple('Node', ['id', 'type'])
@@ -30,7 +33,7 @@ class Graph():
             type_ = []
         elif isinstance(type_, str):
             type_ = [type_]
-        type_.append('dummy')
+        type_.append('test')
         self.graph['nodes'].append(Node(node, type_))
 
     def add_edge(self, source_id, target_id):
@@ -94,13 +97,33 @@ def big_set():
     return g
 
 
-def add_to_neo4j(graph):
-    """Add graph to Neo4j."""
-    driver = GraphDatabase.driver(
-        'bolt://localhost:7687',
-        auth=basic_auth(
-            'neo4j',
-            'pword'
-        ),
-    )
-    dump_kg(driver, graph.to_json())
+url = 'bolt://localhost:7687'
+driver = GraphDatabase.driver(
+    url,
+    auth=basic_auth(
+        'neo4j',
+        'pword'
+    ),
+)
+with open(os.path.join(os.environ['ROBOKOP_HOME'], 'robokop-messenger', 'tests', 'data', 'ebola_kg.json'), 'r') as f:
+    kgraph = json.load(f)
+for node in kgraph['nodes']:
+    node['type'].append('test')
+clear(driver)
+dump_kg(driver, kgraph, with_props=True)
+
+dump_kg(driver, big_set().to_json())
+
+statement = "MATCH ()-[e]-() RETURN DISTINCT type(e) as predicate"
+with driver.session() as session:
+    result = session.run(statement)
+predicates = [record['predicate'] for record in result]
+predicates_string = ', '.join(f"'{predicate}'" for predicate in predicates)
+statement = f"""CALL db.index.fulltext.createRelationshipIndex(
+    'edge_id_index',
+    [{predicates_string}],
+    ['id'],
+    {{analyzer: 'keyword'}}
+)"""
+with driver.session() as session:
+    session.run(statement)
