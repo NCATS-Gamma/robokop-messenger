@@ -32,7 +32,7 @@ class OmniCorp():
             dbname=os.environ['OMNICORP_DB'],
             user=os.environ['OMNICORP_USER'],
             host=os.environ['OMNICORP_HOST'],
-            port=os.environ['OMNICORP_POST'],
+            port=os.environ['OMNICORP_PORT'],
             password=os.environ['OMNICORP_PASSWORD'])
         self.nsingle = 0
         self.total_single_call = datetime.timedelta()
