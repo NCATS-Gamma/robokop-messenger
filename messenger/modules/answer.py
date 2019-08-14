@@ -56,7 +56,7 @@ class LocalKGraph:
         # add uid to kgraph nodes
         nodes = []
         for node in message['knowledge_graph']['nodes']:
-            node_type = node['type']
+            node_type = node.get('type', '')
             if isinstance(node_type, str):
                 node_type = [node_type]
             node_type.append(self.uid)
@@ -67,7 +67,7 @@ class LocalKGraph:
         # add uid to qgraph nodes
         nodes = []
         for node in message['query_graph']['nodes']:
-            node_type = node['type']
+            node_type = node.get('type', '')
             if isinstance(node_type, str):
                 node_type = [node_type]
             node_type.append(self.uid)
