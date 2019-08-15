@@ -164,7 +164,11 @@ components:
             n01, n02, etc.
           example: n00
         curie:
-          type: string
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
           description: CURIE identifier for this node
           example: 'OMIM:603903'
         type:
