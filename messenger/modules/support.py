@@ -2,12 +2,15 @@
 
 from collections import defaultdict
 from itertools import combinations
+import logging
 import os
 from uuid import uuid4
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
 from messenger.shared.message_state import kgraph_is_local
+
+logger = logging.getLogger(__name__)
 
 
 def query(message):
@@ -30,7 +33,8 @@ def query(message):
             redis_db=os.environ['CACHE_DB'],
             redis_password=os.environ['CACHE_PASSWORD'],
         )
-    except:
+    except Exception as err:
+        logger.exception(err)
         cache = None
 
     redis_batch_size = 100
