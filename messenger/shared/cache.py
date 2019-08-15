@@ -59,7 +59,10 @@ class Cache:
                          redis_db)
         self.cache_path = cache_path
         if not os.path.exists(self.cache_path):
-            os.makedirs(self.cache_path)
+            try:
+                os.makedirs(self.cache_path)
+            except PermissionError:
+                self.cache_path = None
         self.cache = LRU(1000)
         self.serializer = serializer()
 
@@ -77,7 +80,7 @@ class Cache:
             else:
                 result = None
             self.cache[key] = result
-        else:
+        elif self.cache_path is not None:
             path = os.path.join(self.cache_path, key)
             if os.path.exists(path):
                 with open(path, 'rb') as stream:
@@ -98,7 +101,7 @@ class Cache:
                     result.append(self.serializer.loads(rec))
                 else:
                     result.append(None)
-        else:
+        elif self.cache_path is not None:
             for key in keys:
                 path = os.path.join(self.cache_path, key)
                 if os.path.exists(path):
@@ -116,7 +119,7 @@ class Cache:
             if value is not None:
                 self.redis.set(key, self.serializer.dumps(value))
                 self.cache[key] = value
-        else:
+        elif self.cache_path is not None:
             path = os.path.join(self.cache_path, key)
             with open(path, 'wb') as stream:
                 stream.write(self.serializer.dumps(value))
