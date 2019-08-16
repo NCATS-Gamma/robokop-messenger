@@ -172,7 +172,11 @@ components:
           description: CURIE identifier for this node
           example: 'OMIM:603903'
         type:
-          type: string
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
           description: 'Entity type of this node (e.g., protein, disease, etc.)'
           example: disease
       additionalProperties: true
