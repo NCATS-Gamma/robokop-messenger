@@ -52,32 +52,46 @@ class LocalKGraph:
             auth=basic_auth("neo4j", "pword")
         )
         self.uid = random_string()
+        self.kgraph = message['knowledge_graph']
+        self.qgraph = message['query_graph']
 
+    def add_uid(self):
+        """Add uid to node labels."""
         # add uid to kgraph nodes
         nodes = []
-        for node in message['knowledge_graph']['nodes']:
+        for node in self.kgraph['nodes']:
             node_type = node.get('type', '')
             if isinstance(node_type, str):
                 node_type = [node_type]
             node_type.append(self.uid)
             node['type'] = node_type
             nodes.append(node)
-        message['knowledge_graph']['nodes'] = nodes
+        self.kgraph['nodes'] = nodes
 
         # add uid to qgraph nodes
         nodes = []
-        for node in message['query_graph']['nodes']:
+        for node in self.qgraph['nodes']:
             node_type = node.get('type', '')
             if isinstance(node_type, str):
                 node_type = [node_type]
             node_type.append(self.uid)
             node['type'] = node_type
             nodes.append(node)
-        message['query_graph']['nodes'] = nodes
-        self.kgraph = message['knowledge_graph']
+        self.qgraph['nodes'] = nodes
+
+    def remove_uid(self):
+        """Remove uid labels from nodes."""
+        # remove uid from kgraph nodes
+        for node in self.kgraph['nodes']:
+            node['type'].remove(self.uid)
+
+        # remove uid from qgraph nodes
+        for node in self.qgraph['nodes']:
+            node['type'].remove(self.uid)
 
     def __enter__(self):
         """Enter context."""
+        self.add_uid()
         dump_kg(self.driver, self.kgraph)
         return self.driver
 
@@ -85,6 +99,7 @@ class LocalKGraph:
         """Exit context."""
         with self.driver.session() as session:
             session.run(f"MATCH (n:{self.uid}) DETACH DELETE n")
+        self.remove_uid()
 
 
 def query(message, max_connectivity=0):
