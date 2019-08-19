@@ -10,7 +10,7 @@ from messenger.shared.neo4j import get_edge_properties, get_node_properties
 def test_yank_edges():
     """Test yanking edges from the KG."""
     options = {
-        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_PORT']}",
+        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
         "credentials": {
             "username": os.environ['NEO4J_USER'],
             "password": os.environ['NEO4J_PASSWORD'],
@@ -25,7 +25,7 @@ def test_yank_edges():
 def test_fail_yank():
     """Test yanking nodes/edges from the KG."""
     options = {
-        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_PORT']}",
+        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
         "credentials": {
             "username": os.environ['NEO4J_USER'],
             "password": os.environ['NEO4J_PASSWORD'],

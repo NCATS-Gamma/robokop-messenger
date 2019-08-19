@@ -102,7 +102,7 @@ def big_set():
     return g
 
 
-url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_PORT"]}'
+url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_BOLT_PORT"]}'
 driver = GraphDatabase.driver(
     url,
     auth=basic_auth(
