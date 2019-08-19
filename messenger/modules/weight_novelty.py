@@ -1,8 +1,13 @@
 """Novelty."""
+import copy
+import logging
+import os
 import uuid
 from collections import defaultdict
 from messenger.shared.qgraph_compiler import NodeReference, EdgeReference
 from messenger.modules.answer import KGraph
+
+logger = logging.getLogger(__name__)
 
 
 def get_rgraph(result, message):
@@ -73,78 +78,83 @@ def get_rgraph(result, message):
 def query(message):
     """Compute informativeness weights for edges."""
     qgraph = message['query_graph']
-    kgraph = message['knowledge_graph']
     results = message['results']
 
-    knodes = kgraph['nodes']
-    kedges = kgraph['edges']
     qnodes = qgraph['nodes']
     qedges = qgraph['edges']
 
-    knode_map = {knode['id']: knode for knode in knodes}
+    # knode_map = {knode['id']: knode for knode in knodes}
     qnode_map = {qnode['id']: qnode for qnode in qnodes}
     qedge_map = {qedge['id']: qedge for qedge in qedges}
 
-    for result in results:
-        rgraph = get_rgraph(result, message)
-        redges_by_id = {
-            redge['id']: redge
-            for redge in rgraph['edges']
+    message_remoteKG = copy.deepcopy(message)
+    message_remoteKG['knowledge_graph'] = {
+        'url': f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_BOLT_PORT"]}',
+        'credentials': {
+            'username': os.environ["NEO4J_USER"],
+            'password': os.environ["NEO4J_PASSWORD"]
         }
+    }
+    with KGraph(message_remoteKG) as driver:
+        for result in results:
+            rgraph = get_rgraph(result, message)
+            redges_by_id = {
+                redge['id']: redge
+                for redge in rgraph['edges']
+            }
 
-        count_plans = defaultdict(lambda: defaultdict(list))
-        for redge in rgraph['edges']:
-            count_plans[redge['kg_source_id']][(redge['eb']['qg_id'], redge['qg_target_id'])].append(
-                redge['id']
-            )
-            count_plans[redge['kg_target_id']][(redge['eb']['qg_id'], redge['qg_source_id'])].append(
-                redge['id']
-            )
+            count_plans = defaultdict(lambda: defaultdict(list))
+            for redge in rgraph['edges']:
+                count_plans[redge['kg_source_id']][(redge['eb']['qg_id'], redge['qg_target_id'])].append(
+                    redge['id']
+                )
+                count_plans[redge['kg_target_id']][(redge['eb']['qg_id'], redge['qg_source_id'])].append(
+                    redge['id']
+                )
 
-        counters = []
-        keys = []
-        count_to_redge = {}
-        for idx, (ksource_id, plan) in enumerate(count_plans.items()):
-            knode = knode_map[ksource_id]
-            anchor_node_reference = NodeReference({
-                'id': 'n',
-                'curie': knode['id'],
-                'type': knode['type']
-            })
-            base = f"MATCH ({anchor_node_reference})"
-            # base += f"USING INDEX n:{knode['type'][0]}(id)"
-            cypher_counts = []
-            new_keys = []
-            for jdx, (qlink, redge_ids) in enumerate(plan.items()):
-                qedge_id, qtarget_id = qlink
-                count_id = f"c{idx:03d}{chr(97 + jdx)}"
-                qedge = qedge_map[qedge_id]
-                edge_reference = EdgeReference(qedge, anonymous=True)
-                anon_node_reference = NodeReference(qnode_map[qtarget_id], anonymous=True)
-                if qedge['target_id'] == qtarget_id:
-                    source_reference = anon_node_reference
-                    target_reference = anchor_node_reference
-                elif qedge['source_id'] == qtarget_id:
-                    source_reference = anchor_node_reference
-                    target_reference = anon_node_reference
-                cypher_counts.append(f"size(({source_reference}){edge_reference}({target_reference})) AS {count_id}")
-                new_keys.append(count_id)
-                count_to_redge[count_id] = redge_ids
-            counters.append(base + ' WITH ' + ', '.join(cypher_counts + keys))
-            keys += new_keys
+            counters = []
+            keys = []
+            count_to_redge = {}
+            for idx, (ksource_id, plan) in enumerate(count_plans.items()):
+                anchor_node_reference = NodeReference({
+                    'id': 'n',
+                    'curie': ksource_id,
+                    'type': 'named_thing'
+                })
+                base = f"MATCH ({anchor_node_reference})"
+                # base += f"USING INDEX n:{knode['type'][0]}(id)"
+                cypher_counts = []
+                new_keys = []
+                for jdx, (qlink, redge_ids) in enumerate(plan.items()):
+                    qedge_id, qtarget_id = qlink
+                    count_id = f"c{idx:03d}{chr(97 + jdx)}"
+                    qedge = qedge_map[qedge_id]
+                    edge_reference = EdgeReference(qedge, anonymous=True)
+                    anon_node_reference = NodeReference(qnode_map[qtarget_id], anonymous=True)
+                    if qedge['target_id'] == qtarget_id:
+                        source_reference = anon_node_reference
+                        target_reference = anchor_node_reference
+                    elif qedge['source_id'] == qtarget_id:
+                        source_reference = anchor_node_reference
+                        target_reference = anon_node_reference
+                    cypher_counts.append(f"size(({source_reference}){edge_reference}({target_reference})) AS {count_id}")
+                    new_keys.append(count_id)
+                    count_to_redge[count_id] = redge_ids
+                counters.append(base + ' WITH ' + ', '.join(cypher_counts + keys))
+                keys += new_keys
 
-        cypher = ' '.join(counters) + ' RETURN ' + ', '.join(keys)
+            cypher = ' '.join(counters) + ' RETURN ' + ', '.join(keys)
 
-        with KGraph(message) as driver:
+            logger.debug(cypher)
             with driver.session() as session:
                 response = session.run(cypher)
 
-        degrees = list(response)[0].data()
+            degrees = list(response)[0].data()
 
-        for key in degrees:
-            for redge_id in count_to_redge[key]:
-                eb = redges_by_id[redge_id]['eb']
-                eb['weight'] = eb.get('weight', 1.0) / degrees[key]
+            for key in degrees:
+                for redge_id in count_to_redge[key]:
+                    eb = redges_by_id[redge_id]['eb']
+                    eb['weight'] = eb.get('weight', 1.0) / degrees[key]
 
     message['results'] = results
     return message
