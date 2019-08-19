@@ -4,6 +4,7 @@ from operator import itemgetter
 from collections import defaultdict
 from itertools import combinations, product
 import re
+from uuid import uuid4
 import numpy as np
 from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.util import flatten_semilist
@@ -32,6 +33,18 @@ class Ranker:
         self.kedges_by_knodes = defaultdict(list)
         for e in kedges:
             self.kedges_by_knodes[tuple(sorted([e['source_id'], e['target_id']]))].append(e)
+
+        # find leaf-set qnodes
+        degree = defaultdict(int)
+        for edge in qgraph['edges']:
+            degree[edge['source_id']] += 1
+            degree[edge['target_id']] += 1
+        self.leaf_sets = [
+            node['id']
+            for node in qgraph['nodes']
+            if node.get('set', False) and degree[node['id']]
+        ]
+
 
     def rank(self, answers):
         """Generate a sorted list and scores for a set of subgraphs."""
@@ -77,9 +90,10 @@ class Ranker:
     def get_rgraph(self, answer):
         """Get "ranker" subgraph."""
         # TODO: for each set node with degree 1, add a new neighbor
+        rnodes = []
+        redges = []
 
         # get list of nodes, and knode_map
-        rnodes = []
         knode_map = defaultdict(set)
         for nb in answer['node_bindings']:
             qnode_id = nb['qg_id']
@@ -89,9 +103,15 @@ class Ranker:
                 rnode_id = '_' + rnode_id
             rnodes.append(rnode_id)
             knode_map[knode_id].add(rnode_id)
+            if qnode_id in self.leaf_sets:
+                rnodes.append(f'{qnode_id}_anchor')
+                redges.append({
+                    'weight': 1e9,
+                    'source_id': rnode_id,
+                    'target_id': f'{qnode_id}_anchor'
+                })
 
         # get "result" edges
-        redges = []
         for eb in answer['edge_bindings']:
             qedge_id = eb['qg_id']
             kedge_id = eb['kg_id']

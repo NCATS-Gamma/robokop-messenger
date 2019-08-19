@@ -13,3 +13,10 @@ from fixtures import bigset
 def test_answer_bigset(bigset):
     """Test that answer() handles empty queries."""
     result = score(novelty(yank(answer(bigset))))
+
+
+def test_score_leafset(bigset):
+    """Test that answer() handles empty queries."""
+    bigset['query_graph']['nodes'] = bigset['query_graph']['nodes'][:3]
+    bigset['query_graph']['edges'] = bigset['query_graph']['edges'][:2]
+    result = score(correctness(yank(answer(bigset))))
