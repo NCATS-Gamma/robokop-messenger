@@ -15,5 +15,5 @@ before_script:
 script:
   - tox
 after_script:
-  - cd ./helpers
+  - cd ./tests/helpers
   - docker-compose down
