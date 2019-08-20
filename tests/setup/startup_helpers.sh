@@ -12,6 +12,10 @@ docker cp ../data/omnicorp_hgnc.csv omnicorp_postgres:/data/omnicorp_hgnc.csv
 python ../setup/init_omnicorp.py
 echo "Postgres initialized."
 
+set -a
+source $ROBOKOP_HOME/robokop-messenger/tests/.env
+set +a
+
 echo "Waiting for Neo4j to start..."
 until echo $(docker logs remote_neo4j 2>&1) | grep -q "Bolt enabled"; do sleep 1; done
 echo "Neo4j started."
