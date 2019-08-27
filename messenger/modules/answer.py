@@ -102,23 +102,27 @@ class LocalKGraph:
         self.remove_uid()
 
 
-def query(message, max_connectivity=0):
+def query(message, **kwargs):
     """Fetch answers to question."""
     message = copy.deepcopy(message)
     with KGraph(message) as driver:
-        message = query_neo4j(message, driver, max_connectivity=max_connectivity)
+        message = query_neo4j(message, driver, **kwargs)
     return message
 
 
-def query_neo4j(message, driver, max_connectivity):
+def query_neo4j(message, driver, max_connectivity=-1):
     """Query Neo4j for answers to question."""
     qgraph = message["query_graph"]
     # get all answer maps relevant to the question from the knowledge graph
     answers = []
-    options = {"limit": 1000000, "skip": 0, "max_connectivity": max_connectivity}
+    options = {
+        "limit": 1000000,
+        "skip": 0,
+        "max_connectivity": max_connectivity,
+    }
 
     while True:
-        query_string = cypher_query_answer_map(qgraph, options=options)
+        query_string = cypher_query_answer_map(qgraph, **options)
 
         with driver.session() as session:
             result = session.run(query_string)

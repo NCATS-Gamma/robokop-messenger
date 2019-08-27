@@ -140,7 +140,7 @@ class EdgeReference():
             return ''
 
 
-def cypher_query_fragment_match(qgraph, max_connectivity=0):
+def cypher_query_fragment_match(qgraph, max_connectivity=-1):
     """Generate a Cypher query fragment to match the nodes and edges that correspond to a question.
 
     This is used internally for cypher_query_answer_map and cypher_query_knowledge_graph
@@ -168,37 +168,30 @@ def cypher_query_fragment_match(qgraph, max_connectivity=0):
             match_strings.append("WHERE " + node_references[n].filters)
 
     # match edges
-    include_size_constraints = bool(max_connectivity)
     for e, eref in zip(edges, edge_references):
         source_node = node_references[e['source_id']]
         target_node = node_references[e['target_id']]
         match_strings.append(f"MATCH ({source_node}){eref}({target_node})")
         match_strings[-1] += source_node.extras + target_node.extras
         filters = [f'({c})' for c in [source_node.filters, target_node.filters, eref.filters] if c]
+        if max_connectivity > -1:
+            filters.append(f"(size( ({target_node})-[]-() ) < {max_connectivity})")
         if filters:
             match_strings.append("WHERE " + " AND ".join(filters))
-            if include_size_constraints:
-                match_strings.append(f"AND size( ({target_node})-[]-() ) < {max_connectivity}")
-        else:
-            if include_size_constraints:
-                match_strings.append(f"WHERE size( ({target_node})-[]-() ) < {max_connectivity}")
 
     match_string = ' '.join(match_strings)
 
     return match_string
 
 
-def cypher_query_answer_map(qgraph, options=None):
+def cypher_query_answer_map(qgraph, **kwargs):
     """Generate a Cypher query to extract the answer maps for a question.
 
     Returns the query as a string.
     """
-    max_connectivity = 0
-    if options and 'max_connectivity' in options:
-        max_connectivity = options['max_connectivity']
     clauses = []
 
-    match_string = cypher_query_fragment_match(qgraph, max_connectivity)
+    match_string = cypher_query_fragment_match(qgraph, max_connectivity=kwargs.pop('max_connectivity', -1))
     if match_string:
         clauses.append(match_string)
 
@@ -223,10 +216,9 @@ def cypher_query_answer_map(qgraph, options=None):
 
     # return answer maps matching query
     query_string = ' '.join(clauses)
-    if options is not None:
-        if 'skip' in options:
-            query_string += f' SKIP {options["skip"]}'
-        if 'limit' in options:
-            query_string += f' LIMIT {options["limit"]}'
+    if 'skip' in kwargs:
+        query_string += f' SKIP {kwargs["skip"]}'
+    if 'limit' in kwargs:
+        query_string += f' LIMIT {kwargs["limit"]}'
 
     return query_string
