@@ -1,10 +1,11 @@
 """Normalize node curies."""
 
+import os
 import requests
 
 
 def synonymize(curie, node_type):
-    response = requests.post(f"http://robokop.renci.org:6010/api/synonymize/{curie}/{node_type}/")
+    response = requests.post(f"http://{os.environ['BUILDER_HOST']}:{os.environ['BUILDER_PORT']}/api/synonymize/{curie}/{node_type}/")
     if response.status_code != 200:
         return curie
     return response.json()['id']
