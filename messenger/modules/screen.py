@@ -1,8 +1,12 @@
 """Filter by score."""
 import heapq
+import json
+import logging
 import operator
 from messenger.shared.util import flatten_semilist
 from messenger.shared.neo4j import get_edge_properties
+
+logger = logging.getLogger(__name__)
 
 
 def query(message, max_results=3):
@@ -10,6 +14,9 @@ def query(message, max_results=3):
 
     Keep the top max_results, by their total edge weight.
     """
+    if max_results < 0:
+        return message
+
     kgraph = message['knowledge_graph']
     answers = message['results']
 
