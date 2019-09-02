@@ -4,7 +4,7 @@ services:
     container_name: messenger
     build:
       context: .
-    command: 'python /home/murphy/robokop-messenger/main.py'
+    command: 'gunicorn --bind 0.0.0.0:4868 wsgi:app'
     user: "${UID}:${GID}"
     env_file:
       - ../shared/robokop.env

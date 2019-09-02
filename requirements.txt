@@ -1,6 +1,7 @@
 connexion
 flask
 flask-cors
+gunicorn
 jinja2
 jsonschema
 lru-dict
