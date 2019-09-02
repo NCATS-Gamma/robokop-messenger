@@ -23,7 +23,6 @@ components:
           oneOf:
             - $ref: '#/components/schemas/KnowledgeGraph'
             - $ref: '#/components/schemas/RemoteKnowledgeGraph'
-      additionalProperties: true
       required:
         - results
         - query_graph
@@ -95,7 +94,6 @@ components:
           description: List of edges in the KnowledgeGraph
           items:
             $ref: '#/components/schemas/KEdge'
-      additionalProperties: false
       required:
         - nodes
         - edges
@@ -116,7 +114,6 @@ components:
             Credentials needed for programmatic access to the remote knowledge
             graph
           $ref: '#/components/schemas/Credentials'
-      additionalProperties: false
       required:
         - url
         - credentials
@@ -149,7 +146,6 @@ components:
           description: List of edges in the QueryGraph
           items:
             $ref: '#/components/schemas/QEdge'
-      additionalProperties: true
       required:
         - nodes
         - edges
@@ -231,7 +227,6 @@ components:
             type: string
           example:
             - protein
-      additionalProperties: true
       required:
         - id
     KEdge:
@@ -255,21 +250,20 @@ components:
           type: string
           description: Corresponds to the @id of target node of this edge
           example: 'https://www.uniprot.org/uniprot/P00738'
-      additionalProperties: true
       required:
         - id
         - source_id
         - target_id
     BiolinkEntity:
       description: A subclass of named_thing (snake_case)
-          type: string
+      type: string
       externalDocs:
         description: Biolink model entities
         url: https://biolink.github.io/biolink-model/docs/NamedThing.html
       example: disease
     BiolinkRelation:
       description: A relation, i.e. child of related_to (snake_case)
-          type: string
+      type: string
       externalDocs:
         description: Biolink model relations
         url: https://biolink.github.io/biolink-model/docs/related_to.html
