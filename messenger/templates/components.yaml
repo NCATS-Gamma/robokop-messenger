@@ -36,12 +36,12 @@ components:
           type: array
           description: List of QNode-KNode bindings.
           items:
-            $ref: '#/components/schemas/RNode'
+            $ref: '#/components/schemas/NodeBinding'
         edge_bindings:
           type: array
           description: List of QEdge-KEdge bindings.
           items:
-            $ref: '#/components/schemas/REdge'
+            $ref: '#/components/schemas/EdgeBinding'
         score:
           type: number
           format: float
@@ -50,7 +50,7 @@ components:
       required:
         - node_bindings
         - edge_bindings
-    RNode:
+    NodeBinding:
       type: object
       properties:
         qg_id:
@@ -64,7 +64,7 @@ components:
       required:
         - qg_id
         - kg_id
-    REdge:
+    EdgeBinding:
       type: object
       properties:
         qg_id:
@@ -173,13 +173,17 @@ components:
           example: 'OMIM:603903'
         type:
           oneOf:
+            - $ref: '#/components/schemas/BiolinkEntity'
             - type: string
             - type: array
               items:
-                type: string
-          description: 'Entity type of this node (e.g., protein, disease, etc.)'
-          example: disease
-      additionalProperties: true
+                $ref: '#/components/schemas/BiolinkEntity'
+              description: 'Entity types of this node (e.g., protein, disease, etc.)'
+              example:
+                - disease
+                - genetic_condition
+      required:
+        - id
     QEdge:
       type: object
       description: An edge in the QueryGraph
@@ -191,9 +195,11 @@ components:
             e01, e02, etc.
           example: e00
         type:
-          type: string
-          description: Higher-level relationship type of this edge
-          example: affects
+          oneOf:
+            - $ref: '#/components/schemas/BiolinkRelation'
+            - type: array
+              items:
+                $ref: '#/components/schemas/BiolinkRelation'
         source_id:
           type: string
           description: Corresponds to the @id of source node of this edge
@@ -202,8 +208,8 @@ components:
           type: string
           description: Corresponds to the @id of target node of this edge
           example: 'https://www.uniprot.org/uniprot/P00738'
-      additionalProperties: true
       required:
+        - id
         - source_id
         - target_id
     KNode:
@@ -239,6 +245,8 @@ components:
             KnowledgeGraph, and perhaps within the source reasoner's knowledge
             graph
           example: '553903'
+        type:
+          $ref: '#/components/schemas/BiolinkRelation'
         source_id:
           type: string
           description: Corresponds to the @id of source node of this edge
@@ -252,26 +260,17 @@ components:
         - id
         - source_id
         - target_id
-    EdgeAttribute:
-      type: object
-      description: A generic additional attribute for an edge
-      properties:
-        type:
+    BiolinkEntity:
+      description: A subclass of named_thing (snake_case)
           type: string
-          example: localization
-          description: Entity type of this attribute
-        name:
+      externalDocs:
+        description: Biolink model entities
+        url: https://biolink.github.io/biolink-model/docs/NamedThing.html
+      example: disease
+    BiolinkRelation:
+      description: A relation, i.e. child of related_to (snake_case)
           type: string
-          example: Cell type limitation
-          description: Formal name of the attribute
-        value:
-          type: string
-          example: MFC cells
-          description: >-
-            Value of the attribute. While all attributes should have a name, many
-            will not have a value
-        url:
-          type: string
-          example: 'https://www.ncbi.nlm.nih.gov/pubmed/29309293'
-          description: A URL corresponding to this attribute
-      additionalProperties: true
+      externalDocs:
+        description: Biolink model relations
+        url: https://biolink.github.io/biolink-model/docs/related_to.html
+      example: affects
