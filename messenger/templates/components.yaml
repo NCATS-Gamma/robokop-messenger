@@ -170,7 +170,6 @@ components:
         type:
           oneOf:
             - $ref: '#/components/schemas/BiolinkEntity'
-            - type: string
             - type: array
               items:
                 $ref: '#/components/schemas/BiolinkEntity'
