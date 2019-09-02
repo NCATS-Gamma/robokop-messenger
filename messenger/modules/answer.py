@@ -102,11 +102,11 @@ class LocalKGraph:
         self.remove_uid()
 
 
-def query(message, **kwargs):
+def query(message, *, max_connectivity=-1):
     """Fetch answers to question."""
     message = copy.deepcopy(message)
     with KGraph(message) as driver:
-        message = query_neo4j(message, driver, **kwargs)
+        message = query_neo4j(message, driver, max_connectivity=max_connectivity)
     return message
 
 

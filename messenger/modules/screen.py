@@ -9,7 +9,7 @@ from messenger.shared.neo4j import get_edge_properties
 logger = logging.getLogger(__name__)
 
 
-def query(message, max_results=3):
+def query(message, *, max_results=3):
     """Prescreen subgraphs.
 
     Keep the top max_results, by their total edge weight.
