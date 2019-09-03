@@ -1,5 +1,6 @@
 """Answer."""
 import copy
+import logging
 import os
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.message_state import kgraph_is_local
@@ -7,6 +8,8 @@ from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import random_string
 from messenger.shared.neo4j import dump_kg
 from messenger.shared.qgraph_compiler import cypher_query_answer_map
+
+logger = logging.getLogger(__name__)
 
 
 def KGraph(message):
