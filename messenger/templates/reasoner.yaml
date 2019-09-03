@@ -45,7 +45,10 @@ paths:
                   $ref: '#/components/schemas/Message'
                 options:
                   additionalProperties: true
+              required:
+                - message
             example:
+              message:
                 results: []
                 query_graph:
                   nodes:

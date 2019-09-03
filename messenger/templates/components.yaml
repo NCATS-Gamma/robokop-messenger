@@ -23,10 +23,6 @@ components:
           oneOf:
             - $ref: '#/components/schemas/KnowledgeGraph'
             - $ref: '#/components/schemas/RemoteKnowledgeGraph'
-      required:
-        - results
-        - query_graph
-        - knowledge_graph
     Result:
       type: object
       description: One of potentially several results or answers for a query
