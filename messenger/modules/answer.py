@@ -14,6 +14,14 @@ logger = logging.getLogger(__name__)
 
 def KGraph(message):
     """Return a LocalKGraph or RemoteKGraph, depending on the structure of `kgraph`."""
+    if 'knowledge_graph' not in message:
+        message['knowledge_graph'] = {
+            'url': 'bolt://robokopdb2.renci.org:7687',
+            'credentials': {
+                'username': 'neo4j',
+                'password': 'ncatsgamma',
+            },
+        }
     # TODO: rigorously check against json schema
     if "edges" in message['knowledge_graph']:
         return LocalKGraph(message)
