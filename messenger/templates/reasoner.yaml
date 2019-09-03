@@ -49,14 +49,10 @@ paths:
                 - message
             example:
               message:
-                results: []
                 query_graph:
                   nodes:
                     - id: n00
                       curie: MONDO:0005737
-                  edges: []
-                knowledge_graph:
-                  nodes: []
                   edges: []
         required: true
       responses:
