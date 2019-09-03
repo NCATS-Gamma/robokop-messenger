@@ -53,7 +53,7 @@ for operation in operations:
 
     def query(mdi=md):
         """Wrap query method as Flask controller."""
-        return mdi.query(request.json['message'], **request.json['options']), 200
+        return mdi.query(request.json['message'], **request.json.get('options', {})), 200
     query.__name__ = operation
     if md.query.__kwdefaults__ is not None:
         parameters = [{
