@@ -5,6 +5,7 @@ from itertools import combinations
 import logging
 import os
 from uuid import uuid4
+import gevent
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
@@ -49,8 +50,12 @@ def query(message):
 
         for node, value, key in zip(kgraph['nodes'], values, keys):
             if value is not None:
+                logger.debug(f'{key} is cached')
                 support_dict = value
             else:
+                logger.debug(f'Computing {key}...')
+                # yield to gevent loop
+                gevent.sleep(0)
                 support_dict = supporter.node_pmid_count(node['id'])
                 if cache and support_dict['omnicorp_article_count']:
                     cache.set(key, support_dict)
@@ -94,11 +99,17 @@ def query(message):
                 #    check cached_prefixes for this...
                 prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
                 if cached_prefixes and prefixes in cached_prefixes:
+                    logger.debug(f'{pair} should be cached: assume 0')
                     support_edge = []
                 else:
+                    logger.debug(f'Computing {pair}...')
+                    # yield to gevent loop
+                    gevent.sleep(0)
                     support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
                     if cache and support_edge:
                         cache.set(key, support_edge)
+            else:
+                logger.debug(f'{pair} is cached')
             if not support_edge:
                 continue
             uid = str(uuid4())
@@ -122,3 +133,24 @@ def query(message):
     message['knowledge_graph'] = kgraph
     message['results'] = answers
     return message
+
+if __name__ == "__main__":
+    import argparse
+    from dotenv import load_dotenv
+    import json
+    parser = argparse.ArgumentParser('support')
+    parser.add_argument('json', type=str, help='JSON message file')
+    parser.add_argument('-o', dest='output', default=None, type=str, help='output file')
+    args = parser.parse_args()
+
+    file_path = os.path.dirname(os.path.realpath(__file__))
+    load_dotenv(dotenv_path=os.path.join(file_path, '..', '..', '.env'))
+
+    with open(args.json, 'r') as f:
+        message = json.load(f)
+    output = query(message)
+    if args.output is not None:
+        with open(args.output, 'w') as f:
+            json.dump(output, f)
+    else:
+        print(json.dumps(output, indent=4))

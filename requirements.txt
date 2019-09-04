@@ -1,6 +1,7 @@
 connexion
 flask
 flask-cors
+gevent
 gunicorn
 jinja2
 jsonschema
