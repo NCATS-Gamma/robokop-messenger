@@ -2,7 +2,7 @@
 
 from operator import itemgetter
 from collections import defaultdict
-from itertools import combinations, product
+from itertools import combinations, permutations
 import logging
 import re
 from uuid import uuid4
@@ -118,39 +118,36 @@ class Ranker:
         for eb in answer['edge_bindings']:
             qedge_id = eb['qg_id']
             kedge_id = eb['kg_id']
-            if qedge_id[0] == 's':
-                continue
-            qedge = self.qedge_by_id[qedge_id]
+            try:
+                qedge = self.qedge_by_id[qedge_id]
+            except KeyError:
+                # a support edge
+                # qedge just needs to contain regex patterns for source and target ids
+                qedge = {
+                    'source_id': '.*',
+                    'target_id': '.*',
+                }
             kedge = self.kedge_by_id[kedge_id]
 
-            # find source and target
+            # find source and target rnode(s)
             # qedge direction may not match kedge direction
-            # we'll go with the qedge direction
-            source_id = first_match(f"_?{qedge['source_id']}/({kedge['source_id']}|{kedge['target_id']})", rnodes)
-            target_id = first_match(f"_?{qedge['target_id']}/({kedge['source_id']}|{kedge['target_id']})", rnodes)
-            edge = {
-                'weight': eb['weight'],
-                'source_id': source_id,
-                'target_id': target_id
-            }
-            redges.append(edge)
-
-        # get "support" edges
-        # We cannot get these the same way as the result edges
-        # because they do not appear in the qgraph.
-        for nodes in combinations(sorted(knode_map.keys()), 2):
-            # loop over edges connecting these nodes
-            for kedge in self.kedges_by_knodes[nodes]:
-                if kedge['type'] != 'literature_co-occurrence':
-                    continue
-                # loop over rnodes connected by this edge
-                for source_id, target_id in product(knode_map[kedge['source_id']], knode_map[kedge['target_id']]):
-                    edge = {
-                        'weight': kedge['weight'],
-                        'source_id': source_id,
-                        'target_id': target_id
-                    }
-                    redges.append(edge)
+            # we'll go with the kedge direction
+            # note that a single support edge may in theory result in multiple redges
+            # if the same knode is bound to multiple qnodes
+            pairs = matching_subsets(
+                (
+                    f"_?({qedge['source_id']}|{qedge['target_id']})/{kedge['source_id']}",
+                    f"_?({qedge['source_id']}|{qedge['target_id']})/{kedge['target_id']}",
+                ),
+                rnodes
+            )
+            for source_id, target_id in pairs:
+                edge = {
+                    'weight': eb['weight'],
+                    'source_id': source_id,
+                    'target_id': target_id
+                }
+                redges.append(edge)
 
         return rnodes, redges
 
@@ -169,10 +166,10 @@ def kirchhoff(L, keep):
     return np.trace(x.T @ np.linalg.lstsq(L, x, rcond=None)[0])
 
 
-def first_match(pattern, strings):
-    """Return the first string in the list matching the regular expression."""
-    return next(
-        string
-        for string in strings
-        if re.fullmatch(pattern, string) is not None
-    )
+def matching_subsets(patterns, superset):
+    """Return subsets matching the regular expressions."""
+    return [
+        subset
+        for subset in permutations(superset, len(patterns))
+        if all(re.fullmatch(pattern, string) is not None for pattern, string in zip(patterns, subset))
+    ]
