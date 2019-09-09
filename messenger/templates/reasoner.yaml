@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.2
 info:
   title: {{ title|default('<title>') }}
   description: {{ description|default('\<description\>') }}
@@ -8,9 +8,10 @@ info:
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+  x-reasoner_standard_version: 0.9.2
 tags:
   - name: reasoner
-    description: Reasoner services
+  - name: translator
 {% if path is defined -%}
 servers:
   - url: "/{{ path }}"
