@@ -63,13 +63,13 @@ def query(message):
             node.update(support_dict)
 
         # Generate a set of pairs of node curies
-        pair_to_answer = defaultdict(list)  # a map of node pairs to answers
+        pair_to_answer = defaultdict(set)  # a map of node pairs to answers
         for ans_idx, answer_map in enumerate(answers):
 
             # Get all nodes that are not part of sets and densely connect them
             nodes = [nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], str)]
             for node_pair in combinations(nodes, 2):
-                pair_to_answer[node_pair].append(ans_idx)
+                pair_to_answer[node_pair].add(ans_idx)
 
             # For all nodes that are within sets, connect them to all nodes that are not in sets
             set_nodes_list_list = [nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], list)]
@@ -77,7 +77,7 @@ def query(message):
             for set_node in set_nodes:
                 for node in nodes:
                     node_pair = tuple(sorted((node, set_node)))
-                    pair_to_answer[node_pair].append(ans_idx)
+                    pair_to_answer[node_pair].add(ans_idx)
 
         # get all pair supports
         cached_prefixes = cache.get('OmnicorpPrefixes') if cache else None
