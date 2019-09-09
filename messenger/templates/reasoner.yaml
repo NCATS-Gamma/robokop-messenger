@@ -24,16 +24,6 @@ paths:
       summary: {{ endpoint.description.split('\n')[0]|default('<summary>')}}
       description: ''
       operationId: {{ endpoint.operation|default('not_implemented') }}
-      {% if endpoint.parameters|length -%}
-      parameters:
-        {%- for parameter in endpoint.parameters %}
-        - in: query
-          name: {{ parameter.name }}
-          schema:
-            type: {{ parameter.type }}
-            default: {{ parameter.default }}
-        {%- endfor %}
-      {% endif -%}
       requestBody:
         description: Request
         content:
@@ -44,16 +34,18 @@ paths:
                 message:
                   $ref: '#/components/schemas/Message'
                 options:
-                  additionalProperties: true
+                  type: object
+                  {%- if endpoint.parameters|length %}
+                  properties:
+                    {%- for parameter in endpoint.parameters %}
+                    {{ parameter.name }}:
+                      type: {{ parameter.type }}
+                      example: {{ parameter.default }}
+                      default: {{ parameter.default }}
+                    {%- endfor %}
+                  {%- endif %}
               required:
                 - message
-            example:
-              message:
-                query_graph:
-                  nodes:
-                    - id: n00
-                      curie: MONDO:0005737
-                  edges: []
         required: true
       responses:
         '200':

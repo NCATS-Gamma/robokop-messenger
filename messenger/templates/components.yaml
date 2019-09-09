@@ -23,6 +23,12 @@ components:
           oneOf:
             - $ref: '#/components/schemas/KnowledgeGraph'
             - $ref: '#/components/schemas/RemoteKnowledgeGraph'
+      example:
+        query_graph:
+          nodes:
+            - id: n00
+              curie: MONDO:0005737
+          edges: []
     Result:
       type: object
       description: One of potentially several results or answers for a query
