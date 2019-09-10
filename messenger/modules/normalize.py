@@ -42,12 +42,16 @@ def query(message):
             raise ValueError(f'Curie should be a list or str, but it is a {type(curies)}.')
         curies = [synonymize(curie, node['type']) for curie in curies]
         node['curie'] = curies
+    if ('knowledge_graph' not in message) or ('nodes' not in message['knowledge_graph']):
+        return message
     curie_map = {
         node['id']: synonymize(node['id'], typelist2str(node['type']))
         for node in message['knowledge_graph']['nodes']
     }
     for node in message['knowledge_graph']['nodes']:
         node['id'] = curie_map[node['id']]
+    if 'results' not in message:
+        return message
     for result in message['results']:
         for nb in result['node_bindings']:
             nb['kg_id'] = curie_map[nb['kg_id']]
