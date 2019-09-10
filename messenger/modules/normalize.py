@@ -11,6 +11,20 @@ def synonymize(curie, node_type):
     return response.json()['id']
 
 
+def typelist2str(node_types):
+    """Convert possible list of types to single string."""
+    if isinstance(node_types, str):
+        return node_types
+    if isinstance(node_types, list):
+        return next(
+            node_type
+            for node_type in node_types
+            if node_type not in ('named_thing', 'Base')
+        )
+    else:
+        raise ValueError(f'Unsupport node-type type {type(node_types)}')
+
+
 def query(message):
     """Normalize."""
     qgraph = message['query_graph']
@@ -28,5 +42,14 @@ def query(message):
             raise ValueError(f'Curie should be a list or str, but it is a {type(curies)}.')
         curies = [synonymize(curie, node['type']) for curie in curies]
         node['curie'] = curies
+    curie_map = {
+        node['id']: synonymize(node['id'], typelist2str(node['type']))
+        for node in message['knowledge_graph']['nodes']
+    }
+    for node in message['knowledge_graph']['nodes']:
+        node['id'] = curie_map[node['id']]
+    for result in message['results']:
+        for nb in result['node_bindings']:
+            nb['kg_id'] = curie_map[nb['kg_id']]
 
     return message
