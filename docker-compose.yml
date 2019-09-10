@@ -19,9 +19,9 @@ services:
       - ../shared:/home/murphy/shared
       - ./:/home/murphy/robokop-messenger
     links:
-      - neo4j
+      - tmp_kg
 
-  neo4j:
+  tmp_kg:
     image: neo4j:3.5.4
     container_name: messenger_neo4j
     environment:
