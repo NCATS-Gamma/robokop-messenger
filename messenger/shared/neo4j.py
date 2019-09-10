@@ -82,6 +82,17 @@ def get_node_properties(node_ids, **options):
         auth=basic_auth(options['credentials']['username'], options['credentials']['password'])
     )
 
+    def get_nodes_from_query(query, n):
+        with driver.session() as session:
+            result = session.run(query_string)
+
+        nodes = [record['n'] for record in result]
+
+        if len(nodes) != n:
+            node_ids = [node['id'] for node in nodes]
+            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}; could not find {set(batch) - set(node_ids)}')
+        return nodes
+
     output = []
     n = 10000
     for batch in batches(node_ids, n):
@@ -90,19 +101,16 @@ def get_node_properties(node_ids, **options):
         where_string = 'n.id IN [' + ', '.join([f'"{node_id}"' for node_id in node_ids]) + ']'
         query_string = f'MATCH (n:named_thing) WHERE {where_string} RETURN n{{{prop_string}}}'
 
-        with driver.session() as session:
-            result = session.run(query_string)
+        try:
+            nodes = get_nodes_from_query(query_string, len(batch))
+        except RuntimeError:
+            # try without using the index on named_thing
+            query_string = f'MATCH (n) WHERE {where_string} RETURN n{{{prop_string}}}'
+            nodes = get_nodes_from_query(query_string, len(batch))
 
-        nodes = []
-        for record in result:
-            r = record['n']
-            if 'type' in r and 'named_thing' in r['type']:
-                r['type'].remove('named_thing')
-
-            nodes.append(r)
-        if len(nodes) != len(batch):
-            node_ids = [node['id'] for node in nodes]
-            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}; could not find {set(batch) - set(node_ids)}')
+        for node in nodes:
+            if 'type' in node and 'named_thing' in node['type']:
+                node['type'].remove('named_thing')
         output += nodes
 
     return output
