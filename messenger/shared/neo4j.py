@@ -123,7 +123,8 @@ def get_edge_properties(edge_ids, **options):
     functions = {
         'source_id': 'startNode(e).id',
         'target_id': 'endNode(e).id',
-        'type': 'type(e)'
+        'type': 'type(e)',
+        'id': 'toString(id(e))',
     }
 
     if fields is not None:
@@ -151,11 +152,16 @@ def get_edge_properties(edge_ids, **options):
         output = [record['e'] for record in result]
     else:
         output = []
-        statement = f"CALL db.index.fulltext.queryRelationships('edge_id_index', {{edge_ids}}) YIELD relationship WITH relationship as e RETURN e{{{prop_string}}}"
+        if options.get('relationship_id', 'property') == 'internal':
+            statement = f"""MATCH ()-[e]->() WHERE id(e) in {{edge_ids}} RETURN e{{{prop_string}}}"""
+            cat_fcn = lambda x: [int(edge_id) for edge_id in x]
+        else:
+            statement = f"CALL db.index.fulltext.queryRelationships('edge_id_index', {{edge_ids}}) YIELD relationship as e RETURN e{{{prop_string}}}"
+            cat_fcn = ' '.join
         with driver.session() as session:
             tx = session.begin_transaction()
             for batch in batches(edge_ids, 1024):
-                result = tx.run(statement, {'edge_ids': ' '.join(batch)})
+                result = tx.run(statement, {'edge_ids': cat_fcn(batch)})
 
                 edges = [record['e'] for record in result]
                 if len(edges) != len(batch):

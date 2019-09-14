@@ -126,10 +126,12 @@ def query_neo4j(message, driver, max_connectivity=-1):
     qgraph = message["query_graph"]
     # get all answer maps relevant to the question from the knowledge graph
     answers = []
+    relationship_id = message['knowledge_graph'].get('relationship_id', 'property')
     options = {
         "limit": 1000000,
         "skip": 0,
         "max_connectivity": max_connectivity,
+        "relationship_id": relationship_id,
     }
 
     while True:

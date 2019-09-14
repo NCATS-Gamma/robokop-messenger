@@ -203,7 +203,10 @@ def cypher_query_answer_map(qgraph, **kwargs):
 
     # deal with sets
     node_id_accessor = [f"collect(DISTINCT {n['id']}.id) AS {n['id']}" if 'set' in n and n['set'] else f"[{n['id']}.id] AS {n['id']}" for n in nodes]
-    edge_id_accessor = [f"collect(DISTINCT {e['id']}.id) AS {e['id']}" for e in edges]
+    if kwargs.get('relationship_id', 'property') == 'internal':
+        edge_id_accessor = [f"collect(DISTINCT toString(id({e['id']}))) AS {e['id']}" for e in edges]
+    else:
+        edge_id_accessor = [f"collect(DISTINCT {e['id']}.id) AS {e['id']}" for e in edges]
     if node_id_accessor or edge_id_accessor:
         with_string = f"WITH {', '.join(node_id_accessor+edge_id_accessor)}"
         clauses.append(with_string)
