@@ -35,6 +35,24 @@ def query(message, **options):
     all_pubs = 27840000
 
     results = message['results']
+
+    # ensure that each edge_binding has a single kg_id
+    for result in results:
+        result['edge_bindings'] = [
+            eb
+            for ebs in result['edge_bindings']
+            for eb in (
+                [
+                    {
+                        'qg_id': ebs['qg_id'],
+                        'kg_id': kg_id,
+                    }
+                    for kg_id in ebs['kg_id']
+                ] if isinstance(ebs['kg_id'], list)
+                else [ebs]
+            )
+        ]
+
     # map kedges to edge_bindings
     krmap = defaultdict(list)
     for result in results:
