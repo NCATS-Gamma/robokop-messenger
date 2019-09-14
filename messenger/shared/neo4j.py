@@ -124,8 +124,9 @@ def get_edge_properties(edge_ids, **options):
         'source_id': 'startNode(e).id',
         'target_id': 'endNode(e).id',
         'type': 'type(e)',
-        'id': 'toString(id(e))',
     }
+    if options.get('relationship_id', 'property') == 'internal':
+        functions['id'] = 'toString(id(e))'
 
     if fields is not None:
         prop_string = ', '.join([f'{key}:{functions[key]}' if key in functions else f'{key}:e.{key}' for key in fields])
