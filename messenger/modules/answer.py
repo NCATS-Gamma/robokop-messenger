@@ -3,8 +3,6 @@ import copy
 import logging
 import os
 from neo4j import GraphDatabase, basic_auth
-from messenger.shared.message_state import kgraph_is_local
-from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import random_string
 from messenger.shared.neo4j import dump_kg
 from messenger.shared.qgraph_compiler import cypher_query_answer_map
@@ -48,7 +46,7 @@ class RemoteKGraph:
         """Enter context."""
         return self.driver
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exc_type, exc_value, exc_traceback):
         """Exit context."""
         pass
 
@@ -106,7 +104,7 @@ class LocalKGraph:
         dump_kg(self.driver, self.kgraph)
         return self.driver
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exc_type, exc_value, exc_traceback):
         """Exit context."""
         with self.driver.session() as session:
             session.run(f"MATCH (n:{self.uid}) DETACH DELETE n")
@@ -117,7 +115,11 @@ def query(message, *, max_connectivity=-1):
     """Fetch answers to question."""
     message = copy.deepcopy(message)
     with KGraph(message) as driver:
-        message = query_neo4j(message, driver, max_connectivity=max_connectivity)
+        message = query_neo4j(
+            message,
+            driver,
+            max_connectivity=max_connectivity,
+        )
     return message
 
 
