@@ -50,6 +50,9 @@ def query(message):
     }
     for node in message['knowledge_graph']['nodes']:
         node['id'] = curie_map[node['id']]
+    for edge in message['knowledge_graph']['edges']:
+        edge['source_id'] = curie_map[edge['source_id']]
+        edge['target_id'] = curie_map[edge['target_id']]
     if 'results' not in message:
         return message
     for result in message['results']:
