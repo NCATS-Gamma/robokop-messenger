@@ -2,7 +2,7 @@
 
 from operator import itemgetter
 from collections import defaultdict
-from itertools import combinations, permutations
+from itertools import combinations, permutations, product
 import logging
 import re
 from uuid import uuid4
@@ -45,7 +45,7 @@ class Ranker:
         self.leaf_sets = [
             node['id']
             for node in qgraph['nodes']
-            if node.get('set', False) and degree[node['id']]
+            if node.get('set', False) and degree[node['id']]==1
         ]
 
 
@@ -63,7 +63,13 @@ class Ranker:
         rgraph = self.get_rgraph(answer)
 
         laplacian = self.graph_laplacian(rgraph)
-        nonset_node_ids = [idx for idx, node_id in enumerate(rgraph[0]) if not node_id.startswith('_')]
+        nonset_node_ids = [
+            idx for idx, rnode_id in enumerate(rgraph[0])
+            if (
+                (rnode_id[0] not in self.qnode_by_id) or
+                (not self.qnode_by_id[rnode_id[0]].get('set', False))
+            )
+        ]
 
         score = 1 / kirchhoff(laplacian, nonset_node_ids)
 
@@ -100,47 +106,57 @@ class Ranker:
         for nb in answer['node_bindings']:
             qnode_id = nb['qg_id']
             knode_id = nb['kg_id']
-            rnode_id = f"{qnode_id}/{knode_id}"
-            if self.qnode_by_id[qnode_id].get('set', False):
-                rnode_id = '_' + rnode_id
+            rnode_id = (qnode_id, knode_id)
             rnodes.add(rnode_id)
             knode_map[knode_id].add(rnode_id)
             if qnode_id in self.leaf_sets:
-                rnodes.add(f'{qnode_id}_anchor')
+                anchor_id = (f'{qnode_id}_anchor', '')
+                rnodes.add(anchor_id)
                 redges.append({
                     'weight': 1e9,
                     'source_id': rnode_id,
-                    'target_id': f'{qnode_id}_anchor'
+                    'target_id': anchor_id
                 })
         rnodes = list(rnodes)
 
         # get "result" edges
         for eb in answer['edge_bindings']:
-            qedge_id = eb['qg_id']
             kedge_id = eb['kg_id']
-            try:
-                qedge = self.qedge_by_id[qedge_id]
-            except KeyError:
-                # a support edge
-                # qedge just needs to contain regex patterns for source and target ids
-                qedge = {
-                    'source_id': '.*',
-                    'target_id': '.*',
-                }
-            kedge = self.kedge_by_id[kedge_id]
+            qedge_id = eb['qg_id']
 
             # find source and target rnode(s)
             # qedge direction may not match kedge direction
             # we'll go with the kedge direction
             # note that a single support edge may in theory result in multiple redges
             # if the same knode is bound to multiple qnodes
-            pairs = matching_subsets(
-                (
-                    f"_?({qedge['source_id']}|{qedge['target_id']})/{kedge['source_id']}",
-                    f"_?({qedge['source_id']}|{qedge['target_id']})/{kedge['target_id']}",
-                ),
-                rnodes
-            )
+
+            kedge = self.kedge_by_id[kedge_id]
+            try:
+                qedge = self.qedge_by_id[qedge_id]
+                pairs = list(product(
+                    [
+                        rnode for rnode in rnodes
+                        if rnode[0] in (qedge['source_id'], qedge['target_id']) and rnode[1] == kedge['source_id']
+                    ],
+                    [
+                        rnode for rnode in rnodes
+                        if rnode[0] in (qedge['source_id'], qedge['target_id']) and rnode[1] == kedge['target_id']
+                    ],
+                ))
+            except KeyError:
+                # a support edge
+                # qedge just needs to contain regex patterns for source and target ids
+                pairs = list(product(
+                    [
+                        rnode for rnode in rnodes
+                        if rnode[1] == kedge['source_id']
+                    ],
+                    [
+                        rnode for rnode in rnodes
+                        if rnode[1] == kedge['target_id']
+                    ],
+                ))
+
             for source_id, target_id in pairs:
                 edge = {
                     'weight': eb['weight'],
@@ -168,8 +184,8 @@ def kirchhoff(L, keep):
 
 def matching_subsets(patterns, superset):
     """Return subsets matching the regular expressions."""
-    return [
-        subset
-        for subset in permutations(superset, len(patterns))
-        if all(re.fullmatch(pattern, string) is not None for pattern, string in zip(patterns, subset))
-    ]
+    subsets = []
+    for subset in superset:
+        if patterns(subset):
+            subsets.append(subset)
+    return subsets
