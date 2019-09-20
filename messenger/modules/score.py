@@ -5,7 +5,7 @@ from messenger.shared.message_state import kgraph_is_local
 from messenger.shared.ranker_obj import Ranker
 
 
-def query(message):
+def query(message, *, jaccard_like=False):
     """Score answers.
 
     This is mostly glue around the heavy lifting in ranker_obj.Ranker
@@ -15,7 +15,7 @@ def query(message):
 
     # resistance distance ranking
     pr = Ranker(message)
-    answers = pr.rank(answers)
+    answers = pr.rank(answers, jaccard_like=jaccard_like)
 
     # finish
     message['results'] = answers

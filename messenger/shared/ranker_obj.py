@@ -49,15 +49,18 @@ class Ranker:
         ]
 
 
-    def rank(self, answers):
+    def rank(self, answers, jaccard_like=False):
         """Generate a sorted list and scores for a set of subgraphs."""
         # get subgraph statistics
-        answers = [self.score(answer) for answer in answers]
+        answers = [
+            self.score(answer, jaccard_like=jaccard_like)
+            for answer in answers
+        ]
 
         answers.sort(key=itemgetter('score'), reverse=True)
         return answers
 
-    def score(self, answer):
+    def score(self, answer, jaccard_like=False):
         """Compute answer score."""
         # answer is a list of dicts with fields 'id' and 'bound'
         rgraph = self.get_rgraph(answer)
@@ -75,7 +78,10 @@ class Ranker:
 
         # fail safe to nuke nans
         score = score if np.isfinite(score) and score >= 0 else -1
-        answer['score'] = score
+        if jaccard_like:
+            answer['score'] = score / (1 - score)
+        else:
+            answer['score'] = score
         return answer
 
     def graph_laplacian(self, rgraph):
