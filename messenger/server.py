@@ -36,14 +36,14 @@ operations = [op[:-3] for op in os.listdir(dirname) if op.endswith('.py')]
 
 def json_type(value):
     """Get JSON type for Python variable."""
-    if isinstance(value, int):
+    if isinstance(value, bool):
+        return 'boolean'
+    elif isinstance(value, int):
         return 'integer'
     elif isinstance(value, float):
         return 'number'
     elif isinstance(value, str):
         return 'string'
-    elif isinstance(value, bool):
-        return 'boolean'
     raise ValueError(f'Unsupported type {type(value)}')
 
 # create controllers module
