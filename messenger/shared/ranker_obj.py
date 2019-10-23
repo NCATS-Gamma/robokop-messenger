@@ -66,6 +66,9 @@ class Ranker:
         rgraph = self.get_rgraph(answer)
 
         laplacian = self.graph_laplacian(rgraph)
+        if np.any(np.all(np.abs(laplacian) == 0, axis=0)):
+            answer['score'] = 0
+            return answer
         nonset_node_ids = [
             idx for idx, rnode_id in enumerate(rgraph[0])
             if (
