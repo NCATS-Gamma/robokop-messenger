@@ -60,7 +60,7 @@ class NodeReference():
         self._num += 1
         if self._num == 1:
             return f'{self.name}' + \
-                   ''.join(':' + label for label in self.labels) + \
+                   ''.join(f':`{label}`' for label in self.labels) + \
                    f'{self.prop_string}'
         return self.name
 
