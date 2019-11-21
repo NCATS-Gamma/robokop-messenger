@@ -169,14 +169,14 @@ def get_node_properties(node_ids, **options):
         credentials=options['credentials'],
     )
 
-    def get_nodes_from_query(query, n):
+    def get_nodes_from_query(query_string, node_ids):
         result = driver.run(query_string)
 
         nodes = [record['n'] for record in result]
 
-        if len(nodes) != n:
-            node_ids = [node['id'] for node in nodes]
-            raise RuntimeError(f'Went looking for {len(batch)} nodes but only found {len(nodes)}; could not find {set(batch) - set(node_ids)}')
+        if len(nodes) != len(node_ids):
+            partial_node_ids = [node['id'] for node in nodes]
+            raise RuntimeError(f'Went looking for {len(node_ids)} nodes but only found {len(partial_node_ids)}; could not find {set(node_ids) - set(partial_node_ids)}')
         return nodes
 
     output = []
@@ -188,11 +188,11 @@ def get_node_properties(node_ids, **options):
         query_string = f'MATCH (n:named_thing) WHERE {where_string} RETURN n{{{prop_string}}}'
 
         try:
-            nodes = get_nodes_from_query(query_string, len(batch))
+            nodes = get_nodes_from_query(query_string, batch)
         except RuntimeError:
             # try without using the index on named_thing
             query_string = f'MATCH (n) WHERE {where_string} RETURN n{{{prop_string}}}'
-            nodes = get_nodes_from_query(query_string, len(batch))
+            nodes = get_nodes_from_query(query_string, batch)
 
         for node in nodes:
             if 'type' in node and 'named_thing' in node['type']:
