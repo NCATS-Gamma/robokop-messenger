@@ -8,7 +8,7 @@ jsonschema
 lru-dict
 neo4j-driver
 numpy
-psycopg2
+psycopg2-binary
 pyyaml
 redis
 requests
