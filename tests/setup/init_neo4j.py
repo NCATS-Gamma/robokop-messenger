@@ -9,7 +9,7 @@ import re
 import uuid
 from dotenv import load_dotenv
 from neo4j import GraphDatabase, basic_auth
-from messenger.shared.neo4j import dump_kg, clear
+from messenger.shared.neo4j import dump_kg, clear, Neo4jDatabase
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 dotenv_path = os.path.abspath(os.path.join(file_path, '..', '.env'))
@@ -103,12 +103,12 @@ def big_set():
 
 
 url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_BOLT_PORT"]}'
-driver = GraphDatabase.driver(
-    url,
-    auth=basic_auth(
-        os.environ['NEO4J_USER'],
-        os.environ['NEO4J_PASSWORD']
-    ),
+driver = Neo4jDatabase(
+    url=url,
+    credentials={
+        'username': os.environ['NEO4J_USER'],
+        'password': os.environ['NEO4J_PASSWORD'],
+    },
 )
 with open(os.path.join(os.environ['ROBOKOP_HOME'], 'robokop-messenger', 'tests', 'data', 'ebola_kg.json'), 'r') as f:
     kgraph = json.load(f)
@@ -120,8 +120,7 @@ dump_kg(driver, kgraph, with_props=True)
 dump_kg(driver, big_set().to_json())
 
 statement = "MATCH ()-[e]-() RETURN DISTINCT type(e) as predicate"
-with driver.session() as session:
-    result = session.run(statement)
+result = driver.run(statement)
 predicates = [record['predicate'] for record in result]
 predicates_string = ', '.join(f"'{predicate}'" for predicate in predicates)
 statement = f"""CALL db.index.fulltext.createRelationshipIndex(
@@ -130,5 +129,4 @@ statement = f"""CALL db.index.fulltext.createRelationshipIndex(
     ['id'],
     {{analyzer: 'keyword'}}
 )"""
-with driver.session() as session:
-    session.run(statement)
+driver.run(statement)

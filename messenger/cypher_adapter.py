@@ -131,7 +131,4 @@ class Graph(object):
 
     def query(self, q):
         """Execute a query against the graph."""
-        with self.neo4j_driver.session() as session:
-            result = session.run(q)
-
-        return [r for r in result]
+        return self.neo4j_driver.run(q)

@@ -9,6 +9,7 @@ from neo4j import GraphDatabase, basic_auth
 from messenger.shared.qgraph_compiler import NodeReference, EdgeReference
 from messenger.modules.answer import KGraph
 from messenger.shared.util import batches
+from messenger.shared.neo4j import Neo4jDatabase
 
 logger = logging.getLogger(__name__)
 
@@ -90,12 +91,12 @@ def query(message, *, exclude_sets=False):
     qnode_map = {qnode['id']: qnode for qnode in qnodes}
     qedge_map = {qedge['id']: qedge for qedge in qedges}
 
-    driver = GraphDatabase.driver(
-        f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
-        auth=basic_auth(
-            os.environ["NEO4J_USER"],
-            os.environ['NEO4J_PASSWORD']
-        )
+    driver = Neo4jDatabase(
+        url=f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
+        credentials={
+            'username': os.environ["NEO4J_USER"],
+            'password': os.environ['NEO4J_PASSWORD'],
+        },
     )
     redges_by_id = dict()
     count_plans = defaultdict(lambda: defaultdict(list))
@@ -116,54 +117,52 @@ def query(message, *, exclude_sets=False):
                     (kdx, redge['id'])
                 )
 
-    with driver.session() as session:
-        start_time = time.time()
-        count_to_redge = {}
-        for ldx, batch in enumerate(batches(list(count_plans.keys()), 1000)):
-            batch_bits = []
-            for idx, ksource_id in enumerate(batch):
-                sets = []
-                plan = count_plans[ksource_id]
-                anchor_node_reference = NodeReference({
-                    'id': f'n{idx:04d}',
-                    'curie': ksource_id,
-                    'type': 'named_thing'
+    count_to_redge = {}
+    for ldx, batch in enumerate(batches(list(count_plans.keys()), 1000)):
+        batch_bits = []
+        for idx, ksource_id in enumerate(batch):
+            sets = []
+            plan = count_plans[ksource_id]
+            anchor_node_reference = NodeReference({
+                'id': f'n{idx:04d}',
+                'curie': ksource_id,
+                'type': 'named_thing'
+            })
+            anchor_node_reference = str(anchor_node_reference)
+            base = f"MATCH ({anchor_node_reference}) "
+            for jdx, (qlink, redge_ids) in enumerate(plan.items()):
+                cypher_counts = []
+                qedge_id, qtarget_id = qlink
+                count_id = f"c{idx:03d}{chr(97 + jdx)}"
+                qedge = qedge_map[qedge_id]
+                edge_reference = EdgeReference(qedge, anonymous=True)
+                anon_node_reference = NodeReference({
+                    **qnode_map[qtarget_id],
+                    'id': count_id,
                 })
-                anchor_node_reference = str(anchor_node_reference)
-                base = f"MATCH ({anchor_node_reference}) "
-                for jdx, (qlink, redge_ids) in enumerate(plan.items()):
-                    cypher_counts = []
-                    qedge_id, qtarget_id = qlink
-                    count_id = f"c{idx:03d}{chr(97 + jdx)}"
-                    qedge = qedge_map[qedge_id]
-                    edge_reference = EdgeReference(qedge, anonymous=True)
-                    anon_node_reference = NodeReference({
-                        **qnode_map[qtarget_id],
-                        'id': count_id,
-                    })
-                    if qedge['source_id'] == qtarget_id:
-                        source_reference = anon_node_reference
-                        target_reference = anchor_node_reference
-                    elif qedge['target_id'] == qtarget_id:
-                        source_reference = anchor_node_reference
-                        target_reference = anon_node_reference
-                    cypher_counts.append(f"{anon_node_reference.name}: count(DISTINCT {anon_node_reference.name})")
-                    count_to_redge[count_id] = redge_ids
-                    sets.append(f'MATCH ({source_reference}){edge_reference}({target_reference})' + ' RETURN {' + ', '.join(cypher_counts) + '} as output')
-                batch_bits.append(' UNION ALL '.join(sets))
-            cypher = ' UNION ALL '.join(batch_bits)
-            response = session.run(cypher)
+                if qedge['source_id'] == qtarget_id:
+                    source_reference = anon_node_reference
+                    target_reference = anchor_node_reference
+                elif qedge['target_id'] == qtarget_id:
+                    source_reference = anchor_node_reference
+                    target_reference = anon_node_reference
+                cypher_counts.append(f"{anon_node_reference.name}: count(DISTINCT {anon_node_reference.name})")
+                count_to_redge[count_id] = redge_ids
+                sets.append(f'MATCH ({source_reference}){edge_reference}({target_reference})' + ' RETURN {' + ', '.join(cypher_counts) + '} as output')
+            batch_bits.append(' UNION ALL '.join(sets))
+        cypher = ' UNION ALL '.join(batch_bits)
+        response = driver.run(cypher)
 
-            degrees = {
-                key: value
-                for result in response
-                for key, value in result.data()['output'].items()
-            }
+        degrees = {
+            key: value
+            for result in response
+            for key, value in result['output'].items()
+        }
 
-            for key in degrees:
-                for redge_id in count_to_redge[key]:
-                    eb = redges_by_id[redge_id]['eb']
-                    eb['weight'] = eb.get('weight', 1.0) / degrees[key]
+        for key in degrees:
+            for redge_id in count_to_redge[key]:
+                eb = redges_by_id[redge_id]['eb']
+                eb['weight'] = eb.get('weight', 1.0) / degrees[key]
 
     message['results'] = results
     return message

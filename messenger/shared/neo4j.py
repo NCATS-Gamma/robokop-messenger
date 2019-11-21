@@ -1,14 +1,101 @@
 """Neo4j lookup utilities."""
+from abc import ABC, abstractmethod
 from copy import deepcopy
+import json
+import logging
+from urllib.parse import urlparse
 from neo4j import GraphDatabase, basic_auth
+import requests
 from messenger.cypher_adapter import Node, Edge, Graph
 from messenger.shared.util import batches, flatten_semilist
+
+logger = logging.getLogger(__name__)
+
+
+class Neo4jDatabase():
+    """Neo4j database.
+
+    This is a thin wrapper that chooses whether to instantiate
+    a Bolt interface or an HTTP interface.
+    """
+
+    def __new__(cls, url=None, **kwargs):
+        """Generate database interface."""
+        scheme = urlparse(url).scheme
+        if scheme == 'http':
+            return HttpInterface(url=url, **kwargs)
+        elif scheme == 'bolt':
+            return BoltInterface(url=url, **kwargs)
+        else:
+            raise ValueError(f'Unsupported interface scheme "{scheme}"')
+
+    @abstractmethod
+    def run(self, statement, *args):
+        """Run statement."""
+        pass
+
+
+class Neo4jInterface(ABC):
+    """Abstract interface to Neo4j database."""
+
+    def __init__(self, url=None, credentials=None, **kwargs):
+        """Initialize."""
+        url = urlparse(url)
+        self.hostname = url.hostname
+        self.port = url.port
+        self.auth = (credentials['username'], credentials['password'])
+
+    @abstractmethod
+    def run(self, statement, *args):
+        """Run statement."""
+        pass
+
+
+class HttpInterface(Neo4jInterface):
+    """HTTP interface to Neo4j database."""
+
+    def __init__(self, **kwargs):
+        """Initialize."""
+        super().__init__(**kwargs)
+        self.url = f'http://{self.hostname}:{self.port}/db/data/transaction/commit'
+
+    def run(self, statement, *args):
+        """Run statement."""
+        response = requests.post(
+            self.url,
+            auth=self.auth,
+            json={"statements": [{"statement": statement}]},
+        )
+        result = ''.join([row.decode('utf-8') for row in response])
+        result = json.loads(result)['results'][0]
+        result = [
+            dict(zip(result['columns'], datum['row']))
+            for datum in result['data']
+        ]
+        return result
+
+
+class BoltInterface(Neo4jInterface):
+    """Bolt interface to Neo4j database."""
+
+    def __init__(self, **kwargs):
+        """Initialize."""
+        super().__init__(**kwargs)
+        self.url = f'bolt://{self.hostname}:{self.port}'
+        self.driver = GraphDatabase.driver(
+            self.url,
+            auth=basic_auth(*self.auth)
+        )
+
+    def run(self, statement, *args):
+        """Run statement."""
+        with self.driver.session() as session:
+            return [dict(row) for row in session.run(statement)]
 
 
 def clear(driver):
     """Clear nodes and edges from Neo4j."""
-    with driver.session() as session:
-        session.run(f"MATCH (n) DETACH DELETE n")
+    driver.run(f"MATCH (n) DETACH DELETE n")
 
 
 def escape_quotes(string):
@@ -77,14 +164,13 @@ def get_node_properties(node_ids, **options):
         prop_string = ', '.join([f'{key}:{functions[key]}' for key in functions] + ['.*'])
 
     # get Neo4j connection
-    driver = GraphDatabase.driver(
-        options['url'],
-        auth=basic_auth(options['credentials']['username'], options['credentials']['password'])
+    driver = Neo4jDatabase(
+        url=options['url'],
+        credentials=options['credentials'],
     )
 
     def get_nodes_from_query(query, n):
-        with driver.session() as session:
-            result = session.run(query_string)
+        result = driver.run(query_string)
 
         nodes = [record['n'] for record in result]
 
@@ -134,9 +220,9 @@ def get_edge_properties(edge_ids, **options):
         prop_string = ', '.join([f'{key}:{functions[key]}' for key in functions] + ['.*'])
 
     # get Neo4j connection
-    driver = GraphDatabase.driver(
-        options['url'],
-        auth=basic_auth(options['credentials']['username'], options['credentials']['password'])
+    driver = Neo4jDatabase(
+        url=options['url'],
+        credentials=options['credentials'],
     )
 
     # print(len(edge_ids))
@@ -148,28 +234,24 @@ def get_edge_properties(edge_ids, **options):
         where_string = 'e.id IN [' + ', '.join([f'"{edge_id}"' for edge_id in edge_ids]) + ']'
         query_string = f'MATCH (n:named_thing)-[e]->() WHERE ({node_id_string}) AND ({where_string}) RETURN e{{{prop_string}}}'
 
-        with driver.session() as session:
-            result = session.run(query_string)
+        result = driver.run(query_string)
         output = [record['e'] for record in result]
     else:
         output = []
         if options.get('relationship_id', 'property') == 'internal':
-            statement = f"""MATCH ()-[e]->() WHERE id(e) in {{edge_ids}} RETURN e{{{prop_string}}}"""
+            statement = f"""MATCH ()-[e]->() WHERE id(e) in {{edge_ids}} RETURN e{{{{{prop_string}}}}}"""
             cat_fcn = lambda x: [int(edge_id) for edge_id in x]
         else:
-            statement = f"CALL db.index.fulltext.queryRelationships('edge_id_index', {{edge_ids}}) YIELD relationship as e RETURN e{{{prop_string}}}"
+            statement = f"CALL db.index.fulltext.queryRelationships('edge_id_index', {{edge_ids}}) YIELD relationship as e RETURN e{{{{{prop_string}}}}}"
             cat_fcn = ' '.join
-        with driver.session() as session:
-            tx = session.begin_transaction()
             for batch in batches(edge_ids, 1024):
-                result = tx.run(statement, {'edge_ids': cat_fcn(batch)})
+                result = driver.run(statement.format(edge_ids=repr(cat_fcn(batch))))
 
                 edges = [record['e'] for record in result]
                 if len(edges) != len(batch):
                     edge_ids = [edge['id'] for edge in edges]
                     raise RuntimeError(f'Went looking for {len(batch)} edges but only found {len(edge_ids)}; could not find {set(batch) - set(edge_ids)}')
                 output += edges
-            tx.commit()
 
     return output
 

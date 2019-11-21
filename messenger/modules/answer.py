@@ -4,7 +4,7 @@ import logging
 import os
 from neo4j import GraphDatabase, basic_auth
 from messenger.shared.util import random_string
-from messenger.shared.neo4j import dump_kg
+from messenger.shared.neo4j import dump_kg, Neo4jDatabase
 from messenger.shared.qgraph_compiler import cypher_query_answer_map
 
 logger = logging.getLogger(__name__)
@@ -34,13 +34,7 @@ class RemoteKGraph:
         """Initialize context manager."""
         # get Neo4j connection
         kgraph = message['knowledge_graph']
-        self.driver = GraphDatabase.driver(
-            kgraph["url"],
-            auth=basic_auth(
-                kgraph["credentials"]["username"],
-                kgraph["credentials"]["password"]
-            ),
-        )
+        self.driver = Neo4jDatabase(**kgraph)
 
     def __enter__(self):
         """Enter context."""
@@ -56,9 +50,12 @@ class LocalKGraph:
 
     def __init__(self, message):
         """Initialize context manager."""
-        self.driver = GraphDatabase.driver(
-            f"bolt://{os.environ['LOCAL_NEO4J_HOST']}:7687",
-            auth=basic_auth("neo4j", "pword")
+        self.driver = Neo4jDatabase(
+            url=f"bolt://{os.environ['LOCAL_NEO4J_HOST']}:7687",
+            credentials={
+                'username': 'neo4j',
+                'password': 'pword',
+            },
         )
         self.uid = random_string()
         self.kgraph = message['knowledge_graph']
@@ -106,8 +103,7 @@ class LocalKGraph:
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         """Exit context."""
-        with self.driver.session() as session:
-            session.run(f"MATCH (n:{self.uid}) DETACH DELETE n")
+        self.driver.run(f"MATCH (n:{self.uid}) DETACH DELETE n")
         self.remove_uid()
 
 
@@ -139,8 +135,7 @@ def query_neo4j(message, driver, max_connectivity=-1):
     while True:
         query_string = cypher_query_answer_map(qgraph, **options)
 
-        with driver.session() as session:
-            result = session.run(query_string)
+        result = driver.run(query_string)
 
         these_answers = [{
             "node_bindings": r["nodes"],

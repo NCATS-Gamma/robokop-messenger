@@ -93,8 +93,7 @@ def query_neo4j(message, driver, threshold):
             RETURN result, intersection, jaccard ORDER BY jaccard DESC"""
         logger.debug(query_string)
 
-        with driver.session() as session:
-            result = session.run(query_string)
+        result = driver.run(query_string)
 
         answers.extend([{
             "node_bindings": [
