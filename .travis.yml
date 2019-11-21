@@ -5,7 +5,7 @@ python:
 services:
   - docker
 install:
-  - pip install tox neo4j-driver psycopg2 python-dotenv
+  - pip install tox neo4j-driver psycopg2 python-dotenv requests
   - mkdir logs
   - mkdir cache
   - export PYTHONPATH=$(pwd)
