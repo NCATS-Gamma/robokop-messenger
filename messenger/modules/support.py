@@ -67,7 +67,7 @@ def query(message):
         for ans_idx, answer_map in enumerate(answers):
 
             # Get all nodes that are not part of sets and densely connect them
-            nodes = [nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], str)]
+            nodes = sorted([nb['kg_id'] for nb in answer_map['node_bindings'] if isinstance(nb['kg_id'], str)])
             for node_pair in combinations(nodes, 2):
                 pair_to_answer[node_pair].add(ans_idx)
 
