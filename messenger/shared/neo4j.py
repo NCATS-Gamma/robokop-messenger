@@ -228,8 +228,7 @@ def get_edge_properties(edge_ids, **options):
     # print(len(edge_ids))
 
     # batching has never been shown to be helpful except for fulltext indexing
-    if False:
-    # if node_ids is not None:
+    if node_ids:
         node_id_string = 'n.id IN [' + ', '.join([f'"{node_id}"' for node_id in node_ids]) + ']'
         where_string = 'e.id IN [' + ', '.join([f'"{edge_id}"' for edge_id in edge_ids]) + ']'
         query_string = f'MATCH (n:named_thing)-[e]->() WHERE ({node_id_string}) AND ({where_string}) RETURN e{{{prop_string}}}'
