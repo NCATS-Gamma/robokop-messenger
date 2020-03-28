@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messenger-deployment
+  labels:
+    app: robokop-messenger
+    service: messenger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: robokop-messenger
+  template:
+    metadata:
+      labels:
+        app: robokop-messenger
+    spec:
+      containers:
+      - name: messenger-container
+        image: renciorg/robokop_messenger:latest
+        envFrom:
+          - configMapRef:
+              name: robokop-env
+        env:
+          - name: "LOCAL_NEO4J_HOST"
+            value: "localhost"
+          - name: "PYTHONPATH"
+            value: "$(ROBOKOP_HOME)/robokop-messenger"
+        command:
+          - "gunicorn"
+        args:
+          - "--bind"
+          - "0.0.0.0:$(MESSENGER_PORT)"
+          - "-w"
+          - "4"
+          - "-k"
+          - "gevent"
+          - "-t"
+          - "600"
+          - "main:app"
+        volumeMounts:
+          - mountPath: /home/murphy/logs
+            name: logs-volume
+          - mountPath: /home/murphy/shared
+            name: shared-volume
+        ports:
+          - containerPort: 4868 # same as $(MESSENGER_PORT)
+      - name: messenger-neo4j-container
+        image: neo4j:3.5.4
+        env:
+          - name: NEO4J_AUTH
+            value: "neo4j/pword"
+      restartPolicy: Always
+      volumes:
+        - name: logs-volume
+          persistentVolumeClaim:
+            claimName: robokop-logs-pvc
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: robokop-shared-pvc

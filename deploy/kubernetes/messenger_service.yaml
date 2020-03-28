@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: messenger
+spec:
+  selector:
+    app: robokop-messenger
+  type: NodePort
+  ports:
+    # Messenger web service
+    - name: postgres-port
+      protocol: TCP
+      port: 4868
+      targetPort: 4868
