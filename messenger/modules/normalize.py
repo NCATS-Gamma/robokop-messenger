@@ -49,10 +49,9 @@ def query(message):
         synonymize(*(qcuries | knode_ids))
     ))
     for node in qgraph['nodes']:
-        if isinstance(node['curie'], list):
-            node['curie'] = [curie_map[ci] for ci in node['curie']]
-            break
-        node['curie'] = curie_map[node['curie']]
+        if not node.get('curie', None):
+            continue
+        node['curie'] = [curie_map[ci] for ci in ensure_list(node['curie'])]
     if ('knowledge_graph' not in message) or ('nodes' not in message['knowledge_graph']):
         return message
     for node in message['knowledge_graph']['nodes']:
