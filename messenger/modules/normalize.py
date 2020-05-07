@@ -42,8 +42,8 @@ def query(message):
     try:
         knode_ids = {node['id'] for node in message['knowledge_graph']['nodes']}
     except KeyError:
-        # knowledge graph is absent or malformed, skip
-        pass
+        # knowledge graph is absent or malformed
+        knode_ids = set()
     curie_map = dict(zip(
         qcuries | knode_ids,
         synonymize(*(qcuries | knode_ids))
