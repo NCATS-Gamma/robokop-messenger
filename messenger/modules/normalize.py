@@ -1,53 +1,60 @@
 """Normalize node curies."""
 
-import os
+import urllib
+
 import requests
 
 
-def synonymize(curie, node_type):
-    response = requests.post(f"http://{os.environ['BUILDER_HOST']}:{os.environ['BUILDER_PORT']}/api/synonymize/{curie}/{node_type}/")
-    if response.status_code != 200:
-        return curie
-    return response.json()['id']
+def synonymize(*curies):
+    """Return a list of synonymous, preferred curies."""
+    response = requests.get(
+        'https://nodenormalization-sri.renci.org/get_normalized_nodes?'
+        + '&'.join(f'curie={urllib.parse.quote(curie)}' for curie in curies)
+    )
+    if response.status_code == 404:
+        return curies
+    results = response.json()
+    return [
+        results[curie]['id']['identifier']
+        if results[curie] else
+        curie
+        for curie in curies
+    ]
 
 
-def typelist2str(node_types):
-    """Convert possible list of types to single string."""
-    if isinstance(node_types, str):
-        return node_types
-    if isinstance(node_types, list):
-        return next(
-            node_type
-            for node_type in node_types
-            if node_type not in ('named_thing', 'Base')
-        )
-    else:
-        raise ValueError(f'Unsupport node-type type {type(node_types)}')
+def ensure_list(list_or_scalar):
+    """Convert the input to a list if it is not."""
+    if isinstance(list_or_scalar, list):
+        return list_or_scalar
+    return [list_or_scalar]
 
 
 def query(message):
     """Normalize."""
     qgraph = message['query_graph']
 
+    qcuries = {
+        curie
+        for node in qgraph['nodes']
+        if 'curie' in node
+        for curie in ensure_list(node['curie'])
+    }
+    try:
+        knode_ids = {node['id'] for node in message['knowledge_graph']['nodes']}
+    except KeyError:
+        # knowledge graph is absent or malformed, skip
+        pass
+    curie_map = dict(zip(
+        qcuries | knode_ids,
+        synonymize(*(qcuries | knode_ids))
+    ))
     for node in qgraph['nodes']:
-        if not ('curie' in node and 'type' in node):
-            continue
-        # synonymize/normalize curie
-        curies = node['curie']
-        if isinstance(curies, list):
-            pass
-        elif isinstance(curies, str):
-            curies = [curies]
-        else:
-            raise ValueError(f'Curie should be a list or str, but it is a {type(curies)}.')
-        curies = [synonymize(curie, node['type']) for curie in curies]
-        node['curie'] = curies
+        if isinstance(node['curie'], list):
+            node['curie'] = [curie_map[ci] for ci in node['curie']]
+            break
+        node['curie'] = curie_map[node['curie']]
     if ('knowledge_graph' not in message) or ('nodes' not in message['knowledge_graph']):
         return message
-    curie_map = {
-        node['id']: synonymize(node['id'], typelist2str(node['type']))
-        for node in message['knowledge_graph']['nodes']
-    }
     for node in message['knowledge_graph']['nodes']:
         node['id'] = curie_map[node['id']]
     for edge in message['knowledge_graph']['edges']:
@@ -56,7 +63,7 @@ def query(message):
     if 'results' not in message:
         return message
     for result in message['results']:
-        for nb in result['node_bindings']:
-            nb['kg_id'] = curie_map[nb['kg_id']]
+        for binding in result['node_bindings']:
+            binding['kg_id'] = curie_map[binding['kg_id']]
 
     return message
