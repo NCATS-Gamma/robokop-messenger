@@ -274,4 +274,5 @@ def nodes_from_answers(message, **kwargs):
     node_ids = [nb['kg_id'] for answer in message['results'] for nb in answer['node_bindings']]
     node_ids = flatten_semilist(node_ids)
     node_ids = list(set(node_ids))
+    kwargs['url'] = message['knowledge_graph']['url']   
     return get_node_properties(node_ids, **kwargs)
