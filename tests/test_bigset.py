@@ -6,7 +6,6 @@ import json
 from reasoner_pydantic import Request
 
 from messenger.modules.answer import query as answer
-from messenger.modules.yank import query as yank
 from messenger.modules.weight_correctness import query as correctness
 from messenger.modules.weight_novelty import query as novelty
 from messenger.modules.score import query as score

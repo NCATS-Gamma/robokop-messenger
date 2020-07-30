@@ -7,11 +7,11 @@ from fixtures import nonsense_curie, whatis_doid
 
 def test_normalize_nonsense(nonsense_curie):
     """Test that normalize() returns the input for curies that cannot be normalized."""
-    result = normalize(nonsense_curie)
+    result = normalize(nonsense_curie).dict()
     assert result['query_graph']['nodes'][0]['curie'] == ['x:NONSENSE']
 
 
 def test_normalize_ebola(whatis_doid):
     """Test that normalize() maps DOIDs to MONDO ids."""
-    result = normalize(whatis_doid)
+    result = normalize(whatis_doid).dict()
     assert result['query_graph']['nodes'][0]['curie'] == ['MONDO:0005737']
