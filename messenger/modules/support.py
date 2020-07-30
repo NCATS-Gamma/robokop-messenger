@@ -1,12 +1,11 @@
 """Literature co-occurrence support."""
-
 from collections import defaultdict
 from itertools import combinations
 import logging
 import os
 from uuid import uuid4
 
-import gevent
+import asyncio
 from reasoner_pydantic import Request, Message
 
 from messenger.shared.cache import Cache
@@ -22,7 +21,68 @@ CACHE_DB = os.environ.get('CACHE_DB', '0')
 CACHE_PASSWORD = os.environ.get('CACHE_PASSWORD', '')
 
 
-def query(request: Request) -> Message:
+async def count_node_pmids(supporter, node, key, value, cache):
+    """Count node PMIDs and add as node property."""
+    if value is not None:
+        logger.debug(f'{key} is cached')
+        support_dict = value
+    else:
+        logger.debug(f'Computing {key}...')
+        support_dict = supporter.node_pmid_count(node['id'])
+        if cache and support_dict['omnicorp_article_count']:
+            cache.set(key, support_dict)
+    # add omnicorp_article_count to nodes in networkx graph
+    node.update(support_dict)
+
+
+async def count_shared_pmids(
+        supporter, support_idx, pair, key, value,
+        cache, cached_prefixes, kgraph, pair_to_answer,
+        answers,
+):
+    """Count PMIDS shared by a pair of nodes and create a new support edge."""
+    support_edge = value
+
+    if support_edge is None:
+        # There are two reasons that we don't get anything back:
+        # 1. We haven't evaluated that pair
+        # 2. We evaluated, and found it to be zero, and it was part
+        #    of a prefix pair that we evaluated all of.  In that case
+        #    we can infer that getting nothing back means an empty list
+        #    check cached_prefixes for this...
+        prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
+        if cached_prefixes and prefixes in cached_prefixes:
+            logger.debug(f'{pair} should be cached: assume 0')
+            support_edge = []
+        else:
+            logger.debug(f'Computing {pair}...')
+            support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
+            if cache and support_edge:
+                cache.set(key, support_edge)
+    else:
+        logger.debug(f'{pair} is cached')
+    if not support_edge:
+        return
+    uid = str(uuid4())
+    kgraph['edges'].append({
+        'type': 'literature_co-occurrence',
+        'id': uid,
+        'num_publications': support_edge,
+        'publications': [],
+        'source_database': 'omnicorp',
+        'source_id': pair[0],
+        'target_id': pair[1],
+        'edge_source': 'omnicorp.term_to_term'
+    })
+
+    for sg in pair_to_answer[pair]:
+        answers[sg]['edge_bindings'].append({
+            'qg_id': f's{support_idx}',
+            'kg_id': uid
+        })
+
+
+async def query(request: Request) -> Message:
     """Add support to message.
 
     Add support edges to knowledge_graph and bindings to results.
@@ -57,19 +117,11 @@ def query(request: Request) -> Message:
         for batch in batches(keys, redis_batch_size):
             values.extend(cache.mget(*batch))
 
-        for node, value, key in zip(kgraph['nodes'], values, keys):
-            if value is not None:
-                logger.debug(f'{key} is cached')
-                support_dict = value
-            else:
-                logger.debug(f'Computing {key}...')
-                # yield to gevent loop
-                gevent.sleep(0)
-                support_dict = supporter.node_pmid_count(node['id'])
-                if cache and support_dict['omnicorp_article_count']:
-                    cache.set(key, support_dict)
-            # add omnicorp_article_count to nodes in networkx graph
-            node.update(support_dict)
+        jobs = [
+            count_node_pmids(supporter, node, key, value, cache)
+            for node, value, key in zip(kgraph['nodes'], values, keys)
+        ]
+        await asyncio.gather(*jobs)
 
         # Generate a set of pairs of node curies
         pair_to_answer = defaultdict(set)  # a map of node pairs to answers
@@ -96,48 +148,15 @@ def query(request: Request) -> Message:
         for batch in batches(keys, redis_batch_size):
             values.extend(cache.mget(*batch))
 
-        for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys)):
-            support_edge = value
-
-            if support_edge is None:
-                # There are two reasons that we don't get anything back:
-                # 1. We haven't evaluated that pair
-                # 2. We evaluated, and found it to be zero, and it was part
-                #    of a prefix pair that we evaluated all of.  In that case
-                #    we can infer that getting nothing back means an empty list
-                #    check cached_prefixes for this...
-                prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
-                if cached_prefixes and prefixes in cached_prefixes:
-                    logger.debug(f'{pair} should be cached: assume 0')
-                    support_edge = []
-                else:
-                    logger.debug(f'Computing {pair}...')
-                    # yield to gevent loop
-                    gevent.sleep(0)
-                    support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
-                    if cache and support_edge:
-                        cache.set(key, support_edge)
-            else:
-                logger.debug(f'{pair} is cached')
-            if not support_edge:
-                continue
-            uid = str(uuid4())
-            kgraph['edges'].append({
-                'type': 'literature_co-occurrence',
-                'id': uid,
-                'num_publications': support_edge,
-                'publications': [],
-                'source_database': 'omnicorp',
-                'source_id': pair[0],
-                'target_id': pair[1],
-                'edge_source': 'omnicorp.term_to_term'
-            })
-
-            for sg in pair_to_answer[pair]:
-                answers[sg]['edge_bindings'].append({
-                    'qg_id': f's{support_idx}',
-                    'kg_id': uid
-                })
+        jobs = [
+            count_shared_pmids(
+                supporter, support_idx, pair, key, value,
+                cache, cached_prefixes, kgraph, pair_to_answer,
+                answers,
+            )
+            for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys))
+        ]
+        await asyncio.gather(*jobs)
 
     message['knowledge_graph'] = kgraph
     message['results'] = answers
