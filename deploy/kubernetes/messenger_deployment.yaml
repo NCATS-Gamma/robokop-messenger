@@ -22,8 +22,6 @@ spec:
           - configMapRef:
               name: robokop-env
         env:
-          - name: "LOCAL_NEO4J_HOST"
-            value: "localhost"
           - name: "PYTHONPATH"
             value: "$(ROBOKOP_HOME)/robokop-messenger"
         command:
