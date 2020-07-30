@@ -4,5 +4,6 @@ __pycache__
 .coverage
 .tox/
 .pytest_cache/
+.python-version
 venv/
 .coverage
