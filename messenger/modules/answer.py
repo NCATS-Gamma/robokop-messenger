@@ -3,6 +3,7 @@ import logging
 import os
 
 from reasoner.cypher import get_query
+from reasoner_pydantic import Request, Message
 
 from messenger.shared.neo4j import Neo4jDatabase
 
@@ -14,9 +15,9 @@ NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
 NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'pword')
 
 
-def query(message, *, max_connectivity=-1):
+def query(request: Request, *, max_connectivity: int = -1) -> Message:
     """Fetch answers to question."""
-    message = copy.deepcopy(message)
+    message = request.message.dict()
     neo4j = Neo4jDatabase(
         url=f'bolt://{NEO4J_HOST}:{NEO4J_BOLT_PORT}',
         credentials={
@@ -31,4 +32,4 @@ def query(message, *, max_connectivity=-1):
     )
     message = neo4j.run(cypher)[0]
     message['query_graph'] = qgraph
-    return message
+    return Message(**message)
