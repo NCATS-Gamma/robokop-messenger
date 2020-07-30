@@ -1,10 +1,7 @@
 {
     "knowledge_graph": {
-        "credentials": {
-            "password": "pword",
-            "username": "neo4j"
-        },
-        "url": "bolt://localhost:7687"
+        "nodes": [],
+        "edges": []
     },
     "query_graph": {
         "edges": [],
