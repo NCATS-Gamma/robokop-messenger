@@ -3,17 +3,21 @@ import heapq
 import json
 import logging
 import operator
+
+from reasoner_pydantic import Request, Message
+
 from messenger.shared.util import flatten_semilist
 from messenger.shared.neo4j import get_edge_properties
 
 logger = logging.getLogger(__name__)
 
 
-def query(message, *, max_results=3):
+def query(request: Request, *, max_results: int = 3) -> Message:
     """Prescreen subgraphs.
 
     Keep the top max_results, by their total edge weight.
     """
+    message = request.message.dict()
     if max_results < 0:
         return message
 
@@ -43,4 +47,4 @@ def query(message, *, max_results=3):
         message['knowledge_graph'] = kgraph
 
     message['results'] = answers
-    return message
+    return Message(**message)

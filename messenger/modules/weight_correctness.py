@@ -1,15 +1,17 @@
 """Weight edges."""
-import math
-import json
 from collections import defaultdict
+import math
+
+from reasoner_pydantic import Request, Message
 
 
-def query(message, **options):
+def query(request: Request, **options) -> Message:
     """Weight kgraph edges based on metadata.
 
       "19 pubs from CTD is a 1, and 2 should at least be 0.5"
         - cbizon
     """
+    message = request.message.dict()
     relevance = options.pop('relevance', 1 / 4000)  # portion of cooccurrence pubs relevant to question
 
     wt_min = options.pop('wt_min', 0)  # minimum weight (at 0 pubs)
@@ -78,4 +80,4 @@ def query(message, **options):
             redge['weight'] = redge.get('weight', 1.0) * sigmoid(effective_pubs)
 
     message['knowledge_graph'] = kgraph
-    return message
+    return Message(**message)

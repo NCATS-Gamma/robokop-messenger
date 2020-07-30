@@ -1,8 +1,10 @@
 """Answer."""
-import copy
 import logging
 import os
+
 from neo4j import GraphDatabase, basic_auth
+from reasoner_pydantic import Request, Message
+
 from messenger.shared.util import random_string
 from messenger.shared.neo4j import Neo4jDatabase
 from messenger.shared.qgraph_compiler import cypher_query_answer_map
@@ -10,9 +12,9 @@ from messenger.shared.qgraph_compiler import cypher_query_answer_map
 logger = logging.getLogger(__name__)
 
 
-def query(message, *, threshold=0.5):
+def query(request: Request, *, threshold: float = 0.5) -> Message:
     """Fetch answers to question."""
-    message = copy.deepcopy(message)
+    message = request.message.dict()
     driver = Neo4jDatabase(
         url='http://localhost:7474',
         credentials={
@@ -25,7 +27,7 @@ def query(message, *, threshold=0.5):
         driver,
         threshold,
     )
-    return message
+    return Message(**message)
 
 
 def query_neo4j(message, driver, threshold):

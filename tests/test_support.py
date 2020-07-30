@@ -5,5 +5,5 @@ from fixtures import yanked
 
 def test_support(yanked):
     """Test support()."""
-    result = support(yanked)
+    result = support(yanked).dict()
     assert any(edge['type'] == 'literature_co-occurrence' for edge in result['knowledge_graph']['edges'])

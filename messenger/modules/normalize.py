@@ -1,7 +1,7 @@
 """Normalize node curies."""
-
 import urllib
 
+from reasoner_pydantic import Request, Message
 import requests
 
 
@@ -29,8 +29,9 @@ def ensure_list(list_or_scalar):
     return [list_or_scalar]
 
 
-def query(message):
+def query(request: Request) -> Message:
     """Normalize."""
+    message = request.message.dict()
     qgraph = message['query_graph']
 
     qcuries = {
@@ -65,4 +66,4 @@ def query(message):
         for binding in result['node_bindings']:
             binding['kg_id'] = curie_map[binding['kg_id']]
 
-    return message
+    return Message(**message)

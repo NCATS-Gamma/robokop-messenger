@@ -8,7 +8,7 @@ from fixtures import nonsense_curie, whatis_doid
 def test_normalize_nonsense(nonsense_curie):
     """Test that normalize() returns the input for curies that cannot be normalized."""
     result = normalize(nonsense_curie)
-    assert result['query_graph']['nodes'][0]['curie'] == ['NONSENSE']
+    assert result['query_graph']['nodes'][0]['curie'] == ['x:NONSENSE']
 
 
 def test_normalize_ebola(whatis_doid):

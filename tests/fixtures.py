@@ -1,8 +1,10 @@
 """Test message formatting."""
-import os
 import glob
 import json
+import os
+
 import pytest
+from reasoner_pydantic import Request
 
 # generate fixture for each JSON file in tests/data
 files = glob.glob('tests/data/*.json')
@@ -14,5 +16,5 @@ for filename in files:
     def fixture(filename=filename):
         """Get message with ambiguous kgraph."""
         with open(filename, 'r') as f:
-            return json.load(f)
+            return Request(message=json.load(f))
     globals()[base] = fixture

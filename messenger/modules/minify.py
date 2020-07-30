@@ -1,7 +1,8 @@
 """Minify message."""
+from reasoner_pydantic import Request, Message
 
 
-def query(message):
+def query(request: Request) -> Message:
     """Minify message.
 
     for knowledge graph:
@@ -10,6 +11,7 @@ def query(message):
     for results:
       * keep only qg_id, kg_id
     """
+    message = request.message.dict()
     kgraph = message['knowledge_graph']
     results = message['results']
 
@@ -36,4 +38,4 @@ def query(message):
 
     message['knowledge_graph'] = kgraph
     message['results'] = results
-    return message
+    return Message(**message)

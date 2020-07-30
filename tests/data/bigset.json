@@ -6,7 +6,7 @@
     "query_graph": {
         "nodes": [
             {
-                "curie": "start",
+                "curie": "x:start",
                 "id": "n00",
                 "type": "A"
             },
@@ -24,7 +24,7 @@
                 "type": "D"
             },
             {
-                "curie": "end",
+                "curie": "x:end",
                 "id": "n04",
                 "type": "E"
             }

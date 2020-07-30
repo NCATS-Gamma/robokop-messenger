@@ -6,14 +6,19 @@ import os
 import pytest
 from messenger.shared.neo4j import get_edge_properties, get_node_properties
 
+NEO4J_HOST = os.environ.get('NEO4J_HOST', 'localhost')
+NEO4J_BOLT_PORT = os.environ.get('NEO4J_BOLT_PORT', '7687')
+NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
+NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'pword')
+
 
 def test_yank_edges():
     """Test yanking edges from the KG."""
     options = {
-        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
+        "url": f"bolt://{NEO4J_HOST}:{NEO4J_BOLT_PORT}",
         "credentials": {
-            "username": os.environ['NEO4J_USER'],
-            "password": os.environ['NEO4J_PASSWORD'],
+            "username": NEO4J_USER,
+            "password": NEO4J_PASSWORD,
         },
     }
     edge_id = '18557484'
@@ -25,10 +30,10 @@ def test_yank_edges():
 def test_fail_yank():
     """Test yanking nodes/edges from the KG."""
     options = {
-        "url": f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
+        "url": f"bolt://{NEO4J_HOST}:{NEO4J_BOLT_PORT}",
         "credentials": {
-            "username": os.environ['NEO4J_USER'],
-            "password": os.environ['NEO4J_PASSWORD'],
+            "username": NEO4J_USER,
+            "password": NEO4J_PASSWORD,
         },
     }
     edge_ids = [

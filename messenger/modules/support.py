@@ -5,7 +5,10 @@ from itertools import combinations
 import logging
 import os
 from uuid import uuid4
+
 import gevent
+from reasoner_pydantic import Request, Message
+
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
@@ -13,12 +16,18 @@ from messenger.shared.message_state import kgraph_is_local
 
 logger = logging.getLogger(__name__)
 
+CACHE_HOST = os.environ.get('CACHE_HOST', 'localhost')
+CACHE_PORT = os.environ.get('CACHE_PORT', '6379')
+CACHE_DB = os.environ.get('CACHE_DB', '0')
+CACHE_PASSWORD = os.environ.get('CACHE_PASSWORD', '')
 
-def query(message):
+
+def query(request: Request) -> Message:
     """Add support to message.
 
     Add support edges to knowledge_graph and bindings to results.
     """
+    message = request.message.dict()
     if not kgraph_is_local(message):
         raise ValueError('Support requires a local kgraph.')
 
@@ -29,10 +38,10 @@ def query(message):
     # get cache if possible
     try:
         cache = Cache(
-            redis_host=os.environ['CACHE_HOST'],
-            redis_port=os.environ['CACHE_PORT'],
-            redis_db=os.environ['CACHE_DB'],
-            redis_password=os.environ['CACHE_PASSWORD'],
+            redis_host=CACHE_HOST,
+            redis_port=CACHE_PORT,
+            redis_db=CACHE_DB,
+            redis_password=CACHE_PASSWORD,
         )
     except Exception as err:
         logger.exception(err)
@@ -132,7 +141,8 @@ def query(message):
 
     message['knowledge_graph'] = kgraph
     message['results'] = answers
-    return message
+    return Message(**message)
+
 
 if __name__ == "__main__":
     import argparse
