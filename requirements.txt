@@ -10,6 +10,7 @@ neo4j-driver
 numpy
 psycopg2-binary
 pyyaml
+git+https://github.com/ranking-agent/reasoner#egg=reasoner
 redis
 requests
 swagger-ui-bundle
