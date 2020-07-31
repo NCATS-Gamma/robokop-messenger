@@ -2,7 +2,7 @@
 import pytest
 
 from messenger.modules.support import query as support
-from fixtures import yanked
+from .fixtures import yanked
 
 
 @pytest.mark.asyncio

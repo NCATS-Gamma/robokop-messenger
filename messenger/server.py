@@ -35,7 +35,11 @@ APP.add_middleware(
 )
 
 dirname = os.path.join(os.path.dirname(__file__), 'modules')
-operations = [op[:-3] for op in os.listdir(dirname) if op.endswith('.py')]
+operations = [
+    op[:-3]
+    for op in os.listdir(dirname)
+    if op.endswith('.py') and not op.startswith('_')
+]
 
 for operation in operations:
     md = import_module(f"messenger.modules.{operation}")

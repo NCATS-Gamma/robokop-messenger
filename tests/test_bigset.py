@@ -9,7 +9,7 @@ from messenger.modules.answer import query as answer
 from messenger.modules.weight_correctness import query as correctness
 from messenger.modules.weight_novelty import query as novelty
 from messenger.modules.score import query as score
-from fixtures import bigset
+from .fixtures import bigset
 
 
 def test_answer_bigset(bigset):

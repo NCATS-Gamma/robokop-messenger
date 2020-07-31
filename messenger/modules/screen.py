@@ -7,7 +7,6 @@ import operator
 from reasoner_pydantic import Request, Message
 
 from messenger.shared.util import flatten_semilist
-from messenger.shared.neo4j import get_edge_properties
 
 logger = logging.getLogger(__name__)
 

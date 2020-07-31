@@ -2,7 +2,6 @@
 from reasoner_pydantic import Request, Message
 
 from messenger.shared.util import flatten_semilist
-from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.ranker_obj import Ranker
 
 

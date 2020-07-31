@@ -3,7 +3,7 @@
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 import json
 from messenger.modules.weight_correctness import query as weight
-from fixtures import to_weight
+from .fixtures import to_weight
 
 
 def test_weight(to_weight):

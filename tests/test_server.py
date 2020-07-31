@@ -3,7 +3,7 @@
 from fastapi.testclient import TestClient
 
 from messenger.server import APP
-from fixtures import empty
+from .fixtures import empty
 
 client = TestClient(APP)
 

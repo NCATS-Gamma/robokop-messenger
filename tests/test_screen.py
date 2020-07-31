@@ -7,7 +7,7 @@ from reasoner_pydantic import Request
 
 from messenger.modules.score import query as score
 from messenger.modules.screen import query as screen
-from fixtures import weighted2
+from .fixtures import weighted2
 
 
 def test_screen(weighted2):

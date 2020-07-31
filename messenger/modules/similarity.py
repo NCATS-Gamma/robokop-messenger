@@ -7,7 +7,6 @@ from reasoner_pydantic import Request, Message
 
 from messenger.shared.util import random_string
 from messenger.shared.neo4j import Neo4jDatabase
-from messenger.shared.qgraph_compiler import cypher_query_answer_map
 
 logger = logging.getLogger(__name__)
 

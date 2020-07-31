@@ -4,7 +4,7 @@
 import json
 import os
 import pytest
-from messenger.shared.neo4j import get_edge_properties, get_node_properties
+from .setup.neo4j import get_edge_properties, get_node_properties
 
 NEO4J_HOST = os.environ.get('NEO4J_HOST', 'localhost')
 NEO4J_BOLT_PORT = os.environ.get('NEO4J_BOLT_PORT', '7687')
