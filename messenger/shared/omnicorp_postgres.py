@@ -35,7 +35,6 @@ class OmniCorp():
             'HGNC',
             'EFO',
             'MESH'])
-        logger.info("Opening Connection to ROBOKOPDB Postgres")
         self.pool = None
         self.nsingle = 0
         self.total_single_call = datetime.timedelta()
@@ -44,6 +43,7 @@ class OmniCorp():
 
     async def connect(self):
         """Connect to PostgreSQL."""
+        logger.debug("Creating PostgreSQL connection pool...")
         self.pool = await asyncpg.create_pool(
             user=OMNICORP_USER,
             password=OMNICORP_PASSWORD,
@@ -54,7 +54,7 @@ class OmniCorp():
 
     async def close(self):
         """Close PostgreSQL connection."""
-        logger.debug('Closing Postgres connection...')
+        logger.debug('Closing PostgreSQL connection pool...')
         await self.pool.close()
 
     async def get_shared_pmids_count(self, node1, node2):

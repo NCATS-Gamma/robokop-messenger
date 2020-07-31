@@ -21,7 +21,6 @@ class OmnicorpSupport():
 
     async def __aexit__(self, exception_type, exception_value, traceback):
         """Exit context, closing database connection."""
-        logger.info("Closing Connection to ROBOKOPDB Postgres")
         await self.omnicorp.close()
 
     def term_to_term_pmids(self, node_a, node_b):
