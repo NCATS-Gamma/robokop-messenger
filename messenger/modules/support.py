@@ -158,25 +158,3 @@ async def query(request: Request) -> Message:
     message['knowledge_graph'] = kgraph
     message['results'] = answers
     return Message(**message)
-
-
-if __name__ == "__main__":
-    import argparse
-    from dotenv import load_dotenv
-    import json
-    parser = argparse.ArgumentParser('support')
-    parser.add_argument('json', type=str, help='JSON message file')
-    parser.add_argument('-o', dest='output', default=None, type=str, help='output file')
-    args = parser.parse_args()
-
-    file_path = os.path.dirname(os.path.realpath(__file__))
-    load_dotenv(dotenv_path=os.path.join(file_path, '..', '..', '.env'))
-
-    with open(args.json, 'r') as f:
-        message = json.load(f)
-    output = query(message)
-    if args.output is not None:
-        with open(args.output, 'w') as f:
-            json.dump(output, f)
-    else:
-        print(json.dumps(output, indent=4))
