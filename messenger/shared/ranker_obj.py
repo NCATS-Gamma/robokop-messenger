@@ -9,7 +9,6 @@ from uuid import uuid4
 import numpy as np
 from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.util import flatten_semilist
-from messenger.shared.message_state import kgraph_is_local
 
 logger = logging.getLogger(__name__)
 
@@ -22,10 +21,7 @@ class Ranker:
         kgraph = message['knowledge_graph']
         qgraph = message['query_graph']
 
-        if kgraph_is_local(message):
-            kedges = kgraph['edges']
-        else:
-            kedges = edges_from_answers(message)
+        kedges = kgraph['edges']
         if not any('weight' in kedge for kedge in kedges):
             for kedge in kedges:
                 kedge['weight'] = 1

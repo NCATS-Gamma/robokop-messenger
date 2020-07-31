@@ -11,7 +11,6 @@ from reasoner_pydantic import Request, Message
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
-from messenger.shared.message_state import kgraph_is_local
 
 logger = logging.getLogger(__name__)
 
@@ -88,8 +87,6 @@ async def query(request: Request) -> Message:
     Add support edges to knowledge_graph and bindings to results.
     """
     message = request.message.dict()
-    if not kgraph_is_local(message):
-        raise ValueError('Support requires a local kgraph.')
 
     kgraph = message['knowledge_graph']
     qgraph = message['query_graph']
