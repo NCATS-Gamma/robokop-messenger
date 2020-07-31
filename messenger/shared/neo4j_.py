@@ -4,8 +4,10 @@ from copy import deepcopy
 import json
 import logging
 from urllib.parse import urlparse
+
+import httpx
 from neo4j import GraphDatabase, basic_auth
-import requests
+
 from messenger.shared.util import batches, flatten_semilist
 
 logger = logging.getLogger(__name__)
@@ -60,13 +62,12 @@ class HttpInterface(Neo4jInterface):
 
     def run(self, statement, *args):
         """Run statement."""
-        response = requests.post(
+        response = httpx.post(
             self.url,
             auth=self.auth,
             json={"statements": [{"statement": statement}]},
         )
-        result = ''.join([row.decode('utf-8') for row in response])
-        result = json.loads(result)['results'][0]
+        result = response.json()['results'][0]
         result = [
             dict(zip(result['columns'], datum['row']))
             for datum in result['data']

@@ -103,7 +103,7 @@ def big_set():
     return g
 
 
-url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_BOLT_PORT"]}'
+url = os.environ['NEO4J_URL']
 driver = Neo4jDatabase(
     url=url,
     credentials={

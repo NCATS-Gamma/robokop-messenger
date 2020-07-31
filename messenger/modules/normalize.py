@@ -1,13 +1,13 @@
 """Normalize node curies."""
 import urllib
 
+import httpx
 from reasoner_pydantic import Request, Message
-import requests
 
 
 def synonymize(*curies):
     """Return a list of synonymous, preferred curies."""
-    response = requests.get(
+    response = httpx.get(
         'https://nodenormalization-sri.renci.org/get_normalized_nodes?'
         + '&'.join(f'curie={urllib.parse.quote(curie)}' for curie in curies)
     )

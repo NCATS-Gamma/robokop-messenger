@@ -9,8 +9,7 @@ from messenger.shared.neo4j_ import Neo4jDatabase
 
 logger = logging.getLogger(__name__)
 
-NEO4J_HOST = os.environ.get('NEO4J_HOST', 'localhost')
-NEO4J_BOLT_PORT = os.environ.get('NEO4J_BOLT_PORT', '7687')
+NEO4J_URL = os.environ.get('NEO4J_URL', 'http://localhost:7474')
 NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
 NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'pword')
 
@@ -19,7 +18,7 @@ def query(request: Request, *, max_connectivity: int = -1) -> Message:
     """Fetch answers to question."""
     message = request.message.dict()
     neo4j = Neo4jDatabase(
-        url=f'bolt://{NEO4J_HOST}:{NEO4J_BOLT_PORT}',
+        url=NEO4J_URL,
         credentials={
             'username': NEO4J_USER,
             'password': NEO4J_PASSWORD,
