@@ -7,7 +7,6 @@ import logging
 import re
 from uuid import uuid4
 import numpy as np
-from messenger.shared.neo4j import edges_from_answers
 from messenger.shared.util import flatten_semilist
 
 logger = logging.getLogger(__name__)
@@ -48,10 +47,10 @@ class Ranker:
     def rank(self, answers, jaccard_like=False):
         """Generate a sorted list and scores for a set of subgraphs."""
         # get subgraph statistics
-        answers = [
-            self.score(answer, jaccard_like=jaccard_like)
-            for answer in answers
-        ]
+        print(f'{len(answers)} answers')
+        answers_ = []
+        for answer in answers:
+            answers_.append(self.score(answer, jaccard_like=jaccard_like))
 
         answers.sort(key=itemgetter('score'), reverse=True)
         return answers
