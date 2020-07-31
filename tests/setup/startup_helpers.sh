@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd $ROBOKOP_HOME/robokop-messenger/tests/helpers
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR/../helpers
 docker-compose up -d
 
 echo "Waiting for Postgres to start..."
@@ -13,12 +14,12 @@ python ../setup/init_omnicorp.py
 echo "Postgres initialized."
 
 set -a
-source $ROBOKOP_HOME/robokop-messenger/tests/.env
+source ../.env
 set +a
 
 echo "Waiting for Neo4j to start..."
 until echo $(docker logs remote_neo4j 2>&1) | grep -q "Bolt enabled"; do sleep 1; done
 echo "Neo4j started."
-export PYTHONPATH=$ROBOKOP_HOME/robokop-messenger
-python ../setup/init_neo4j.py
+cd ../..
+python tests/setup/init_neo4j.py
 echo "Neo4j initialized."

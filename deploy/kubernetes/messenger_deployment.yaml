@@ -21,21 +21,18 @@ spec:
         envFrom:
           - configMapRef:
               name: robokop-env
-        env:
-          - name: "PYTHONPATH"
-            value: "$(ROBOKOP_HOME)/robokop-messenger"
         command:
           - "gunicorn"
         args:
           - "--bind"
-          - "0.0.0.0:$(MESSENGER_PORT)"
+          - "0.0.0.0:4868"
           - "-w"
           - "4"
           - "-k"
-          - "gevent"
+          - "uvicorn.workers.UvicornWorker"
           - "-t"
           - "600"
-          - "main:app"
+          - "messenger.server:APP"
         volumeMounts:
           - mountPath: /home/murphy/logs
             name: logs-volume

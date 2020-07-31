@@ -4,15 +4,14 @@ services:
     container_name: messenger
     build:
       context: .
-    command: 'gunicorn --bind 0.0.0.0:4868 -w 4 -k gevent -t 600 main:app'
+    command: 'gunicorn --bind 0.0.0.0:4868 -w 4 -k uvicorn.workers.UvicornWorker -t 600 messenger.server:APP'
     user: "${UID}:${GID}"
     env_file:
       - ../shared/robokop.env
     environment:
-      - ROBOKOP_HOME=/home/murphy
       - PYTHONPATH=/home/murphy/robokop-messenger
     ports:
-      - "${MESSENGER_PORT}:${MESSENGER_PORT}"
+      - "4868:4868"
     volumes:
       - ../logs:/home/murphy/logs
       - ../shared:/home/murphy/shared

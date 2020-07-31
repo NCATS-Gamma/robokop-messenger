@@ -111,7 +111,7 @@ driver = Neo4jDatabase(
         'password': os.environ['NEO4J_PASSWORD'],
     },
 )
-with open(os.path.join(os.environ['ROBOKOP_HOME'], 'robokop-messenger', 'tests', 'data', 'ebola_kg.json'), 'r') as f:
+with open(os.path.join('tests', 'data', 'ebola_kg.json'), 'r') as f:
     kgraph = json.load(f)
 for node in kgraph['nodes']:
     node['type'].append('test')

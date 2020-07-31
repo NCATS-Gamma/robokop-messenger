@@ -14,7 +14,7 @@ import yaml
 # Set up default logger.
 with pkg_resources.resource_stream('messenger', 'logging.yml') as f:
     config = yaml.safe_load(f.read())
-logdir = os.path.join(os.environ.get('ROBOKOP_HOME', '..'), 'logs')
+logdir = 'logs'
 if not os.path.exists(logdir):
     os.makedirs(logdir)
 config['handlers']['file']['filename'] = os.path.join(logdir, 'messenger.log')
