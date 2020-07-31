@@ -28,7 +28,7 @@ async def count_node_pmids(supporter, node, key, value, cache):
         support_dict = value
     else:
         logger.debug(f'Computing {key}...')
-        support_dict = supporter.node_pmid_count(node['id'])
+        support_dict = await supporter.node_pmid_count(node['id'])
         if cache and support_dict['omnicorp_article_count']:
             cache.set(key, support_dict)
     # add omnicorp_article_count to nodes in networkx graph
@@ -56,7 +56,7 @@ async def count_shared_pmids(
             support_edge = []
         else:
             logger.debug(f'Computing {pair}...')
-            support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
+            support_edge = await supporter.term_to_term_pmid_count(pair[0], pair[1])
             if cache and support_edge:
                 cache.set(key, support_edge)
     else:
@@ -109,7 +109,7 @@ async def query(request: Request) -> Message:
 
     redis_batch_size = 100
 
-    with OmnicorpSupport() as supporter:
+    async with OmnicorpSupport() as supporter:
         # get all node supports
 
         keys = [f"{supporter.__class__.__name__}({node['id']})" for node in kgraph['nodes']]
