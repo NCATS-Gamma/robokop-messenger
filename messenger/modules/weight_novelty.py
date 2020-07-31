@@ -11,7 +11,7 @@ from neo4j import GraphDatabase, basic_auth
 
 from messenger.shared.qgraph_compiler import NodeReference, EdgeReference
 from messenger.shared.util import batches
-from messenger.shared.neo4j import Neo4jDatabase
+from messenger.shared.neo4j_ import Neo4jDatabase
 
 logger = logging.getLogger(__name__)
 

@@ -9,7 +9,8 @@ import re
 import uuid
 from dotenv import load_dotenv
 from neo4j import GraphDatabase, basic_auth
-from messenger.shared.neo4j import dump_kg, clear, Neo4jDatabase
+from tests.setup.neo4j_ import dump_kg, clear
+from messenger.shared.neo4j_ import Neo4jDatabase
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 dotenv_path = os.path.abspath(os.path.join(file_path, '..', '.env'))

@@ -90,8 +90,3 @@ class BoltInterface(Neo4jInterface):
         """Run statement."""
         with self.driver.session() as session:
             return [dict(row) for row in session.run(statement)]
-
-
-def clear(driver):
-    """Clear nodes and edges from Neo4j."""
-    driver.run(f"MATCH (n) DETACH DELETE n")

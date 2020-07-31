@@ -1,9 +1,14 @@
 """Neo4j utils for test setup."""
 from copy import deepcopy
 
-from .cypher_adapter import Node, Edge, Graph
-from messenger.shared.neo4j import Neo4jDatabase
+from tests.setup.cypher_adapter import Node, Edge, Graph
+from messenger.shared.neo4j_ import Neo4jDatabase
 from messenger.shared.util import batches
+
+
+def clear(driver):
+    """Clear nodes and edges from Neo4j."""
+    driver.run(f"MATCH (n) DETACH DELETE n")
 
 
 def get_edge_properties(edge_ids, **options):
