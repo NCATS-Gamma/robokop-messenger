@@ -9,6 +9,7 @@ install:
   - mkdir logs
   - mkdir cache
 before_script:
+  - export PYTHONPATH=$(pwd)
   - ./tests/setup/startup_helpers.sh
 script:
   - tox
