@@ -60,6 +60,21 @@ class HttpInterface(Neo4jInterface):
         super().__init__(**kwargs)
         self.url = f'http://{self.hostname}:{self.port}/db/data/transaction/commit'
 
+    async def arun(self, statement, *args):
+        """Run statement."""
+        async with httpx.AsyncClient(timeout=None) as client:
+            response = await client.post(
+                self.url,
+                auth=self.auth,
+                json={"statements": [{"statement": statement}]},
+            )
+        result = response.json()['results'][0]
+        result = [
+            dict(zip(result['columns'], datum['row']))
+            for datum in result['data']
+        ]
+        return result
+
     def run(self, statement, *args):
         """Run statement."""
         response = httpx.post(

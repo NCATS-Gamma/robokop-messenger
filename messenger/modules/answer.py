@@ -14,7 +14,7 @@ NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
 NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'pword')
 
 
-def query(request: Request, *, max_connectivity: int = -1) -> Message:
+async def query(request: Request, *, max_connectivity: int = -1) -> Message:
     """Fetch answers to question."""
     message = request.message.dict()
     neo4j = Neo4jDatabase(
@@ -29,6 +29,6 @@ def query(request: Request, *, max_connectivity: int = -1) -> Message:
         qgraph,
         max_connectivity=max_connectivity,
     )
-    message = neo4j.run(cypher)[0]
+    message = (await neo4j.arun(cypher))[0]
     message['query_graph'] = qgraph
     return Message(**message)
