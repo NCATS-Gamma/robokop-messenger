@@ -16,6 +16,7 @@ echo "Postgres initialized."
 set -a
 source ../.env
 set +a
+export NEO4J_URL=bolt://localhost:7687
 
 echo "Waiting for Neo4j to start..."
 until echo $(docker logs remote_neo4j 2>&1) | grep -q "Bolt enabled"; do sleep 1; done
