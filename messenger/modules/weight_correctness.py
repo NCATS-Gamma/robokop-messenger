@@ -1,22 +1,37 @@
 """Weight edges."""
 from collections import defaultdict
 import math
+from typing import Optional
 
+from fastapi import Query
 from reasoner_pydantic import Request, Message
 
 
-def query(request: Request, **options) -> Message:
+def query(
+        request: Request,
+        relevance: Optional[float] = Query(
+            0.0025,
+            description='portion of cooccurrence pubs relevant to question',
+        ),
+        wt_min: Optional[float] = Query(
+            0.0,
+            description='minimum weight (at 0 pubs)',
+        ),
+        wt_max: Optional[float] = Query(
+            1.0,
+            description='maximum weight (at inf pubs)',
+        ),
+        p50: Optional[float] = Query(
+            2.0,
+            description='pubs at 50% of wt_max',
+        ),
+) -> Message:
     """Weight kgraph edges based on metadata.
 
-      "19 pubs from CTD is a 1, and 2 should at least be 0.5"
+    "19 pubs from CTD is a 1, and 2 should at least be 0.5"
         - cbizon
     """
     message = request.message.dict()
-    relevance = options.pop('relevance', 1 / 4000)  # portion of cooccurrence pubs relevant to question
-
-    wt_min = options.pop('wt_min', 0)  # minimum weight (at 0 pubs)
-    wt_max = options.pop('wt_max', 1)  # maximum weight (at inf pubs)
-    p50 = options.pop('p50', 2)  # pubs at 50% of wt_max
 
     def sigmoid(x):
         """Scale with partial sigmoid - the right (concave down) half.
