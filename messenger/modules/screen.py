@@ -11,7 +11,7 @@ from messenger.shared.util import flatten_semilist
 logger = logging.getLogger(__name__)
 
 
-def query(request: Request, *, max_results: int = 3) -> Message:
+async def query(request: Request, *, max_results: int = 3) -> Message:
     """Prescreen subgraphs.
 
     Keep the top max_results, by their total edge weight.

@@ -85,7 +85,7 @@ def get_rgraph(result, message):
     }
 
 
-def query(request: Request, *, exclude_sets=False) -> Message:
+async def query(request: Request, *, exclude_sets=False) -> Message:
     """Compute informativeness weights for edges."""
     message = request.message.dict()
     qgraph = message['query_graph']

@@ -5,7 +5,7 @@ from messenger.shared.util import flatten_semilist
 from messenger.shared.ranker_obj import Ranker
 
 
-def query(request: Request, *, jaccard_like: bool = False) -> Message:
+async def query(request: Request, *, jaccard_like: bool = False) -> Message:
     """Score answers.
 
     This is mostly glue around the heavy lifting in ranker_obj.Ranker

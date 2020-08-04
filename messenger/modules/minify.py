@@ -2,7 +2,7 @@
 from reasoner_pydantic import Request, Message
 
 
-def query(request: Request) -> Message:
+async def query(request: Request) -> Message:
     """Minify message.
 
     for knowledge graph:
