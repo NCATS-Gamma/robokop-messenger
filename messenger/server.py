@@ -41,6 +41,22 @@ operations = [
     if op.endswith('.py') and not op.startswith('_')
 ]
 
+
+def log_exception(method):
+    """Wrap method."""
+    @wraps(method)
+    async def wrapper(*args, **kwargs):
+        """Log exception encountered in method, then pass."""
+        try:
+            return await method(*args, **kwargs)
+        except Exception as err:  # pylint: disable=broad-except
+            LOGGER.exception(err)
+            raise
+    return wrapper
+
+
 for operation in operations:
     md = import_module(f"messenger.modules.{operation}")
-    APP.post('/' + operation, response_model=Message)(md.query)
+    APP.post('/' + operation, response_model=Message)(
+        log_exception(md.query)
+    )
