@@ -1,14 +1,18 @@
 """Test Support."""
-import pytest
+# pylint: disable=redefined-outer-name,no-name-in-module,unused-import
+# ^^^ this stuff happens because of the incredible way we do pytest fixtures
+from fastapi.testclient import TestClient
 
-from messenger.modules.support import query as support
+from messenger.server import APP
 from .fixtures import yanked
 
+client = TestClient(APP)
 
-@pytest.mark.asyncio
-async def test_support(yanked):
+
+def test_support(yanked):
     """Test support()."""
-    result = (await support(yanked)).dict()
+    response = client.post('/support', json=yanked.dict())
+    result = response.json()
     assert any(
         edge['type'] == 'literature_co-occurrence'
         for edge in result['knowledge_graph']['edges']
