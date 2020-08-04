@@ -7,7 +7,7 @@ from fastapi import Query
 from reasoner_pydantic import Request, Message
 
 
-def query(
+async def query(
         request: Request,
         relevance: Optional[float] = Query(
             0.0025,

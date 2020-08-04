@@ -11,7 +11,7 @@ from messenger.shared.neo4j_ import Neo4jDatabase
 logger = logging.getLogger(__name__)
 
 
-def query(request: Request, *, threshold: float = 0.5) -> Message:
+async def query(request: Request, *, threshold: float = 0.5) -> Message:
     """Fetch answers to question."""
     message = request.message.dict()
     driver = Neo4jDatabase(

@@ -29,7 +29,7 @@ def ensure_list(list_or_scalar):
     return [list_or_scalar]
 
 
-def query(request: Request) -> Message:
+async def query(request: Request) -> Message:
     """Normalize."""
     message = request.message.dict()
     qgraph = message['query_graph']
@@ -42,18 +42,23 @@ def query(request: Request) -> Message:
     }
     try:
         knode_ids = {node['id'] for node in message['knowledge_graph']['nodes']}
-    except KeyError:
+    except (KeyError, TypeError):
         # knowledge graph is absent or malformed
         knode_ids = set()
+    curies = {
+        curie
+        for curie in qcuries | knode_ids
+        if curie
+    }
     curie_map = dict(zip(
-        qcuries | knode_ids,
-        synonymize(*(qcuries | knode_ids))
+        curies,
+        synonymize(*(curies))
     ))
     for node in qgraph['nodes']:
         if not node.get('curie', None):
             continue
         node['curie'] = [curie_map[ci] for ci in ensure_list(node['curie'])]
-    if ('knowledge_graph' not in message) or ('nodes' not in message['knowledge_graph']):
+    if not message.get('knowledge_graph', None) or ('nodes' not in message['knowledge_graph']):
         return message
     for node in message['knowledge_graph']['nodes']:
         node['id'] = curie_map[node['id']]
