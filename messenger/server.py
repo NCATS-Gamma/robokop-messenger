@@ -24,7 +24,7 @@ LOGGER = logging.getLogger(__name__)
 
 APP = FastAPI(
     title='ROBOKOP Messenger',
-    version='2.0.0',
+    version='2.1.0',
 )
 APP.add_middleware(
     CORSMiddleware,
