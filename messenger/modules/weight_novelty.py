@@ -5,13 +5,19 @@ import os
 import time
 import uuid
 from collections import defaultdict
+
+from reasoner_pydantic import Request, Message
 from neo4j import GraphDatabase, basic_auth
+
 from messenger.shared.qgraph_compiler import NodeReference, EdgeReference
-from messenger.modules.answer import KGraph
 from messenger.shared.util import batches
-from messenger.shared.neo4j import Neo4jDatabase
+from messenger.shared.neo4j_ import Neo4jDatabase
 
 logger = logging.getLogger(__name__)
+
+NEO4J_URL = os.environ.get('NEO4J_URL', 'http://localhost:7474')
+NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
+NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'pword')
 
 
 def get_rgraph(result, message):
@@ -79,8 +85,9 @@ def get_rgraph(result, message):
     }
 
 
-def query(message, *, exclude_sets=False):
+def query(request: Request, *, exclude_sets=False) -> Message:
     """Compute informativeness weights for edges."""
+    message = request.message.dict()
     qgraph = message['query_graph']
     results = message['results']
 
@@ -92,10 +99,10 @@ def query(message, *, exclude_sets=False):
     qedge_map = {qedge['id']: qedge for qedge in qedges}
 
     driver = Neo4jDatabase(
-        url=f"bolt://{os.environ['NEO4J_HOST']}:{os.environ['NEO4J_BOLT_PORT']}",
+        url=NEO4J_URL,
         credentials={
-            'username': os.environ["NEO4J_USER"],
-            'password': os.environ['NEO4J_PASSWORD'],
+            'username': NEO4J_USER,
+            'password': NEO4J_PASSWORD,
         },
     )
     redges_by_id = dict()
@@ -165,4 +172,4 @@ def query(message, *, exclude_sets=False):
                 eb['weight'] = eb.get('weight', 1.0) / degrees[key]
 
     message['results'] = results
-    return message
+    return Message(**message)

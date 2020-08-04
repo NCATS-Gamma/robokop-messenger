@@ -1,13 +1,20 @@
 """Test answer."""
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
-from messenger.modules.answer import query as answer
-from fixtures import empty, whatis_mondo, onestep, ebola_mondo
+from fastapi.testclient import TestClient
+
+from messenger.server import APP
+from .fixtures import empty, whatis_mondo, onestep, ebola_mondo
+
+client = TestClient(APP)
 
 
 def test_answer_empty(empty):
     """Test that answer() handles empty queries."""
-    result = answer(empty)
+    response = client.post('/answer', json={
+        "message": empty
+    })
+    result = response.json()
     assert len(result['results']) == 1
     result = result['results'][0]
     assert isinstance(result['node_bindings'], list) and not result['node_bindings']
@@ -16,19 +23,28 @@ def test_answer_empty(empty):
 
 def test_answer_whatis(whatis_mondo):
     """Test that answer() can look up a single node."""
-    result = answer(whatis_mondo)
+    response = client.post('/answer', json={
+        "message": whatis_mondo
+    })
+    result = response.json()
     assert result['results']
     assert 'MONDO:0005737' in result['results'][0]['node_bindings'][0]['kg_id']
 
 
 def test_answer_onestep(onestep):
     """Test that answer() answers one-step queries."""
-    result = answer(onestep)
+    response = client.post('/answer', json={
+        "message": onestep
+    })
+    result = response.json()
     assert result['results']
     first = result['results'][0]
     assert first['node_bindings']
     assert first['edge_bindings']
 
+
 def test_ebola(ebola_mondo):
     """Test that answer() answers ebola."""
-    result = answer(ebola_mondo)
+    response = client.post('/answer', json={
+        "message": ebola_mondo
+    })

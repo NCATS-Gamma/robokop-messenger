@@ -5,12 +5,11 @@ python:
 services:
   - docker
 install:
-  - pip install tox neo4j-driver psycopg2 python-dotenv requests
+  - pip install tox neo4j-driver psycopg2 python-dotenv httpx
   - mkdir logs
   - mkdir cache
-  - export PYTHONPATH=$(pwd)
-  - export ROBOKOP_HOME=$(pwd)/..
 before_script:
+  - export PYTHONPATH=$(pwd)
   - ./tests/setup/startup_helpers.sh
 script:
   - tox

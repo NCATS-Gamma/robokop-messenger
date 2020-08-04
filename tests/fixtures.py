@@ -1,7 +1,8 @@
 """Test message formatting."""
-import os
 import glob
 import json
+import os
+
 import pytest
 
 # generate fixture for each JSON file in tests/data
@@ -13,6 +14,6 @@ for filename in files:
     @pytest.fixture(name=base, scope='module')
     def fixture(filename=filename):
         """Get message with ambiguous kgraph."""
-        with open(filename, 'r') as f:
-            return json.load(f)
+        with open(filename, 'r') as stream:
+            return json.load(stream)
     globals()[base] = fixture

@@ -2,10 +2,17 @@
 # pylint: disable=redefined-outer-name,no-name-in-module,unused-import
 # ^^^ this stuff happens because of the incredible way we do pytest fixtures
 import json
-from messenger.modules.weight_correctness import query as weight
-from fixtures import to_weight
+
+from fastapi.testclient import TestClient
+
+from messenger.server import APP
+from .fixtures import to_weight
+
+client = TestClient(APP)
 
 
 def test_weight(to_weight):
     """Test that weight() runs without errors."""
-    result = weight(to_weight)
+    response = client.post('/weight_correctness', json={
+        "message": to_weight
+    })

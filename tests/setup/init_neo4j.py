@@ -9,7 +9,8 @@ import re
 import uuid
 from dotenv import load_dotenv
 from neo4j import GraphDatabase, basic_auth
-from messenger.shared.neo4j import dump_kg, clear, Neo4jDatabase
+from tests.setup.neo4j_ import dump_kg, clear
+from messenger.shared.neo4j_ import Neo4jDatabase
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 dotenv_path = os.path.abspath(os.path.join(file_path, '..', '.env'))
@@ -102,7 +103,7 @@ def big_set():
     return g
 
 
-url = f'bolt://{os.environ["NEO4J_HOST"]}:{os.environ["NEO4J_BOLT_PORT"]}'
+url = os.environ['NEO4J_URL']
 driver = Neo4jDatabase(
     url=url,
     credentials={
@@ -110,7 +111,7 @@ driver = Neo4jDatabase(
         'password': os.environ['NEO4J_PASSWORD'],
     },
 )
-with open(os.path.join(os.environ['ROBOKOP_HOME'], 'robokop-messenger', 'tests', 'data', 'ebola_kg.json'), 'r') as f:
+with open(os.path.join('tests', 'data', 'ebola_kg.json'), 'r') as f:
     kgraph = json.load(f)
 for node in kgraph['nodes']:
     node['type'].append('test')

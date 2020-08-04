@@ -1,26 +1,32 @@
 """Answer."""
-import copy
 import logging
 import os
+
 from neo4j import GraphDatabase, basic_auth
+from reasoner_pydantic import Request, Message
+
 from messenger.shared.util import random_string
-from messenger.shared.neo4j import dump_kg
-from messenger.shared.qgraph_compiler import cypher_query_answer_map
-from messenger.modules.answer import KGraph
+from messenger.shared.neo4j_ import Neo4jDatabase
 
 logger = logging.getLogger(__name__)
 
 
-def query(message, *, threshold=0.5):
+def query(request: Request, *, threshold: float = 0.5) -> Message:
     """Fetch answers to question."""
-    message = copy.deepcopy(message)
-    with KGraph(message) as driver:
-        message = query_neo4j(
-            message,
-            driver,
-            threshold,
-        )
-    return message
+    message = request.message.dict()
+    driver = Neo4jDatabase(
+        url='http://localhost:7474',
+        credentials={
+            'username': 'neo4j',
+            'password': 'pword',
+        },
+    )
+    message = query_neo4j(
+        message,
+        driver,
+        threshold,
+    )
+    return Message(**message)
 
 
 def query_neo4j(message, driver, threshold):

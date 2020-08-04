@@ -1,3 +1,1 @@
-include messenger/templates/reasoner.yaml
-include messenger/templates/components.yaml
 include messenger/logging.yml

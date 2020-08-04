@@ -1,15 +1,12 @@
 {
     "knowledge_graph": {
-        "url": "bolt://localhost:7687",
-        "credentials": {
-            "username": "neo4j",
-            "password": "pword"
-        }
+        "nodes": [],
+        "edges": []
     },
     "query_graph": {
         "nodes": [
             {
-                "curie": "start",
+                "curie": "x:start",
                 "id": "n00",
                 "type": "A"
             },
@@ -27,7 +24,7 @@
                 "type": "D"
             },
             {
-                "curie": "end",
+                "curie": "x:end",
                 "id": "n04",
                 "type": "E"
             }

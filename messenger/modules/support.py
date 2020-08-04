@@ -1,26 +1,92 @@
 """Literature co-occurrence support."""
-
 from collections import defaultdict
 from itertools import combinations
 import logging
 import os
 from uuid import uuid4
-import gevent
+
+import asyncio
+from reasoner_pydantic import Request, Message
+
 from messenger.shared.cache import Cache
 from messenger.shared.omnicorp import OmnicorpSupport
 from messenger.shared.util import batches
-from messenger.shared.message_state import kgraph_is_local
 
 logger = logging.getLogger(__name__)
 
+CACHE_HOST = os.environ.get('CACHE_HOST', 'localhost')
+CACHE_PORT = os.environ.get('CACHE_PORT', '6379')
+CACHE_DB = os.environ.get('CACHE_DB', '0')
+CACHE_PASSWORD = os.environ.get('CACHE_PASSWORD', '')
 
-def query(message):
+
+async def count_node_pmids(supporter, node, key, value, cache):
+    """Count node PMIDs and add as node property."""
+    if value is not None:
+        logger.debug(f'{key} is cached')
+        support_dict = value
+    else:
+        logger.debug(f'Computing {key}...')
+        support_dict = await supporter.node_pmid_count(node['id'])
+        if cache and support_dict['omnicorp_article_count']:
+            cache.set(key, support_dict)
+    # add omnicorp_article_count to nodes in networkx graph
+    node.update(support_dict)
+
+
+async def count_shared_pmids(
+        supporter, support_idx, pair, key, value,
+        cache, cached_prefixes, kgraph, pair_to_answer,
+        answers,
+):
+    """Count PMIDS shared by a pair of nodes and create a new support edge."""
+    support_edge = value
+
+    if support_edge is None:
+        # There are two reasons that we don't get anything back:
+        # 1. We haven't evaluated that pair
+        # 2. We evaluated, and found it to be zero, and it was part
+        #    of a prefix pair that we evaluated all of.  In that case
+        #    we can infer that getting nothing back means an empty list
+        #    check cached_prefixes for this...
+        prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
+        if cached_prefixes and prefixes in cached_prefixes:
+            logger.debug(f'{pair} should be cached: assume 0')
+            support_edge = []
+        else:
+            logger.debug(f'Computing {pair}...')
+            support_edge = await supporter.term_to_term_pmid_count(pair[0], pair[1])
+            if cache and support_edge:
+                cache.set(key, support_edge)
+    else:
+        logger.debug(f'{pair} is cached')
+    if not support_edge:
+        return
+    uid = str(uuid4())
+    kgraph['edges'].append({
+        'type': 'literature_co-occurrence',
+        'id': uid,
+        'num_publications': support_edge,
+        'publications': [],
+        'source_database': 'omnicorp',
+        'source_id': pair[0],
+        'target_id': pair[1],
+        'edge_source': 'omnicorp.term_to_term'
+    })
+
+    for sg in pair_to_answer[pair]:
+        answers[sg]['edge_bindings'].append({
+            'qg_id': f's{support_idx}',
+            'kg_id': uid
+        })
+
+
+async def query(request: Request) -> Message:
     """Add support to message.
 
     Add support edges to knowledge_graph and bindings to results.
     """
-    if not kgraph_is_local(message):
-        raise ValueError('Support requires a local kgraph.')
+    message = request.message.dict()
 
     kgraph = message['knowledge_graph']
     qgraph = message['query_graph']
@@ -29,10 +95,10 @@ def query(message):
     # get cache if possible
     try:
         cache = Cache(
-            redis_host=os.environ['CACHE_HOST'],
-            redis_port=os.environ['CACHE_PORT'],
-            redis_db=os.environ['CACHE_DB'],
-            redis_password=os.environ['CACHE_PASSWORD'],
+            redis_host=CACHE_HOST,
+            redis_port=CACHE_PORT,
+            redis_db=CACHE_DB,
+            redis_password=CACHE_PASSWORD,
         )
     except Exception as err:
         logger.exception(err)
@@ -40,7 +106,7 @@ def query(message):
 
     redis_batch_size = 100
 
-    with OmnicorpSupport() as supporter:
+    async with OmnicorpSupport() as supporter:
         # get all node supports
 
         keys = [f"{supporter.__class__.__name__}({node['id']})" for node in kgraph['nodes']]
@@ -48,19 +114,10 @@ def query(message):
         for batch in batches(keys, redis_batch_size):
             values.extend(cache.mget(*batch))
 
-        for node, value, key in zip(kgraph['nodes'], values, keys):
-            if value is not None:
-                logger.debug(f'{key} is cached')
-                support_dict = value
-            else:
-                logger.debug(f'Computing {key}...')
-                # yield to gevent loop
-                gevent.sleep(0)
-                support_dict = supporter.node_pmid_count(node['id'])
-                if cache and support_dict['omnicorp_article_count']:
-                    cache.set(key, support_dict)
-            # add omnicorp_article_count to nodes in networkx graph
-            node.update(support_dict)
+        jobs = [
+            count_node_pmids(supporter, node, key, value, cache)
+            for node, value, key in zip(kgraph['nodes'], values, keys)
+        ]
 
         # Generate a set of pairs of node curies
         pair_to_answer = defaultdict(set)  # a map of node pairs to answers
@@ -87,70 +144,16 @@ def query(message):
         for batch in batches(keys, redis_batch_size):
             values.extend(cache.mget(*batch))
 
-        for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys)):
-            support_edge = value
-
-            if support_edge is None:
-                # There are two reasons that we don't get anything back:
-                # 1. We haven't evaluated that pair
-                # 2. We evaluated, and found it to be zero, and it was part
-                #    of a prefix pair that we evaluated all of.  In that case
-                #    we can infer that getting nothing back means an empty list
-                #    check cached_prefixes for this...
-                prefixes = tuple(ident.split(':')[0].upper() for ident in pair)
-                if cached_prefixes and prefixes in cached_prefixes:
-                    logger.debug(f'{pair} should be cached: assume 0')
-                    support_edge = []
-                else:
-                    logger.debug(f'Computing {pair}...')
-                    # yield to gevent loop
-                    gevent.sleep(0)
-                    support_edge = supporter.term_to_term_pmid_count(pair[0], pair[1])
-                    if cache and support_edge:
-                        cache.set(key, support_edge)
-            else:
-                logger.debug(f'{pair} is cached')
-            if not support_edge:
-                continue
-            uid = str(uuid4())
-            kgraph['edges'].append({
-                'type': 'literature_co-occurrence',
-                'id': uid,
-                'num_publications': support_edge,
-                'publications': [],
-                'source_database': 'omnicorp',
-                'source_id': pair[0],
-                'target_id': pair[1],
-                'edge_source': 'omnicorp.term_to_term'
-            })
-
-            for sg in pair_to_answer[pair]:
-                answers[sg]['edge_bindings'].append({
-                    'qg_id': f's{support_idx}',
-                    'kg_id': uid
-                })
+        jobs.extend([
+            count_shared_pmids(
+                supporter, support_idx, pair, key, value,
+                cache, cached_prefixes, kgraph, pair_to_answer,
+                answers,
+            )
+            for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys))
+        ])
+        await asyncio.gather(*jobs)
 
     message['knowledge_graph'] = kgraph
     message['results'] = answers
-    return message
-
-if __name__ == "__main__":
-    import argparse
-    from dotenv import load_dotenv
-    import json
-    parser = argparse.ArgumentParser('support')
-    parser.add_argument('json', type=str, help='JSON message file')
-    parser.add_argument('-o', dest='output', default=None, type=str, help='output file')
-    args = parser.parse_args()
-
-    file_path = os.path.dirname(os.path.realpath(__file__))
-    load_dotenv(dotenv_path=os.path.join(file_path, '..', '..', '.env'))
-
-    with open(args.json, 'r') as f:
-        message = json.load(f)
-    output = query(message)
-    if args.output is not None:
-        with open(args.output, 'w') as f:
-            json.dump(output, f)
-    else:
-        print(json.dumps(output, indent=4))
+    return Message(**message)
