@@ -29,7 +29,7 @@ def ensure_list(list_or_scalar):
     return [list_or_scalar]
 
 
-def query(request: Request) -> Message:
+async def query(request: Request) -> Message:
     """Normalize."""
     message = request.message.dict()
     qgraph = message['query_graph']
