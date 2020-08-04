@@ -5,7 +5,7 @@ python:
 services:
   - docker
 install:
-  - pip install tox neo4j-driver psycopg2 python-dotenv requests
+  - pip install tox neo4j-driver psycopg2 python-dotenv httpx
   - mkdir logs
   - mkdir cache
 before_script:
