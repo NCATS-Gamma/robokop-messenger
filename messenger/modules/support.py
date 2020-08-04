@@ -118,7 +118,6 @@ async def query(request: Request) -> Message:
             count_node_pmids(supporter, node, key, value, cache)
             for node, value, key in zip(kgraph['nodes'], values, keys)
         ]
-        await asyncio.gather(*jobs)
 
         # Generate a set of pairs of node curies
         pair_to_answer = defaultdict(set)  # a map of node pairs to answers
@@ -145,14 +144,14 @@ async def query(request: Request) -> Message:
         for batch in batches(keys, redis_batch_size):
             values.extend(cache.mget(*batch))
 
-        jobs = [
+        jobs.extend([
             count_shared_pmids(
                 supporter, support_idx, pair, key, value,
                 cache, cached_prefixes, kgraph, pair_to_answer,
                 answers,
             )
             for support_idx, (pair, value, key) in enumerate(zip(pair_to_answer, values, keys))
-        ]
+        ])
         await asyncio.gather(*jobs)
 
     message['knowledge_graph'] = kgraph
