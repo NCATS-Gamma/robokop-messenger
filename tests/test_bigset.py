@@ -11,7 +11,9 @@ client = TestClient(APP)
 
 def test_answer_bigset(bigset):
     """Test that answer() handles empty queries."""
-    response = client.post('/answer', json=bigset.dict())
+    response = client.post('/answer', json={
+        "message": bigset
+    })
     response = client.post('/weight_novelty', json={
         "message": response.json()
     })
@@ -22,9 +24,11 @@ def test_answer_bigset(bigset):
 
 def test_score_leafset(bigset):
     """Test that answer() handles empty queries."""
-    bigset.message.query_graph.nodes = bigset.message.query_graph.nodes[:3]
-    bigset.message.query_graph.edges = bigset.message.query_graph.edges[:2]
-    response = client.post('/answer', json=bigset.dict())
+    bigset['query_graph']['nodes'] = bigset['query_graph']['nodes'][:3]
+    bigset['query_graph']['edges'] = bigset['query_graph']['edges'][:2]
+    response = client.post('/answer', json={
+        "message": bigset
+    })
     response = client.post('/weight_correctness', json={
         "message": response.json()
     })

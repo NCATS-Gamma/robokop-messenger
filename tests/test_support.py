@@ -11,7 +11,9 @@ client = TestClient(APP)
 
 def test_support(yanked):
     """Test support()."""
-    response = client.post('/support', json=yanked.dict())
+    response = client.post('/support', json={
+        "message": yanked
+    })
     result = response.json()
     assert any(
         edge['type'] == 'literature_co-occurrence'

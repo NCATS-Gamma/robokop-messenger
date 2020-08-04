@@ -11,4 +11,6 @@ client = TestClient(APP)
 
 def test_score(weighted2):
     """Test that score() runs without errors."""
-    response = client.post('/score', json=weighted2.dict())
+    response = client.post('/score', json={
+        "message": weighted2
+    })

@@ -11,7 +11,9 @@ client = TestClient(APP)
 
 def test_weight(to_weight):
     """Test that weight() runs without errors."""
-    response = client.post('/weight_novelty', json=to_weight.dict())
+    response = client.post('/weight_novelty', json={
+        "message": to_weight
+    })
     response = client.post('/weight_correctness', json={
         "message": response.json()
     })

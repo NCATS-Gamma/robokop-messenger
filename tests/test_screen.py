@@ -11,7 +11,9 @@ client = TestClient(APP)
 
 def test_screen(weighted2):
     """Test that screen() runs without errors."""
-    response = client.post('/score', json=weighted2.dict())
+    response = client.post('/score', json={
+        "message": weighted2
+    })
     response = client.post('/screen?max_result=3', json={
         "message": response.json()
     })

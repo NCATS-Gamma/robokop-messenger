@@ -11,7 +11,9 @@ client = TestClient(APP)
 
 def test_answer_empty(empty):
     """Test that answer() handles empty queries."""
-    response = client.post('/answer', json=empty.dict())
+    response = client.post('/answer', json={
+        "message": empty
+    })
     result = response.json()
     assert len(result['results']) == 1
     result = result['results'][0]
@@ -21,7 +23,9 @@ def test_answer_empty(empty):
 
 def test_answer_whatis(whatis_mondo):
     """Test that answer() can look up a single node."""
-    response = client.post('/answer', json=whatis_mondo.dict())
+    response = client.post('/answer', json={
+        "message": whatis_mondo
+    })
     result = response.json()
     assert result['results']
     assert 'MONDO:0005737' in result['results'][0]['node_bindings'][0]['kg_id']
@@ -29,7 +33,9 @@ def test_answer_whatis(whatis_mondo):
 
 def test_answer_onestep(onestep):
     """Test that answer() answers one-step queries."""
-    response = client.post('/answer', json=onestep.dict())
+    response = client.post('/answer', json={
+        "message": onestep
+    })
     result = response.json()
     assert result['results']
     first = result['results'][0]
@@ -39,4 +45,6 @@ def test_answer_onestep(onestep):
 
 def test_ebola(ebola_mondo):
     """Test that answer() answers ebola."""
-    response = client.post('/answer', json=ebola_mondo.dict())
+    response = client.post('/answer', json={
+        "message": ebola_mondo
+    })
