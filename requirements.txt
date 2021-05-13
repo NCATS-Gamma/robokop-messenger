@@ -6,7 +6,7 @@ jsonschema==3.2.0
 lru-dict==1.1.6
 neo4j-driver==4.0.2
 numpy==1.19.1
-pydantic==1.6.1
+pydantic==1.6.2
 git+https://github.com/ranking-agent/reasoner-pydantic#egg=reasoner-pydantic
 pyyaml==5.3.1
 git+https://github.com/ranking-agent/reasoner#egg=reasoner
