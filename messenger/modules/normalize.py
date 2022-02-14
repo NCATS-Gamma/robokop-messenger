@@ -1,15 +1,20 @@
 """Normalize node curies."""
 import urllib
 
+import os
 import httpx
 from reasoner_pydantic import Request, Message
+
+# Makes NN url configurable
+
+NN_URL = os.environ.get("NN_URL", "https://nodenormalization-sri.renci.org/get_normalized_nodes?")
+
 
 
 def synonymize(*curies):
     """Return a list of synonymous, preferred curies."""
     response = httpx.get(
-        'https://nodenormalization-sri.renci.org/get_normalized_nodes?'
-        + '&'.join(f'curie={urllib.parse.quote(curie)}' for curie in curies)
+        NN_URL + '&'.join(f'curie={urllib.parse.quote(curie)}' for curie in curies)
     )
     if response.status_code == 404:
         return curies
