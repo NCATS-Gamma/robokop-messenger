@@ -31,7 +31,7 @@ async def query(request: Request, *, max_connectivity: int = -1) -> Message:
     )
     import re
     
-    m = re.search(r"\-[`[a-zA-Z0-9:]*`:[a-zA-Z0-9:_]*\]-", query)
+    m = re.search(r"\-[`[a-zA-Z0-9:]*`:[a-zA-Z0-9:_]*\]-", cypher)
     if m :
         predicate = m.group(0)
         logger.info(predicate)
