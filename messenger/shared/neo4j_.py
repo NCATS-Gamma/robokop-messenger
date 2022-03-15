@@ -82,6 +82,7 @@ class HttpInterface(Neo4jInterface):
             auth=self.auth,
             json={"statements": [{"statement": statement}]},
         )
+        logger.info(f"Issuing Statement : {statement}")
         result = response.json()['results'][0]
         result = [
             dict(zip(result['columns'], datum['row']))
@@ -104,5 +105,6 @@ class BoltInterface(Neo4jInterface):
 
     def run(self, statement, *args):
         """Run statement."""
+        logger.info(f"Issuing Statement : {statement}")
         with self.driver.session() as session:
             return [dict(row) for row in session.run(statement)]
