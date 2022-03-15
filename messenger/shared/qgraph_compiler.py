@@ -97,7 +97,7 @@ class EdgeReference():
 
         if 'type' in edge and edge['type'] is not None:
             if isinstance(edge['type'], str):
-                label = edge['type']
+                label = f"`{edge['type']}`"
                 filters = ''
             elif isinstance(edge['type'], list):
                 filters = []
