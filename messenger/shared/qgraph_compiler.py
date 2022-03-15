@@ -93,7 +93,7 @@ class EdgeReference():
     def __init__(self, edge, anonymous=False):
         """Create an edge reference."""
         name = f'{edge["id"]}' if not anonymous else ''
-        label = edge['type'] if 'type' in edge else None
+        label = f"`{edge['type']}`" if 'type' in edge else None
 
         if 'type' in edge and edge['type'] is not None:
             if isinstance(edge['type'], str):
