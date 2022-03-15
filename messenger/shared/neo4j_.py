@@ -63,6 +63,7 @@ class HttpInterface(Neo4jInterface):
     async def arun(self, statement, *args):
         """Run statement."""
         async with httpx.AsyncClient(timeout=None) as client:
+            logger.info(f"Issuing Statement: {statement}")
             response = await client.post(
                 self.url,
                 auth=self.auth,
