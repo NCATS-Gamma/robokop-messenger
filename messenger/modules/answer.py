@@ -29,6 +29,19 @@ async def query(request: Request, *, max_connectivity: int = -1) -> Message:
         qgraph,
         max_connectivity=max_connectivity,
     )
+    import re
+    
+    predicate = re.search("-\[[a-zA-Z\:]*\]-", cypher)
+    if predicate :
+        logger.info(predicate)
+        predicate = predicate[0]
+        new_predicate_parts = predicate.split(':')
+        actual_predicate = "`" + new_predicate_parts[1].replace(']-', '') + "`"
+        new_predicate = new_predicate_parts[0] + ":" + actual_predicate + "`]-" 
+        logger.info(f"old cypher:{cypher}")
+        cypher = cypher.replace(predicate, new_predicate)
+        logger.info(f"new cypher: {cypher}")  
+    
     message = (await neo4j.arun(cypher))[0]
     message['query_graph'] = qgraph
     return Message(**message)
