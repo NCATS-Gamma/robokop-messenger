@@ -31,8 +31,9 @@ async def query(request: Request, *, max_connectivity: int = -1) -> Message:
     )
     import re
     
-    predicate = re.search("-\[[a-zA-Z\:]*\]-", cypher)
-    if predicate :
+    m = re.search(r"\-[`[a-zA-Z0-9:]*`:[a-zA-Z0-9:_]*\]-", query)
+    if m :
+        predicate = m.group(0)
         logger.info(predicate)
         predicate = predicate[0]
         new_predicate_parts = predicate.split(':')
