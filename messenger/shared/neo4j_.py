@@ -63,7 +63,6 @@ class HttpInterface(Neo4jInterface):
     async def arun(self, statement, *args):
         """Run statement."""
         async with httpx.AsyncClient(timeout=None) as client:
-            logger.info(f"Issuing Statement: {statement}")
             response = await client.post(
                 self.url,
                 auth=self.auth,
@@ -83,7 +82,6 @@ class HttpInterface(Neo4jInterface):
             auth=self.auth,
             json={"statements": [{"statement": statement}]},
         )
-        logger.info(f"Issuing Statement : {statement}")
         result = response.json()['results'][0]
         result = [
             dict(zip(result['columns'], datum['row']))
@@ -106,6 +104,5 @@ class BoltInterface(Neo4jInterface):
 
     def run(self, statement, *args):
         """Run statement."""
-        logger.info(f"Issuing Statement : {statement}")
         with self.driver.session() as session:
             return [dict(row) for row in session.run(statement)]
