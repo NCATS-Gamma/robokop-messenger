@@ -21,7 +21,7 @@ def synonymize(*curies):
     results = response.json()
     return [
         results[curie]['id']['identifier']
-        if results[curie] else
+        if results.get(curie) else
         curie
         for curie in curies
     ]
